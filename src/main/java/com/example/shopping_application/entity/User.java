@@ -25,7 +25,7 @@ public class User {
     private String password;
     @Column(nullable = false)
     private String address;
-    private int phoneNumber;
+    private String phoneNumber;
     @Column(nullable = false)
     private String postCode;
 
