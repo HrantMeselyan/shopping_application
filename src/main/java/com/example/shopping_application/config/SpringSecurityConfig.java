@@ -25,12 +25,25 @@ public class SpringSecurityConfig {
         httpSecurity.csrf().disable()
                 .authorizeHttpRequests()
                 .requestMatchers(HttpMethod.GET, "/").permitAll()
+                .requestMatchers("/css/**").permitAll()
+                .requestMatchers("/user/register").permitAll()
+                .requestMatchers("/user/admin").hasAuthority("ADMIN")
+                .requestMatchers("/doctors/remove").hasAuthority("ADMIN")
+                .requestMatchers("/patients/remove").hasAuthority("ADMIN")
+                .requestMatchers("/patients/remove").hasAnyAuthority("ADMIN")
                 .anyRequest().authenticated()
                 .and()
-                .formLogin();
+                .logout()
+                .logoutSuccessUrl("/")
+                .and()
+                .formLogin()
+                .loginPage("/customLogin")
+                .defaultSuccessUrl("/customSuccessLogin")
+                .loginProcessingUrl("/login")
+                .permitAll();
+
         return httpSecurity.build();
     }
-
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
