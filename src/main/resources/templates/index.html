@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<div th:replace="header.html"></div>
 <div th:if="${currentUser != null}">
     <h1>Welcome <b th:text="${currentUser.name}"></b></h1>
 </div>
@@ -12,5 +6,6 @@
 <a href="/customLogin" th:if="${currentUser == null}">login</a>
 <a href="/user/register" th:if="${currentUser == null}">Register</a>
 <a th:if="${currentUser != null}" href="/logout">Logout</a>
+<th:block th:include="footer.html :: footer"></th:block>
 </body>
 </html>

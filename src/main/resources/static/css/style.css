@@ -1,0 +1,427 @@
+main {
+    flex: 1;
+    height: 100%;
+}
+
+h1 {
+    font-size: 25px;
+}
+
+header {
+    background-color: #131921;
+    height: 120px;
+
+}
+
+img {
+    max-width: 100%;
+}
+
+section {
+    display: flex;
+
+}
+
+.default_main {
+    background-color: red;
+
+}
+
+.about_main {
+    background-color: blue;
+}
+
+.my_menu div ul li {
+    list-style: none;
+}
+
+ul li {
+    list-style: none;
+}
+
+a {
+    margin: 5px 0px 6px;
+    padding: 8px 9px;
+
+    text-decoration: none;
+    color: #ffffff;
+
+}
+
+.menu {
+    font-family: sans-serif;
+    font-size: 14px;
+    display: flex;
+    margin: 0px;
+    height: 39px;
+    background-color: #232f3e;
+
+}
+
+.menu-item {
+    margin: 5px;
+}
+
+.margin_menu {
+    margin: 0px;
+    color: #fcfcfc;
+    padding: 10px;
+
+}
+
+.margin0 {
+    margin: 0px;
+}
+
+.a-color {
+    color: #007185;
+}
+
+.card-title {
+    font-family: sans-serif;
+}
+
+.card-header {
+    border: none;
+}
+
+.top-carousel {
+    height: 230px;
+}
+
+.carusel-height {
+    height: 100%;
+}
+
+.page img {
+    width: 100%;
+    height: 100%;
+}
+
+.page {
+    float: left;
+}
+
+.page-margin {
+    margin: 15px;
+}
+
+.search-margin {
+    margin-right: 15px;
+}
+
+.results {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.logo img {
+    width: 220px !important;
+    height: 90px !important;
+    padding: 5px;
+    object-fit: contain !important;
+}
+
+.img img {
+    height: 275px;
+    width: 100%;
+}
+
+.margin-bottom {
+    margin-bottom: 10px;
+}
+
+.dog {
+    font-family: 'Big Shoulders Stencil Display', cursive;
+    font-size: 78px;
+    color: #f6f6f7;
+
+}
+
+.margin-0 {
+    margin: 0px;
+}
+
+.see {
+    color: #007185 !important;
+}
+
+.see-more {
+    /*	padding-top: 50px;*/
+    color: #007185;
+    text-align: left;
+    font-size: 13px;
+}
+
+.search {
+    display: flex;
+    margin-left: 5px;
+}
+
+.post img {
+    border-radius: 10px;
+}
+
+.font-size {
+    font-size: 20px;
+}
+
+.cat-img img {
+    height: 130px;
+    width: 100%;
+}
+
+.cat-img4 img {
+    height: 110px;
+    /*width: 120px;*/
+}
+
+.pading {
+    padding: 1.2px;
+}
+
+.cat-div h1 {
+    font-size: 21px;
+    color: #0f1111;
+    padding: 0 20px;
+    margin-bottom: 10px;
+    margin-top: 15px;
+
+}
+
+.font-h5 {
+    font-size: 12px;
+    margin: 6px;
+}
+
+.card-margin {
+    margin: 30px 10px 30px 10px;
+}
+
+.cat-img2 img {
+    height: 100%;
+    width: 100%;
+}
+
+.height-100 {
+    height: 100%;
+}
+
+
+.map {
+    margin: 25px;
+    height: 612px;
+    position: relative;
+}
+
+.map iframe {
+    width: 100%;
+}
+
+.map img {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-14px, -21px);
+    -ms-transform: translate(-14px, -21px);
+    transform: translate(-14px, -21px);
+}
+
+.spad {
+    padding-top: 50px;
+    padding-bottom: 10px;
+}
+
+@media only screen and (min-width: 1200px) {
+    .container1 {
+        max-width: 1170px;
+    }
+}
+
+.contact-info {
+    margin: 30px;
+}
+
+.contact-info h4 {
+    font-weight: 600;
+    color: #111111;
+    text-transform: uppercase;
+    margin-bottom: 47px;
+}
+
+.contact-info .contact-address .ca-widget {
+    overflow: hidden;
+    margin-bottom: 16px;
+}
+
+.contact-info .contact-address .ca-widget .cw-icon {
+    height: 74px;
+    width: 74px;
+    border: 1px solid #ebebeb;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 74px;
+    float: left;
+    margin-right: 28px;
+}
+
+.contact-info .contact-address .ca-widget .cw-text {
+    padding-top: 12px;
+}
+
+.contact-info .contact-address .ca-widget .cw-text h5 {
+    color: #bdbdbd;
+    margin-bottom: 5px;
+}
+
+.contact-info .contact-address .ca-widget .cw-text p {
+    margin-bottom: 0;
+    color: #111111;
+    font-size: 18px;
+}
+
+.contact-form h4 {
+    font-weight: 600;
+    color: #111111;
+    text-transform: uppercase;
+    margin-bottom: 47px;
+}
+
+.contact-form form input {
+    width: 100%;
+    height: 51px;
+    border: 1px solid #e1e1e1;
+    padding-left: 20px;
+    font-size: 16px;
+    margin-bottom: 30px;
+}
+
+.contact-form form input::-webkit-input-placeholder {
+    color: #9a9a9a;
+}
+
+.contact-form form input::-moz-placeholder {
+    color: #9a9a9a;
+}
+
+.contact-form form input:-ms-input-placeholder {
+    color: #9a9a9a;
+}
+
+.contact-form form input::-ms-input-placeholder {
+    color: #9a9a9a;
+}
+
+.contact-form form input::placeholder {
+    color: #9a9a9a;
+}
+
+.contact-form form input:focus {
+    color: #111111;
+}
+
+.contact-form form textarea {
+    width: 100%;
+    height: 150px;
+    border: 1px solid #e1e1e1;
+    padding-left: 20px;
+    font-size: 16px;
+    padding-top: 10px;
+    margin-bottom: 42px;
+    resize: none;
+}
+
+.contact-form form textarea::-webkit-input-placeholder {
+    color: #9a9a9a;
+}
+
+.contact-form form textarea::-moz-placeholder {
+    color: #9a9a9a;
+}
+
+.contact-form form textarea:-ms-input-placeholder {
+    color: #9a9a9a;
+}
+
+.contact-form form textarea::-ms-input-placeholder {
+    color: #9a9a9a;
+}
+
+.contact-form form textarea::placeholder {
+    color: #9a9a9a;
+}
+
+.contact-form form textarea:focus {
+    color: #111111;
+}
+
+.contact-form form button {
+    font-size: 14px;
+    color: #ffffff;
+    padding: 10px 33px;
+    display: inline-block;
+    background: -webkit-gradient(linear, left top, right top, from(#eb3c5a), to(#f67831));
+    background: -o-linear-gradient(left, #eb3c5a, #f67831);
+    background: linear-gradient(to right, #eb3c5a, #f67831);
+    border: none;
+    text-transform: uppercase;
+}
+
+.margin-30 {
+    margin: 30px;
+}
+
+.center-img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    height: 400px;
+}
+
+.submit {
+    margin: 20px;
+    border-radius: 3px;
+}
+
+.padding {
+    padding: 5px;
+}
+
+.index-4 {
+    height: 130px;
+    width: 80%;
+}
+
+.h1-align {
+    text-align: left;
+    margin: 20px 0px 0px 15px;
+}
+
+/*new*/
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: #f5f5f5;
+}
+
+.logo {
+    width: 43px;
+}
+
+.logo-h1 {
+    margin: 0;
+}
+
+.logo-h1 {
+    margin-top: 5px;
+    margin-right: 10px;
+    font-size: 24px;
+}
+
+.logo-link {
+    display: flex;
+    text-decoration: none;
+    color: inherit;
+}
