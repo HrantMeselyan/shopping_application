@@ -3,8 +3,7 @@ package com.example.shopping_application.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 /**
  * Created by Ashot Simonyan on 21.05.23.
@@ -31,6 +30,9 @@ public class Product {
     @ManyToOne(optional = false)
     private User user;
 
-    @ManyToMany(mappedBy = "products")
-    private Set<Category> categories = new HashSet<>();
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "category_product",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
+    private List<Category> categories;
 }

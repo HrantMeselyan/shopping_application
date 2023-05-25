@@ -1,8 +1,6 @@
 package com.example.shopping_application.controller;
 
-import com.example.shopping_application.entity.Category;
 import com.example.shopping_application.entity.Product;
-import com.example.shopping_application.service.CategoryService;
 import com.example.shopping_application.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
