@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface OrderService {
 
-    List<Order> findAllCategory();
+    List<Order> findAllOrder();
 
     void remove(int id);
 

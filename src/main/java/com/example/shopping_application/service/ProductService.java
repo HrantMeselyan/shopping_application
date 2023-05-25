@@ -9,4 +9,6 @@ public interface ProductService {
     List<Product> findAllProducts();
     void remove(int id);
     void save(Product product);
+
+    Product findByUserId(int id);
 }

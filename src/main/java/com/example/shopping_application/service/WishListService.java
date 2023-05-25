@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface WishListService {
 
-    List<WishList> findAllCategory();
+    List<WishList> findAll();
 
     void remove(int id);
 

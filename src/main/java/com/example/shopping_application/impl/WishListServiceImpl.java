@@ -18,7 +18,7 @@ public class WishListServiceImpl implements WishListService {
     private final WishListRepository wishListRepository;
 
     @Override
-    public List<WishList> findAllCategory() {
+    public List<WishList> findAll() {
         return wishListRepository.findAll();
     }
 
