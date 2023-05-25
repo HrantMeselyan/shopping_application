@@ -39,9 +39,9 @@ public class MainController {
     public String customSuccessLogin(@AuthenticationPrincipal CurrentUser currentUser) {
         if (currentUser != null) {
             User user = currentUser.getUser();
-            if (user.getUserType() == UserType.ADMIN) {
-                return "redirect:/user/admin";
-            } else if (user.getUserType() == UserType.ADMIN.USER) {
+            if(user.getUserType() == UserType.ADMIN){
+                return "redirect:/";
+            }else if(user.getUserType() == UserType.USER){
                 return "redirect:/";
             }
         }

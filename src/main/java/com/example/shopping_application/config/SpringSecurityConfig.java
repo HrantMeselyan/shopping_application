@@ -11,12 +11,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+
 @Configuration
 public class SpringSecurityConfig {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-
     @Autowired
     private UserDetailsService userDetailsService;
 
@@ -24,24 +24,24 @@ public class SpringSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers(HttpMethod.GET, "/").permitAll()
-                .requestMatchers("/css/**").permitAll()
-                .requestMatchers("/user/register").permitAll()
-                .requestMatchers("/user/admin").hasAuthority("ADMIN")
-                .requestMatchers("/categories/remove").hasAuthority("ADMIN")
+                .requestMatchers(HttpMethod.GET,"/").permitAll()
+                .requestMatchers(HttpMethod.GET,"/user/register").permitAll()
+
                 .anyRequest().authenticated()
-                .and()
-                .logout()
-                .logoutSuccessUrl("/")
                 .and()
                 .formLogin()
                 .loginPage("/customLogin")
                 .defaultSuccessUrl("/customSuccessLogin")
                 .loginProcessingUrl("/login")
+                .permitAll()
+                .and()
+                .logout()
+                .logoutSuccessUrl("/")
                 .permitAll();
 
         return httpSecurity.build();
     }
+
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
