@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by Ashot Simonyan on 21.05.23.
@@ -30,5 +31,12 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void save(Product product) {
         productRepository.save(product);
+    }
+
+    @Override
+    public Product findByUserId(int id) {
+        Optional<Product> allByUserId = productRepository.findAllByUser_Id(id);
+        Product product = allByUserId.get();
+        return product;
     }
 }

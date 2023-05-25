@@ -17,9 +17,11 @@ public class NotificationServiceImpl implements NotificationService {
 
     private final NotificationRepository notificationRepository;
 
+
     @Override
-    public List<Notification> findAllCategory() {
-        return notificationRepository.findAll();
+    public List<Notification> findAllByUserId(int id) {
+        List<Notification> allByUserId = notificationRepository.findAllByUser_Id(id);
+        return allByUserId;
     }
 
     @Override
