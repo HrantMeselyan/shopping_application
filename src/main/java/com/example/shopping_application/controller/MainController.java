@@ -10,7 +10,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -36,13 +35,13 @@ public class MainController {
         return "customLoginPage";
     }
 
-    @PostMapping("/customSuccessLogin")
+    @GetMapping("/customSuccessLogin")
     public String customSuccessLogin(@AuthenticationPrincipal CurrentUser currentUser) {
         if (currentUser != null) {
             User user = currentUser.getUser();
-            if (user.getUserType() == UserType.ADMIN) {
+            if(user.getUserType() == UserType.ADMIN){
                 return "redirect:/";
-            } else if (user.getUserType() == UserType.ADMIN.USER) {
+            }else if(user.getUserType() == UserType.USER){
                 return "redirect:/";
             }
         }
