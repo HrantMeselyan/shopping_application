@@ -1,6 +1,7 @@
 package com.example.shopping_application.controller;
 
 import com.example.shopping_application.entity.User;
+import com.example.shopping_application.entity.UserType;
 import com.example.shopping_application.security.CurrentUser;
 import com.example.shopping_application.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +32,7 @@ public class UserController {
     public String register(@ModelAttribute User user) {
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
+        user.setUserType(UserType.USER);
         userService.save(user);
         return "redirect:/";
     }

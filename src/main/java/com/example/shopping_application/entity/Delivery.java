@@ -17,8 +17,5 @@ public class Delivery {
     private int id;
 
     @ManyToOne(optional = false)
-    private User user;
-
-    @ManyToOne(optional = false)
     private Order order;
 }
