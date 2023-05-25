@@ -1,6 +1,5 @@
 package com.example.shopping_application.controller;
 
-import com.example.shopping_application.entity.Comments;
 import com.example.shopping_application.entity.Order;
 import com.example.shopping_application.service.OrderService;
 import lombok.RequiredArgsConstructor;

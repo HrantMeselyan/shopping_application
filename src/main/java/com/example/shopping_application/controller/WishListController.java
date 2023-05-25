@@ -1,8 +1,6 @@
 package com.example.shopping_application.controller;
 
-import com.example.shopping_application.entity.Order;
 import com.example.shopping_application.entity.WishList;
-import com.example.shopping_application.service.OrderService;
 import com.example.shopping_application.service.WishListService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
