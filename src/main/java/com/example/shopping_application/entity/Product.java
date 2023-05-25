@@ -2,6 +2,7 @@ package com.example.shopping_application.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.context.annotation.Primary;
 
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class Product {
     private User user;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "category_product",
+    @JoinTable(name = "category_product", uniqueConstraints = @UniqueConstraint(columnNames = {"product_id", "category_id"}),
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
     private List<Category> categories;
