@@ -8,13 +8,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <div th:replace="header.html"></div>
-<div th:if="${currentUser != null}">
-    <h1>Welcome <b th:text="${currentUser.name}"></b></h1>
-</div>
-<h1>Hello </h1>
-<a href="/customLogin" th:if="${currentUser == null}">login</a>
-<a href="/user/register" th:if="${currentUser == null}">Register</a>
-<a th:if="${currentUser != null}" href="/logout">Logout</a>
+<div th:replace="fragment/top-slider.html"></div>
 <th:block th:include="footer.html :: footer"></th:block>
 </body>
 </html>

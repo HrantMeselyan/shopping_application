@@ -1,29 +1,90 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Register</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-</head>
 <div th:replace="header.html"></div>
-<body>
-<form action="/user/register" method="post">
-    <input type="text" name="name" placeholder="Name"><br>
-    <input type="text" name="surname" placeholder="Surname"><br>
-    <input type="text" name="email" placeholder="Email"><br>
-    <input type="password" name="password" placeholder="Password"><br>
-    <input type="text" name="address" placeholder="Address"><br>
-    <input type="text" name="phoneNumber" placeholder="Phone Number"><br>
-    <input type="text" name="postCode" placeholder="Post Code"><br>
-    <label for="male">Male</label>
-    <input id="male" type="radio" name="gender" value="MALE">
-    <label for="female">Female</label>
-    <input id="female" type="radio" name="gender" value="FEMALE"><br>
-    <input type="submit" value="register">
-</form>
-<th:block th:include="footer.html :: footer"></th:block>
+<section>
+    <div class="px-4 py-5 px-md-5 text-center text-lg-start" style="background-color: hsl(0, 0%, 96%)">
+        <div class="container">
+            <div class="row gx-lg-5 align-items-center">
+                <div class="col-lg-6 mb-5 mb-lg-0">
+                    <h1 class="my-5 display-3 fw-bold ls-tight">
+                        The best code <br/>
+                        <span class="text-primary">learning academy</span>
+                    </h1>
+                    <p style="color: hsl(217, 10%, 50.8%)">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Eveniet, itaque accusantium odio, soluta, corrupti aliquam
+                        quibusdam tempora at cupiditate quis eum maiores libero
+                        veritatis? Dicta facilis sint aliquid ipsum atque?
+                    </p>
+                </div>
+
+                <div class="col-lg-6 mb-5 mb-lg-0">
+                    <div class="card">
+                        <div class="card-body py-5 px-md-5">
+                            <form action="/user/register" method="post">
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline">
+                                            <label class="form-label">Name</label>
+                                            <input type="text" placeholder="name" name="name" required
+                                                   class="form-control"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline">
+                                            <label class="form-label">Surname</label>
+                                            <input type="text" placeholder="surname" name="surname" required
+                                                   class="form-control"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-outline mb-4">
+                                    <label class="form-label">Email</label>
+                                    <input type="text" placeholder="email" name="email" required class="form-control"/>
+                                </div>
+                                <div class="form-outline">
+                                    <label class="form-label">Password</label>
+                                    <input type="password" placeholder="password" name="password" required
+                                           class="form-control"/>
+                                </div>
+                                <div class="form-outline">
+                                    <label class="form-label">Address</label>
+                                    <input type="text" placeholder="Address" name="address" required
+                                           class="form-control"/>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline">
+                                            <label class="form-label">PhoneNumber</label>
+                                            <input type="text" placeholder="phoneNumber" name="phoneNumber" required
+                                                   class="form-control"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline">
+                                            <label class="form-label">PostCode</label>
+                                            <input type="text" placeholder="postCode" name="postCode" required
+                                                   class="form-control"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="male">Male</label>
+                                    <input id="male" type="radio" name="gender" value="MALE">
+                                    <label for="female">Female</label>
+                                    <input id="female" type="radio" name="gender" value="FEMALE">
+                                </div>
+                                <div class="d-flex justify-content-center mb-4">
+                                    <button type="submit" class="btn btn-primary btn-block mb-4">
+                                        Register
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div th:replace="footer.html"></div>
 </body>
 </html>

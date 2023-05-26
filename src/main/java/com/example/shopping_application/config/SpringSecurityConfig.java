@@ -26,7 +26,10 @@ public class SpringSecurityConfig {
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry
                         .requestMatchers("/").permitAll()
                         .requestMatchers("/user/register").permitAll()
-                        .requestMatchers("/css/**").permitAll()
+
+                        .requestMatchers(HttpMethod.GET,"img/**").permitAll()
+                        .requestMatchers(HttpMethod.GET,"user/css/**").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/css/**").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(httpSecurityFormLoginConfigurer -> httpSecurityFormLoginConfigurer
                         .loginPage("/customLogin")
