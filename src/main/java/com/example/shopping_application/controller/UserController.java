@@ -39,6 +39,7 @@ public class UserController {
 
     @GetMapping("/admin")
     public String adminPage(ModelMap modelMap, @AuthenticationPrincipal CurrentUser currentUser) {
+        modelMap.addAttribute("currentUser",currentUser.getUser());
         return "admin";
     }
 }
