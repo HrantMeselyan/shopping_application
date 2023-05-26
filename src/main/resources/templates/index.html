@@ -1,9 +1,5 @@
 <div th:replace="header.html"></div>
 <div th:replace="fragment/top-slider.html"></div>
-<h1>Hello </h1>
-<div th:if="${currentUser != null}">
-    <h1>Welcome <b th:text="${currentUser.name}"></b></h1>
-</div>
 <th:block th:include="footer.html :: footer"></th:block>
 </body>
 </html>
