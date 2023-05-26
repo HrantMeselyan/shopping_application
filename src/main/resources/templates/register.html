@@ -1,9 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Register</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
+<div th:replace="header.html"></div>
 <body>
 <form action="/user/register" method="post">
     <input type="text" name="name" placeholder="Name"><br>
@@ -19,5 +24,6 @@
     <input id="female" type="radio" name="gender" value="FEMALE"><br>
     <input type="submit" value="register">
 </form>
+<th:block th:include="footer.html :: footer"></th:block>
 </body>
 </html>

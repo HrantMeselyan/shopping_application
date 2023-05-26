@@ -5,6 +5,7 @@ import lombok.Data;
 import org.hibernate.annotations.Type;
 import org.springframework.context.annotation.Primary;
 
+import java.io.StringReader;
 import java.util.List;
 
 /**
@@ -30,9 +31,10 @@ public class Product {
     private int count;
     @Enumerated(EnumType.STRING)
     private Moderate moderate;
+    private String profilePic;
     @ManyToOne(optional = false)
     private User user;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = "category_product", uniqueConstraints = @UniqueConstraint(columnNames = {"product_id", "category_id"}),
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
