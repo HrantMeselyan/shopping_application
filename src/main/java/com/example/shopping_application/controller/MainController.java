@@ -40,7 +40,7 @@ public class MainController {
         if (currentUser != null) {
             User user = currentUser.getUser();
             if(user.getUserType() == UserType.ADMIN){
-                return "redirect:/";
+                return "redirect:/user/admin";
             }else if(user.getUserType() == UserType.USER){
                 return "redirect:/";
             }
