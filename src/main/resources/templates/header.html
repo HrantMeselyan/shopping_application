@@ -59,10 +59,9 @@
                         My account
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">Login</a>
-                        <a class="dropdown-item" href="#">Register</a>
-                        <a class="dropdown-item" href="#">My Orders</a>
-                        <a class="dropdown-item" href="#">Account Settings</a>
+                        <a href="/customLogin" th:if="${currentUser == null}">login</a>
+                        <a href="/user/register" th:if="${currentUser == null}">Register</a>
+                        <a th:if="${currentUser != null}" href="/logout">Logout</a>
                     </div>
                 </div>
             </div>
