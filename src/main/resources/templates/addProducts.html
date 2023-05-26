@@ -7,9 +7,9 @@
         <input type="text" name="count" placeholder="Count"><br>
         <input type="file" name="profile_pic"><br>
         <textarea name="description" placeholder="Product Description"></textarea><br>
-        <div th:each="category:${categories}">
-            <label for="category" th:text="${category.name}"></label>
-            <input type="checkbox" id="category" name="category" th:value="${category.id}">
+        <div th:each="category, status: ${categories}">
+            <span th:text="${category.name}"></span>
+            <input type="checkbox" th:name="categories[__${status.index}__].id" th:value="${category.id}">
         </div>
         <br>
         <input type="submit" value="Add Product">

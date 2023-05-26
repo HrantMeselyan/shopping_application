@@ -45,9 +45,8 @@ public class ProductController {
     @PostMapping("/add")
     public String addProduct(@ModelAttribute Product product,
                              @AuthenticationPrincipal CurrentUser currentUser,
-                             @RequestParam("category") List<Integer> categories,
                              @RequestParam("profile_pic") MultipartFile multipartFile) throws IOException {
-        productService.save(product, multipartFile, currentUser, categories);
+        productService.save(product, multipartFile, currentUser);
         return "redirect:/";
     }
 
