@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 @ControllerAdvice
-public class MyControllerAdvice {
+public class CurrentUserControllerAdvice {
 
     @ModelAttribute("currentUser")
     public User curretnUser(@AuthenticationPrincipal CurrentUser currentUser){

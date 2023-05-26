@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("Delivery")
+@RequestMapping("/delivery")
 @RequiredArgsConstructor
 public class DeliveryController {
     private final DeliveryService deliveryService;
