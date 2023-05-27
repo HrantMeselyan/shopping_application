@@ -1,0 +1,18 @@
+<div th:replace="header.html"></div>
+<img th:if="${singleUser.profilePic != null}" th:src="@{/getImage(profilePic=${singleUser.profilePic})}"
+     width="80">
+<h2 th:text="${singleUser.name}"></h2>
+<h2 th:text="${singleUser.surname}"></h2>
+<h2 th:text="${singleUser.email}"></h2>
+<h2 th:text="${singleUser.gender}"></h2>
+<h2 th:text="${singleUser.phoneNumber}"></h2>
+<h2 th:text="${singleUser.address}"></h2>
+<h3>Edit Profile Pic</h3>
+<form th:action="@{'/user/' + ${singleUser.id}}" method="post" enctype="multipart/form-data">
+    <input type="file" name="profile_pic"><br>
+    <input type="submit" value="edit">
+</form>
+<a th:href="@{'/user/notifications/' + ${singleUser.id}}">Notifications</a>
+<th:block th:include="footer.html :: footer"></th:block>
+</body>
+</html>
