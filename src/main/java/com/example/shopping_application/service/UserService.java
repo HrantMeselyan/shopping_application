@@ -8,11 +8,12 @@ import java.util.List;
 
 public interface UserService {
 
-    List<User> findAllUser();
+    void updatePicName(MultipartFile multipartFile, int id) throws IOException;
     void remove(int id);
     void save(User user);
+    void update(User user, MultipartFile multipartFile) throws IOException;
 
-    User findAllById(int id);
+    void removeById(int id);
 
-    void updatePicName(MultipartFile multipartFile, int id) throws IOException;
+    User findById(int id);
 }

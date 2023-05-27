@@ -57,9 +57,39 @@ public class UserController {
         return "redirect:/user/" + currentUser.getUser().getId();
     }
 
+    @GetMapping("remove")
+    public String removeUser(@RequestParam("id") int id) {
+        userService.removeById(id);
+        return "redirect:/user/admin/all";
+    }
+
+    @GetMapping("update")
+    public String updateUserPage(@RequestParam("id") int id,ModelMap modelMap) {
+        modelMap.addAttribute("user",userService.findById(id));
+        return "updateUser";
+    }
+
+    @PostMapping("update/{id}")
+    public String updateUser(@PathVariable("id") int id,
+                             @ModelAttribute User user,
+                             @RequestParam("profile_pic") MultipartFile multipartFile) throws IOException {
+        User byId = userService.findById(id);
+        user.setProfilePic(byId.getProfilePic());
+        user.setPassword(byId.getPassword());
+        userService.update(user,multipartFile);
+        return "redirect:/user/admin/all";
+    }
+
     @GetMapping("/admin")
     public String adminPage(ModelMap modelMap, @AuthenticationPrincipal CurrentUser currentUser) {
         modelMap.addAttribute("currentUser", currentUser.getUser());
         return "admin";
+    }
+
+    @GetMapping("/admin/all")
+    public String allUsersPage(ModelMap modelMap, @AuthenticationPrincipal CurrentUser currentUser) {
+        modelMap.addAttribute("currentUser",currentUser.getUser());
+        modelMap.addAttribute("users",userService.findAll());
+        return "allUsers";
     }
 }

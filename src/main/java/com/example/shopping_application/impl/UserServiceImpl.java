@@ -23,12 +23,6 @@ public class UserServiceImpl implements UserService {
     @Value("${shopping-app.upload.image.path}")
     private String imageUploadPath;
 
-
-    @Override
-    public List<User> findAllUser() {
-        return userRepository.findAll();
-    }
-
     @Override
     public void remove(int id) {
         userRepository.findById(id);
@@ -54,5 +48,29 @@ public class UserServiceImpl implements UserService {
             multipartFile.transferTo(file);
             userRepository.updatePicName(id,fileName);
         }
+    }
+    @Override
+   public void update(User user, MultipartFile multipartFile) throws IOException {
+        if (multipartFile != null && !multipartFile.isEmpty()) {
+            String fileName = System.nanoTime() + "_" + multipartFile.getOriginalFilename();
+            File file = new File(imageUploadPath + fileName);
+            multipartFile.transferTo(file);
+            user.setProfilePic(fileName);
+        }
+        userRepository.save(user);
+    }
+
+    @Override
+    public void removeById(int id) {
+        userRepository.deleteById(id);
+    }
+
+    @Override
+    public User findById(int id) {
+        Optional<User> byId = userRepository.findById(id);
+        if (byId.isPresent()) {
+            return byId.get();
+        }
+        return null;
     }
 }
