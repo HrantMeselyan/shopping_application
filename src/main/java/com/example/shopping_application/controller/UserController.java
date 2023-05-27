@@ -52,7 +52,7 @@ public class UserController {
     }
 
     @PostMapping("{id}")
-    public String updateUser(@AuthenticationPrincipal CurrentUser currentUser, @RequestParam("profile_pic") MultipartFile multipartFile) throws IOException {
+    public String updateCurrentUser(@AuthenticationPrincipal CurrentUser currentUser, @RequestParam("profile_pic") MultipartFile multipartFile) throws IOException {
         userService.updatePicName(multipartFile, currentUser.getUser().getId());
         return "redirect:/user/" + currentUser.getUser().getId();
     }
