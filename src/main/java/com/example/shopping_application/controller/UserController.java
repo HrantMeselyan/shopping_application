@@ -41,7 +41,7 @@ public class UserController {
 
     @GetMapping("{id}")
     public String currentUserPage(ModelMap modelmap, @PathVariable("id") int id) {
-        modelmap.addAttribute("singleUser", userService.findAllById(id));
+        modelmap.addAttribute("singleUser", userService.findById(id));
         return "singleUserPage";
     }
 

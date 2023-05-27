@@ -34,10 +34,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findAllById(int id) {
-        Optional<User> byId = userRepository.findById(id);
-        User user = byId.get();
-        return user;
+    public List<User> findAll() {
+        return userRepository.findAll();
     }
 
     @Override
@@ -46,11 +44,12 @@ public class UserServiceImpl implements UserService {
             String fileName = System.nanoTime() + "_" + multipartFile.getOriginalFilename();
             File file = new File(imageUploadPath + fileName);
             multipartFile.transferTo(file);
-            userRepository.updatePicName(id,fileName);
+            userRepository.updatePicName(id, fileName);
         }
     }
+
     @Override
-   public void update(User user, MultipartFile multipartFile) throws IOException {
+    public void update(User user, MultipartFile multipartFile) throws IOException {
         if (multipartFile != null && !multipartFile.isEmpty()) {
             String fileName = System.nanoTime() + "_" + multipartFile.getOriginalFilename();
             File file = new File(imageUploadPath + fileName);
