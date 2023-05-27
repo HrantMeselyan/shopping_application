@@ -20,7 +20,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public List<Notification> findAllByUserId(int id) {
-        List<Notification> allByUserId = notificationRepository.findAllByUser_Id(id);
+        List<Notification> allByUserId = notificationRepository.findAllByUserId(id);
         return allByUserId;
     }
 
