@@ -9,7 +9,7 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "notificationPage")
+@Table(name = "notifications")
 public class Notification {
 
     @Id

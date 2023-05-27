@@ -45,17 +45,20 @@ public class UserController {
         return "singleUserPage";
     }
 
-    @GetMapping("/notifications/{userId}")
-    public String notificationPage(ModelMap modelmap, @PathVariable("userId") int id) {
-        modelmap.addAttribute("notifications", notificationService.findAllByUserId(id));
-        return "notifications";
-    }
-
     @PostMapping("{id}")
-    public String updateCurrentUser(@AuthenticationPrincipal CurrentUser currentUser, @RequestParam("profile_pic") MultipartFile multipartFile) throws IOException {
+    public String updateCurrentUser(@AuthenticationPrincipal CurrentUser currentUser,
+                                    @RequestParam("profile_pic") MultipartFile multipartFile) throws IOException {
         userService.updatePicName(multipartFile, currentUser.getUser().getId());
         return "redirect:/user/" + currentUser.getUser().getId();
     }
+    @GetMapping("/notifications/{userId}")
+    public String notificationPage(ModelMap modelmap, @PathVariable("userId") int id,
+                                   @AuthenticationPrincipal CurrentUser currentUser) {
+        modelmap.addAttribute("notifications", notificationService.findAllByUserId(id));
+        modelmap.addAttribute("currentUser",currentUser.getUser());
+        return "notifications";
+    }
+
 
     @GetMapping("remove")
     public String removeUser(@RequestParam("id") int id) {
