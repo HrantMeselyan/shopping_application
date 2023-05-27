@@ -9,10 +9,10 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @Controller
 @RequiredArgsConstructor
@@ -37,9 +37,40 @@ public class UserController {
         return "redirect:/";
     }
 
+    @GetMapping("remove")
+    public String removeUser(@RequestParam("id") int id) {
+        userService.removeById(id);
+        return "redirect:/user/admin/all";
+    }
+
+    @GetMapping("update")
+    public String updateUserPage(@RequestParam("id") int id,ModelMap modelMap) {
+        modelMap.addAttribute("user",userService.findById(id));
+        return "updateUser";
+    }
+
+    @PostMapping("update/{id}")
+    public String updateUser(@PathVariable("id") int id,
+                             @ModelAttribute User user,
+                             @RequestParam("profile_pic") MultipartFile multipartFile) throws IOException {
+        User byId = userService.findById(id);
+        user.setProfilePic(byId.getProfilePic());
+        user.setPassword(byId.getPassword());
+        userService.update(user,multipartFile);
+        return "redirect:/user/admin/all";
+    }
+
+
     @GetMapping("/admin")
     public String adminPage(ModelMap modelMap, @AuthenticationPrincipal CurrentUser currentUser) {
         modelMap.addAttribute("currentUser",currentUser.getUser());
         return "admin";
+    }
+
+    @GetMapping("/admin/all")
+    public String allUsersPage(ModelMap modelMap, @AuthenticationPrincipal CurrentUser currentUser) {
+        modelMap.addAttribute("currentUser",currentUser.getUser());
+        modelMap.addAttribute("users",userService.findAll());
+        return "allUsers";
     }
 }

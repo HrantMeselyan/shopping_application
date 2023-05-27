@@ -29,6 +29,7 @@ public class User {
     private String phoneNumber;
     @Column(nullable = false)
     private String postCode;
+    private String profilePic;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
