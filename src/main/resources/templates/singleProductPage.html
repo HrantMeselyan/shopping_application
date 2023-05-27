@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<div th:replace="header.html"></div>
+<div th:if="${product != null}">
+    <img th:if="${product.profilePic != null}" th:src="@{/getImage(profilePic=${product.profilePic})}"
+         width="80">
+    <img th:unless="${product.profilePic != null}" src="/image/product-5806313-4863042.webp" width="80">
+    <p th:text="${product.name}"></p>
+    <p th:text="${product.price}"></p>
+    <p th:text="${product.description}"></p>
+    <p th:text="${product.count}"></p>
+    <p th:text="${product.productCode}"></p>
+</div>
+<a th:href="@{'/comments/product/' + ${product.id}}">comments <span th:if="${comm != null}" th:text="${comm.size()}"></span></a>
+<form th:action="@{'/comments/product/' + ${product.id}}" method="post">
+    <input type="text" name="comm">
+    <input type="submit" value="Add Comment">
+</form>
+<p th:each="comment : ${comments}">
+    <span th:text="${comment.comment}"></span> <a th:if="${user.userType.name() == 'ADMIN'}" th:href="@{/comments/remove(comm_id=${comment.id},product_id=${product.id})}">Remove</a>
+</p>
+<th:block th:include="footer.html :: footer"></th:block>
+</body>
+</html>

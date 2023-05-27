@@ -9,4 +9,6 @@ public interface CommentService {
     List<Comments> findAllCategory();
     void remove(int id);
     void save(Comments comment);
+
+    List<Comments> findAllByProductId(int id);
 }
