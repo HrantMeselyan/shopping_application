@@ -15,21 +15,15 @@ import org.springframework.web.bind.annotation.*;
 public class NotificationController {
     private final NotificationService notificationService;
 
-    @GetMapping
-    public String notificationPage(ModelMap modelMap, @AuthenticationPrincipal CurrentUser currentUser) {
-        modelMap.addAttribute("notifications", notificationService.findAllByUserId(currentUser.getUser().getId()));
-        return "notifications";
-    }
-
     @PostMapping("/add")
     public String addNotification(@ModelAttribute Notification notification) {
         notificationService.save(notification);
-        return "redirect:/notifications/" + notification.getId();
+        return "redirect:/notificationPage/" + notification.getId();
     }
 
     @GetMapping("/remove")
     public String removeNotification(@RequestParam("id") int id) {
         notificationService.remove(id);
-        return "redirect:/notifications/";
+        return "redirect:/notificationPage/";
     }
 }

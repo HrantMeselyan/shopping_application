@@ -26,7 +26,7 @@ public class SpringSecurityConfig {
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry
                         .requestMatchers("/").permitAll()
                         .requestMatchers("/user/register").permitAll()
-                        .requestMatchers("/admin").hasAuthority("ADMIN")
+                        .requestMatchers("user/admin").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.GET, "img/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "user/css/**").permitAll()
                         .requestMatchers("/css/**").permitAll()
@@ -41,6 +41,7 @@ public class SpringSecurityConfig {
                         .permitAll());
         return httpSecurity.build();
     }
+
 
     @Bean
     public AuthenticationProvider authenticationProvider() {

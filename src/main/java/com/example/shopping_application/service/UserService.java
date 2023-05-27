@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface UserService {
 
-    List<User> findAll();
+    void updatePicName(MultipartFile multipartFile, int id) throws IOException;
     void remove(int id);
     void save(User user);
     void update(User user, MultipartFile multipartFile) throws IOException;

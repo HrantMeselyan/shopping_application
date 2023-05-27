@@ -19,16 +19,9 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-
     private final UserRepository userRepository;
     @Value("${shopping-app.upload.image.path}")
     private String imageUploadPath;
-
-
-    @Override
-    public List<User> findAll() {
-        return userRepository.findAll();
-    }
 
     @Override
     public void remove(int id) {
@@ -41,7 +34,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void update(User user, MultipartFile multipartFile) throws IOException {
+    public User findAllById(int id) {
+        Optional<User> byId = userRepository.findById(id);
+        User user = byId.get();
+        return user;
+    }
+
+    @Override
+    public void updatePicName(MultipartFile multipartFile, int id) throws IOException {
+        if (multipartFile != null && !multipartFile.isEmpty()) {
+            String fileName = System.nanoTime() + "_" + multipartFile.getOriginalFilename();
+            File file = new File(imageUploadPath + fileName);
+            multipartFile.transferTo(file);
+            userRepository.updatePicName(id,fileName);
+        }
+    }
+    @Override
+   public void update(User user, MultipartFile multipartFile) throws IOException {
         if (multipartFile != null && !multipartFile.isEmpty()) {
             String fileName = System.nanoTime() + "_" + multipartFile.getOriginalFilename();
             File file = new File(imageUploadPath + fileName);
