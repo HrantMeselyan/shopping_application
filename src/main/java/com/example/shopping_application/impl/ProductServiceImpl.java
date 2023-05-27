@@ -67,7 +67,18 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product findByUserId(int id) {
         Optional<Product> allByUserId = productRepository.findAllByUser_Id(id);
-        Product product = allByUserId.get();
-        return product;
+        if (allByUserId.isPresent()) {
+            return allByUserId.get();
+        }
+        return null;
+    }
+
+    @Override
+    public Product findById(int id) {
+        Optional<Product> byId = productRepository.findById(id);
+        if (byId.isPresent()) {
+            return byId.get();
+        }
+        return null;
     }
 }

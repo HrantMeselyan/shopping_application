@@ -32,4 +32,9 @@ public class CommentServiceImpl implements CommentService {
     public void save(Comments comment) {
         commentsRepository.save(comment);
     }
+
+    @Override
+    public List<Comments> findAllByProductId(int id) {
+        return commentsRepository.findAllByProduct_Id(id);
+    }
 }

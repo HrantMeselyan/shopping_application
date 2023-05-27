@@ -5,6 +5,7 @@
 </div>
 <h1>Welcome </h1>
 <a href="/categories/add">add category</a>
+<a href="/products">products</a>
 <a href="/login" th:if="${currentUser == null}">login</a>
 <a href="/user/register" th:if="${currentUser == null}">Register</a>
 <a th:if="${currentUser != null}" href="/logout">Logout</a>
