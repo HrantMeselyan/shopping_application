@@ -10,8 +10,12 @@ import java.util.List;
 public interface ProductService {
 
     List<Product> findAllProducts();
+
     void remove(int id);
+
     void save(Product product);
-    void save(Product product, MultipartFile multipartFile, CurrentUser currentUser, List<Integer> categories) throws IOException;
+
+    void save(Product product, MultipartFile multipartFile, CurrentUser currentUser) throws IOException;
+
     Product findByUserId(int id);
 }

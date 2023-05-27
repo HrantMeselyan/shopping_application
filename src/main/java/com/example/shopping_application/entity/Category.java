@@ -21,7 +21,4 @@ public class Category {
     private String name;
 
     private String image;
-
-    @ManyToMany(mappedBy = "categories")
-    private List<Product> products;
 }

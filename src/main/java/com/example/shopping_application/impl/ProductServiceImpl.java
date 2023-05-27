@@ -6,7 +6,6 @@ import com.example.shopping_application.entity.Product;
 import com.example.shopping_application.entity.UserType;
 import com.example.shopping_application.repository.ProductRepository;
 import com.example.shopping_application.security.CurrentUser;
-import com.example.shopping_application.service.CategoryService;
 import com.example.shopping_application.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,7 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,7 +28,6 @@ public class ProductServiceImpl implements ProductService {
     private String imageUploadPath;
 
     private final ProductRepository productRepository;
-    private final CategoryService categoryService;
 
     @Override
     public List<Product> findAllProducts() {
@@ -48,7 +45,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void save(Product product, MultipartFile multipartFile, CurrentUser currentUser, List<Integer> categories) throws IOException {
+    public void save(Product product, MultipartFile multipartFile, CurrentUser currentUser) throws IOException {
+        product.getCategories().removeIf(category -> category.getId() == 0);
         if (currentUser != null) {
             product.setUser(currentUser.getUser());
             if (currentUser.getUser().getUserType() != UserType.USER) {
@@ -61,16 +59,6 @@ public class ProductServiceImpl implements ProductService {
                 File file = new File(imageUploadPath + fileName);
                 multipartFile.transferTo(file);
                 product.setProfilePic(fileName);
-            }
-            if (categories != null && !categories.isEmpty()) {
-                List<Category> categoryList = new ArrayList<>();
-                for (Integer category : categories) {
-                    Optional<Category> byId = categoryService.findById(category);
-                    if (byId.isPresent()) {
-                        categoryList.add(byId.get());
-                    }
-                }
-                product.setCategories(categoryList);
             }
             productRepository.save(product);
         }
