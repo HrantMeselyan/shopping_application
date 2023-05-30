@@ -51,11 +51,12 @@ public class UserController {
         userService.updatePicName(multipartFile, currentUser.getUser().getId());
         return "redirect:/user/" + currentUser.getUser().getId();
     }
+
     @GetMapping("/notifications/{userId}")
     public String notificationPage(ModelMap modelmap, @PathVariable("userId") int id,
                                    @AuthenticationPrincipal CurrentUser currentUser) {
         modelmap.addAttribute("notifications", notificationService.findAllByUserId(id));
-        modelmap.addAttribute("currentUser",currentUser.getUser());
+        modelmap.addAttribute("currentUser", currentUser.getUser());
         return "notifications";
     }
 
@@ -67,8 +68,8 @@ public class UserController {
     }
 
     @GetMapping("update")
-    public String updateUserPage(@RequestParam("id") int id,ModelMap modelMap) {
-        modelMap.addAttribute("user",userService.findById(id));
+    public String updateUserPage(@RequestParam("id") int id, ModelMap modelMap) {
+        modelMap.addAttribute("user", userService.findById(id));
         return "updateUser";
     }
 
@@ -79,7 +80,7 @@ public class UserController {
         User byId = userService.findById(id);
         user.setProfilePic(byId.getProfilePic());
         user.setPassword(byId.getPassword());
-        userService.update(user,multipartFile);
+        userService.update(user, multipartFile);
         return "redirect:/user/admin/all";
     }
 
@@ -91,8 +92,8 @@ public class UserController {
 
     @GetMapping("/admin/all")
     public String allUsersPage(ModelMap modelMap, @AuthenticationPrincipal CurrentUser currentUser) {
-        modelMap.addAttribute("currentUser",currentUser.getUser());
-        modelMap.addAttribute("users",userService.findAll());
+        modelMap.addAttribute("currentUser", currentUser.getUser());
+        modelMap.addAttribute("users", userService.findAll());
         return "allUsers";
     }
 }
