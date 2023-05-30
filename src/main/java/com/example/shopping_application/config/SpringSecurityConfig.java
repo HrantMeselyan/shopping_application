@@ -28,7 +28,12 @@ public class SpringSecurityConfig {
                         .requestMatchers("/user/register").permitAll()
                         .requestMatchers("user/admin").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.GET, "img/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "user/css/**").permitAll()
+                        .requestMatchers("/vendor/**").permitAll()
+                        .requestMatchers("/vendor/bootstrap/icon/font/**").permitAll()
+                        .requestMatchers("/css/**").permitAll()
+                        .requestMatchers("/fonts/butler/**").permitAll()
+                        .requestMatchers("/js/**").permitAll()
+                        .requestMatchers("/img/**").permitAll()
                         .requestMatchers("/css/**").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(httpSecurityFormLoginConfigurer -> httpSecurityFormLoginConfigurer
