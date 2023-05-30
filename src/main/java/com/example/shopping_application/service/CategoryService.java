@@ -10,7 +10,9 @@ import java.util.Optional;
 public interface CategoryService {
 
     List<Category> findAllCategory();
+
     void remove(int id);
+
     void save(Category category, MultipartFile multipartFile) throws IOException;
 
     Optional<Category> findById(Integer id);

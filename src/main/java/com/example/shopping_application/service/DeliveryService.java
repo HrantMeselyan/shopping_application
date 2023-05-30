@@ -7,6 +7,8 @@ import java.util.List;
 public interface DeliveryService {
 
     List<Delivery> findAllCategory();
+
     void remove(int id);
+
     void save(Delivery delivery);
 }

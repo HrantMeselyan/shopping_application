@@ -12,8 +12,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
-import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/comments")
@@ -39,8 +37,8 @@ public class CommentController {
 
     @PostMapping("product/{id}")
     public String singleProductPageAddComment(@PathVariable("id") int id,
-                                        @RequestParam("comm") String comm,
-                                        @AuthenticationPrincipal CurrentUser currentUser) {
+                                              @RequestParam("comm") String comm,
+                                              @AuthenticationPrincipal CurrentUser currentUser) {
         Comments comment = new Comments();
         comment.setComment(comm);
         Product byId = productService.findById(id);
@@ -50,7 +48,7 @@ public class CommentController {
             comment.setCommentDateTime(new Date());
             commentService.save(comment);
             return "redirect:/comments/product/" + id;
-        } else{
+        } else {
             return "singleProductPage";
         }
 

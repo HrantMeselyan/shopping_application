@@ -20,7 +20,7 @@ public class DeliveryController {
     }
 
     @GetMapping("/remove")
-    public String removeDelivery(@RequestParam("id") int id,@RequestParam("ProductId") int productId) {
+    public String removeDelivery(@RequestParam("id") int id, @RequestParam("ProductId") int productId) {
         deliveryService.remove(id);
         return "redirect:/products" + productId;
     }

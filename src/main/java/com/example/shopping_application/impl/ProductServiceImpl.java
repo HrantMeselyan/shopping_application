@@ -1,6 +1,5 @@
 package com.example.shopping_application.impl;
 
-import com.example.shopping_application.entity.Category;
 import com.example.shopping_application.entity.Moderate;
 import com.example.shopping_application.entity.Product;
 import com.example.shopping_application.entity.UserType;

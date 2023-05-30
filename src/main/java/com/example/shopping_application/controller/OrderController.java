@@ -15,10 +15,11 @@ public class OrderController {
 
 
     @GetMapping
-    public String orderPage(ModelMap modelMap){
+    public String orderPage(ModelMap modelMap) {
         modelMap.addAttribute(orderService.findAllOrder());
         return "orders";
     }
+
     @PostMapping("/add")
     public String addOrder(@ModelAttribute Order order) {
         orderService.save(order);
