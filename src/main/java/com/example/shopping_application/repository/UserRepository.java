@@ -9,8 +9,9 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
-public interface UserRepository extends JpaRepository<User,Integer> {
+public interface UserRepository extends JpaRepository<User, Integer> {
     Optional<User> findByEmail(String email);
+
     @Transactional
     @Modifying
     @Query("UPDATE User u SET u.profilePic = :picName WHERE u.id = :userId")

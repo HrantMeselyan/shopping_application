@@ -15,10 +15,11 @@ public class WishListController {
 
 
     @GetMapping
-    public String wishListPage(ModelMap modelMap){
+    public String wishListPage(ModelMap modelMap) {
         modelMap.addAttribute(wishListService.findAll());
         return "wishlist";
     }
+
     @PostMapping("/add")
     public String addOrder(@ModelAttribute WishList wishList) {
         wishListService.save(wishList);

@@ -18,5 +18,6 @@ public interface ProductService {
     void save(Product product, MultipartFile multipartFile, CurrentUser currentUser) throws IOException;
 
     Product findByUserId(int id);
+
     Product findById(int id);
 }

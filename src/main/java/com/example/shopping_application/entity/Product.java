@@ -2,10 +2,7 @@ package com.example.shopping_application.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.hibernate.annotations.Type;
-import org.springframework.context.annotation.Primary;
 
-import java.io.StringReader;
 import java.util.List;
 
 /**
