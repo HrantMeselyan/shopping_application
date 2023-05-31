@@ -30,7 +30,6 @@ public class SpringSecurityConfig {
                         .requestMatchers(HttpMethod.GET, "img/**").permitAll()
                         .requestMatchers("/vendor/**").permitAll()
                         .requestMatchers("/vendor/bootstrap/icon/font/**").permitAll()
-                        .requestMatchers("/css/**").permitAll()
                         .requestMatchers("/fonts/butler/**").permitAll()
                         .requestMatchers("/js/**").permitAll()
                         .requestMatchers("/img/**").permitAll()
