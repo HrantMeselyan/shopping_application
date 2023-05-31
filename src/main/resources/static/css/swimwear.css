@@ -7,49 +7,49 @@
 
 @font-face {
     font-family: Butler;
-    src: url(Butler-UltraLight.woff2) format('woff2'), url(https://www.pxdraft.com/wrap/shopapp/assets/fonts/butler/Butler-UltraLight.woff) format('woff');
+    src: url(../fonts/butler/Butler-UltraLight.woff2) format('woff2'), url(https://www.pxdraft.com/wrap/shopapp/assets/fonts/butler/Butler-UltraLight.woff) format('woff');
     font-weight: 200;
     font-style: normal
 }
 
 @font-face {
     font-family: Butler;
-    src: url(Butler-Medium.woff2) format('woff2'), url(Butler-Medium.woff) format('woff');
+    src: url(../fonts/butler/Butler-Medium.woff2) format('woff2'), url(../fonts/butler/Butler-Medium.woff) format('woff');
     font-weight: 500;
     font-style: normal
 }
 
 @font-face {
     font-family: Butler;
-    src: url(Butler-Light.woff2) format('woff2'), url(Butler-Light.woff) format('woff');
+    src: url(../fonts/butler/Butler-Light.woff2) format('woff2'), url(../fonts/butler/Butler-Light.woff) format('woff');
     font-weight: 300;
     font-style: normal
 }
 
 @font-face {
     font-family: Butler;
-    src: url(Butler-Black.woff2) format('woff2'), url(Butler-Black.woff) format('woff');
+    src: url(../fonts/butler/Butler-Black.woff2) format('woff2'), url(../fonts/butler/Butler-Black.woff) format('woff');
     font-weight: 900;
     font-style: normal
 }
 
 @font-face {
     font-family: Butler;
-    src: url(Butler-Bold.woff2) format('woff2'), url(Butler-Bold.woff) format('woff');
+    src: url(../fonts/butler/Butler-Bold.woff2) format('woff2'), url(../fonts/butler/Butler-Bold.woff) format('woff');
     font-weight: 700;
     font-style: normal
 }
 
 @font-face {
     font-family: Butler;
-    src: url(Butler-ExtraBold.woff2) format('woff2'), url(Butler-ExtraBold.woff) format('woff');
+    src: url(../fonts/butler/Butler-ExtraBold.woff2) format('woff2'), url(../fonts/butler/Butler-ExtraBold.woff) format('woff');
     font-weight: 800;
     font-style: normal
 }
 
 @font-face {
     font-family: Butler;
-    src: url(Butler.woff2) format('woff2'), url(Butler.woff) format('woff');
+    src: url(../fonts/butler/Butler.woff2) format('woff2'), url(../fonts/butler/Butler.woff) format('woff');
     font-weight: 400;
     font-style: normal
 }
@@ -62,7 +62,7 @@
 @font-face {
     font-display: block;
     font-family: bootstrap-icons;
-    src: url(bootstrap-icons.woff2@1fa40e8900654d2863d011707b9fb6f2) format("woff2"), url(bootstrap-icons.woff@1fa40e8900654d2863d011707b9fb6f2) format("woff")
+    src: url(../vendor/bootstrap/icon/fonts/bootstrap-icons.woff2@1fa40e8900654d2863d011707b9fb6f2) format("woff2"), url(../vendor/bootstrap/icon/fonts/bootstrap-icons.woff@1fa40e8900654d2863d011707b9fb6f2) format("woff")
 }
 
 .bi::before, [class*=" bi-"]::before, [class^=bi-]::before {
@@ -8967,7 +8967,7 @@ button.swiper-pagination-bullet {
 
 @font-face {
     font-family: Feather;
-    src: url(Feather.ttf@sdxovp) format('truetype'), url(Feather.woff@sdxovp) format('woff'), url(Feather.svg@sdxovp) format('svg');
+    src: url(../vendor/feather/fonts/Feather.ttf@sdxovp) format('truetype'), url(../vendor/feather/fonts/Feather.woff@sdxovp) format('woff'), url(../vendor/feather/fonts/Feather.svg@sdxovp) format('svg');
     font-weight: 400;
     font-style: normal
 }
