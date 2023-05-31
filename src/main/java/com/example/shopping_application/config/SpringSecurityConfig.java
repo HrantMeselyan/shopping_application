@@ -29,7 +29,6 @@ public class SpringSecurityConfig {
                         .requestMatchers("user/admin").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.GET, "img/**").permitAll()
                         .requestMatchers("/vendor/**").permitAll()
-                        .requestMatchers("/vendor/bootstrap/icon/font/**").permitAll()
                         .requestMatchers("/fonts/butler/**").permitAll()
                         .requestMatchers("/js/**").permitAll()
                         .requestMatchers("/img/**").permitAll()
