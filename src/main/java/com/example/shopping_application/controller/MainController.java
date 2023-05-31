@@ -22,7 +22,7 @@ public class MainController {
 
     @GetMapping("/")
     private String main(ModelMap modelMap, @AuthenticationPrincipal CurrentUser currentUser) {
-        return "index";
+        return "html/account/checkout-02";
     }
 
     @GetMapping(value = "/getImage", produces = MediaType.IMAGE_JPEG_VALUE)
