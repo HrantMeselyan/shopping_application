@@ -1261,9 +1261,11 @@
                                                                               class="btn btn-outline-primary"><i
                                                 class="fi-eye"></i></a></div>
                                         <div class="product-media"><a href="shop.html#"><img class="img-fluid"
-                                                                                             th:if="${product.profilePic != null}" th:src="@{/getImage(profilePic=${product.profilePic})}">
+                                                                                             th:if="${product.profilePic != null}"
+                                                                                             th:src="@{/getImage(profilePic=${product.profilePic})}">
                                             <img class="img-fluid"
-                                                 th:unless="${product.profilePic != null}" src="/image/product-5806313-4863042.webp">
+                                                 th:unless="${product.profilePic != null}"
+                                                 src="/image/product-5806313-4863042.webp">
                                         </a>
                                             <div class="product-cart-btn"><a href="shop.html#"
                                                                              class="btn btn-primary btn-sm w-100"><i
@@ -1277,33 +1279,25 @@
                                                 class="bi bi-star-fill active"></i> <i
                                                 class="bi bi-star-fill active"></i> <i
                                                 class="bi bi-star-fill active"></i> <i class="bi bi-star"></i></div>
-                                        <h6 class="product-title"><a href="shop.html#" th:text="${product.name}"></a></h6>
+                                        <h6 class="product-title"><a href="shop.html#" th:text="${product.name}"></a>
+                                        </h6>
                                         <div class="product-price"><span
-                                                class="text-primary"th:text="${product.price}"></span>
+                                                class="text-primary" th:text="${product.price}"></span>
                                             <del class="fs-sm text-muted">$38.<small>50</small></del>
                                         </div>
                                     </div>
                                 </div>
                             </div><!-- End Product Box --></div>
-                    <!-- end products-->
-                        <div class="shop-bottom-bar d-flex align-items-center mt-3">
-                            <div th:if="${products.totalPages > 0}" class="pagination"
-                                 th:each="pageNumber : ${pageNumbers}">
-                                <a th:href="@{/products(size=${products.size}, page=${pageNumber})}"
-                                   th:text="${pageNumber}"
-                                   th:class="${pageNumber==products.number + 1} ? active"></a>
-                            </div>
+                        <!-- end products-->
+                        <div class="shop-bottom-bar d-flex align-items-center mt-3" th:if="${products.totalPages > 0}">
                             <div>Showing: 1 - 12 of 17</div>
                             <div class="ms-auto">
                                 <ul class="pagination">
-                                    <li class="page-item"><a class="page-link" href="shop.html#"
-                                                             aria-label="Previous"><span
-                                            aria-hidden="true">&laquo;</span></a></li>
-                                    <li class="page-item active"><a class="page-link" href="shop.html#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="shop.html#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="shop.html#">3</a></li>
-                                    <li class="page-item"><a class="page-link" href="shop.html#" aria-label="Next"><span
-                                            aria-hidden="true">&raquo;</span></a></li>
+                                    <li class="page-item" th:each="pageNumber : ${pageNumbers}"
+                                        th:class="${pageNumber==products.number + 1} ? active">
+                                        <a class="page-link"
+                                           th:href="@{/products(size=${products.size}, page=${pageNumber})}"
+                                           aria-label="Previous"th:text="${pageNumber}"></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -1320,7 +1314,8 @@
                             London,<br>E2 8DY UK</p>
                             <p class="mb-2"><a class="border-bottom border-secondary" href="mailto:support@domain.com">support@domain.com</a>
                             </p>
-                            <p class="mb-2"><a class="border-bottom border-secondary" href="tel:820-885-3321">820-885-3321</a>
+                            <p class="mb-2"><a class="border-bottom border-secondary"
+                                               href="tel:820-885-3321">820-885-3321</a>
                             </p></address>
                         <div class="nav white-link fs-5"><a class="me-3" href="shop.html#"><i
                                 class="bi bi-facebook"></i> </a><a class="me-3" href="shop.html#"><i
