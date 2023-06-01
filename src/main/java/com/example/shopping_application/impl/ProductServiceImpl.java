@@ -1,8 +1,7 @@
 package com.example.shopping_application.impl;
 
-import com.example.shopping_application.entity.Moderate;
+import com.example.shopping_application.entity.Image;
 import com.example.shopping_application.entity.Product;
-import com.example.shopping_application.entity.UserType;
 import com.example.shopping_application.repository.ProductRepository;
 import com.example.shopping_application.security.CurrentUser;
 import com.example.shopping_application.service.ProductService;
@@ -15,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
+import java.util.Arrays;
 import java.util.Optional;
 
 /**
@@ -40,26 +39,19 @@ public class ProductServiceImpl implements ProductService {
         productRepository.deleteById(id);
     }
 
-    @Override
-    public void save(Product product) {
-        productRepository.save(product);
-    }
 
     @Override
-    public void save(Product product, MultipartFile multipartFile, CurrentUser currentUser) throws IOException {
+    public void save(Product product, MultipartFile multipartFile, CurrentUser currentUser,Image image) throws IOException {
         product.getCategories().removeIf(category -> category.getId() == 0);
         if (currentUser != null) {
             product.setUser(currentUser.getUser());
-            if (currentUser.getUser().getUserType() != UserType.USER) {
-                product.setModerate(Moderate.TRUE);
-            } else {
-                product.setModerate(Moderate.FALSE);
-            }
             if (multipartFile != null && !multipartFile.isEmpty()) {
                 String fileName = System.nanoTime() + "_" + multipartFile.getOriginalFilename();
                 File file = new File(imageUploadPath + fileName);
                 multipartFile.transferTo(file);
-                product.setProfilePic(fileName);
+//                Image image = new Image();
+                image.setImage(fileName);
+                product.setImages(Arrays.asList(image));
             }
             productRepository.save(product);
         }

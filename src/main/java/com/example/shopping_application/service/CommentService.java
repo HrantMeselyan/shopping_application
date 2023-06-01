@@ -1,16 +1,16 @@
 package com.example.shopping_application.service;
 
-import com.example.shopping_application.entity.Comments;
+import com.example.shopping_application.entity.Comment;
 
 import java.util.List;
 
 public interface CommentService {
 
-    List<Comments> findAllCategory();
+    List<Comment> findAllCategory();
 
     void remove(int id);
 
-    void save(Comments comment);
+    void save(Comment comment);
 
-    List<Comments> findAllByProductId(int id);
+    List<Comment> findAllByProductId(int id);
 }

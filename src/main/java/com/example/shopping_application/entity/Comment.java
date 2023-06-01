@@ -12,8 +12,8 @@ import java.util.Date;
 
 @Entity
 @Data
-@Table(name = "comments")
-public class Comments {
+@Table(name = "comment")
+public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

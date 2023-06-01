@@ -1,7 +1,7 @@
 package com.example.shopping_application.controller;
 
 import com.example.shopping_application.entity.User;
-import com.example.shopping_application.entity.UserType;
+import com.example.shopping_application.entity.Role;
 import com.example.shopping_application.security.CurrentUser;
 import com.example.shopping_application.service.MainService;
 import lombok.RequiredArgsConstructor;
@@ -39,9 +39,9 @@ public class MainController {
     public String customSuccessLogin(@AuthenticationPrincipal CurrentUser currentUser) {
         if (currentUser != null) {
             User user = currentUser.getUser();
-            if (user.getUserType() == UserType.ADMIN) {
+            if (user.getRole() == Role.ADMIN) {
                 return "redirect:/user/admin";
-            } else if (user.getUserType() == UserType.USER) {
+            } else if (user.getRole() == Role.USER) {
                 return "redirect:/";
             }
         }

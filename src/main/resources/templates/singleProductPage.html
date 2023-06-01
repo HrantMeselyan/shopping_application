@@ -25,7 +25,7 @@
     <input type="submit" value="Add Comment">
 </form>
 <p th:each="comment : ${comments}">
-    <span th:text="${comment.comment}"></span> <a th:if="${user.userType.name() == 'ADMIN'}" th:href="@{/comments/remove(comm_id=${comment.id},product_id=${product.id})}">Remove</a>
+    <span th:text="${comment.comment}"></span> <a th:if="${user.getRole.name() == 'ADMIN'}" th:href="@{/comments/remove(comm_id=${comment.id},product_id=${product.id})}">Remove</a>
 </p>
 <th:block th:include="footer.html :: footer"></th:block>
 </body>

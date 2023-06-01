@@ -6,8 +6,8 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "images")
-public class Images {
+@Table(name = "image")
+public class Image {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,6 +15,4 @@ public class Images {
     @Column(nullable = false)
     private String image;
 
-    @ManyToOne(optional = false)
-    private Product product;
 }

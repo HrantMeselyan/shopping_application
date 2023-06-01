@@ -1,6 +1,6 @@
 package com.example.shopping_application.entity;
 
-public enum UserType {
+public enum Role {
     ADMIN,
     USER,
     MANAGER,

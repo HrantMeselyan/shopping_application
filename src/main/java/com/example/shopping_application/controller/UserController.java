@@ -1,7 +1,7 @@
 package com.example.shopping_application.controller;
 
 import com.example.shopping_application.entity.User;
-import com.example.shopping_application.entity.UserType;
+import com.example.shopping_application.entity.Role;
 import com.example.shopping_application.security.CurrentUser;
 import com.example.shopping_application.service.NotificationService;
 import com.example.shopping_application.service.UserService;
@@ -34,7 +34,7 @@ public class UserController {
     public String register(@ModelAttribute User user) {
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
-        user.setUserType(UserType.USER);
+        user.setRole(Role.USER);
         userService.save(user);
         return "redirect:/";
     }

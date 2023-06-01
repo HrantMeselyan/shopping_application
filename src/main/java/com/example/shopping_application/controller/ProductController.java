@@ -1,5 +1,6 @@
 package com.example.shopping_application.controller;
 
+import com.example.shopping_application.entity.Image;
 import com.example.shopping_application.entity.Product;
 import com.example.shopping_application.security.CurrentUser;
 import com.example.shopping_application.service.CategoryService;
@@ -65,8 +66,9 @@ public class ProductController {
     @PostMapping("/add")
     public String addProduct(@ModelAttribute Product product,
                              @AuthenticationPrincipal CurrentUser currentUser,
-                             @RequestParam("profile_pic") MultipartFile multipartFile) throws IOException {
-        productService.save(product, multipartFile, currentUser);
+                             @RequestParam("profile_pic") MultipartFile multipartFile,
+                             @ModelAttribute Image image) throws IOException {
+        productService.save(product, multipartFile, currentUser,image);
         return "redirect:/";
     }
 

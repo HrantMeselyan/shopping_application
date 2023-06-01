@@ -1,6 +1,6 @@
 package com.example.shopping_application.controller;
 
-import com.example.shopping_application.entity.Comments;
+import com.example.shopping_application.entity.Comment;
 import com.example.shopping_application.entity.Product;
 import com.example.shopping_application.security.CurrentUser;
 import com.example.shopping_application.service.CommentService;
@@ -39,7 +39,7 @@ public class CommentController {
     public String singleProductPageAddComment(@PathVariable("id") int id,
                                               @RequestParam("comm") String comm,
                                               @AuthenticationPrincipal CurrentUser currentUser) {
-        Comments comment = new Comments();
+        Comment comment = new Comment();
         comment.setComment(comm);
         Product byId = productService.findById(id);
         if (byId != null) {
