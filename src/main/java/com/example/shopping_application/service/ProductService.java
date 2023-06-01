@@ -16,7 +16,7 @@ public interface ProductService {
     void remove(int id);
 
 
-    void save(Product product, MultipartFile multipartFile, CurrentUser currentUser,Image image) throws IOException;
+    void save(Product product, MultipartFile multipartFile, CurrentUser currentUser) throws IOException;
 
     Product findByUserId(int id);
 

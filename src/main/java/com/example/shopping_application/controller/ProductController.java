@@ -45,7 +45,14 @@ public class ProductController {
                     .collect(Collectors.toList());
             modelMap.addAttribute("pageNumbers", pageNumbers);
         }
-
+        List<Product> content = result.getContent();
+        String firstImageName = content.stream()
+                .findFirst()
+                .flatMap(product -> product.getImages().stream()
+                        .findFirst())
+                .map(Image::getImage)
+                .orElse(null);
+        modelMap.addAttribute("firstImageName", firstImageName);
         modelMap.addAttribute("products", result);
         return "products";
     }
@@ -66,9 +73,8 @@ public class ProductController {
     @PostMapping("/add")
     public String addProduct(@ModelAttribute Product product,
                              @AuthenticationPrincipal CurrentUser currentUser,
-                             @RequestParam("profile_pic") MultipartFile multipartFile,
-                             @ModelAttribute Image image) throws IOException {
-        productService.save(product, multipartFile, currentUser,image);
+                             @RequestParam("profile_pic") MultipartFile multipartFile) throws IOException {
+        productService.save(product, multipartFile, currentUser);
         return "redirect:/";
     }
 

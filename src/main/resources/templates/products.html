@@ -729,7 +729,7 @@
                                         </div>
                                         <div class="col-12 col-md-3 col-xl-5 d-flex flex-row">
                                             <div class="min-h-200px bg-center bg-cover d-flex align-items-center justify-content-center h-100 w-100"
-                                                 style="background-image: url(../../assets/img/fashion/blog-home-2.jpg);">
+                                                 style="background-image: url(../static/img/fashion/blog-home-2.jpg);">
                                                 <div class="text-center px-4 py-3"><h6
                                                         class="text-uppercase text-white mb-0 letter-spacing-4 fw-300">
                                                     NEW IN</h6>
@@ -806,7 +806,7 @@
                                         </div>
                                         <div class="col-lg-6 d-flex flex-column">
                                             <div class="rounded h-100 bg-cover bg-no-repeat d-flex align-items-center justify-content-center py-8 p-xl-5"
-                                                 style="background-image: url(../../assets/img/fashion/blog-home-3.jpg);">
+                                                 style="background-image: url(../static/img/fashion/blog-home-3.jpg);">
                                                 <div class="w-100 text-center"><h6
                                                         class="text-uppercase fw-300 text-white mb-2">NEW IN</h6>
                                                     <h3 class="fw-400 h3 text-white">New Exclusive<br>2022 Collection
@@ -1261,10 +1261,10 @@
                                                                               class="btn btn-outline-primary"><i
                                                 class="fi-eye"></i></a></div>
                                         <div class="product-media"><a href="shop.html#"><img class="img-fluid"
-                                                                                             th:if="${product.profilePic != null}"
-                                                                                             th:src="@{/getImage(profilePic=${product.profilePic})}">
+                                                                                             th:if="${firstImageName != null}"
+                                                                                             th:src="@{/getImage(profilePic=${firstImageName})}">
                                             <img class="img-fluid"
-                                                 th:unless="${product.profilePic != null}"
+                                                 th:unless="${firstImageName != null}"
                                                  src="/image/product-5806313-4863042.webp">
                                         </a>
                                             <div class="product-cart-btn"><a href="shop.html#"
@@ -1293,11 +1293,17 @@
                             <div>Showing: 1 - 12 of 17</div>
                             <div class="ms-auto">
                                 <ul class="pagination">
+                                    <li class="page-item"><a class="page-link" href="shop-fw.html#"
+                                                             aria-label="Previous"><span
+                                            aria-hidden="true">&laquo;</span></a></li>
                                     <li class="page-item" th:each="pageNumber : ${pageNumbers}"
                                         th:class="${pageNumber==products.number + 1} ? active">
                                         <a class="page-link"
                                            th:href="@{/products(size=${products.size}, page=${pageNumber})}"
-                                           aria-label="Previous"th:text="${pageNumber}"></a></li>
+                                           aria-label="Previous" th:text="${pageNumber}"></a></li>
+                                    <li class="page-item"><a class="page-link" href="shop-fw.html#"
+                                                             aria-label="Next"><span
+                                            aria-hidden="true">&raquo;</span></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -1368,5 +1374,7 @@
             </div>
         </div>
     </footer>
-    <th:block th:include="fragment/header::footer"></th:block>
+</div>
+<th:block th:include="fragment/header::footer"></th:block>
+</body>
 </html>

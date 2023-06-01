@@ -41,7 +41,7 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public void save(Product product, MultipartFile multipartFile, CurrentUser currentUser,Image image) throws IOException {
+    public void save(Product product, MultipartFile multipartFile, CurrentUser currentUser) throws IOException {
         product.getCategories().removeIf(category -> category.getId() == 0);
         if (currentUser != null) {
             product.setUser(currentUser.getUser());
@@ -49,7 +49,7 @@ public class ProductServiceImpl implements ProductService {
                 String fileName = System.nanoTime() + "_" + multipartFile.getOriginalFilename();
                 File file = new File(imageUploadPath + fileName);
                 multipartFile.transferTo(file);
-//                Image image = new Image();
+                Image image = new Image();
                 image.setImage(fileName);
                 product.setImages(Arrays.asList(image));
             }

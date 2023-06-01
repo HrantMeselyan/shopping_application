@@ -21,7 +21,7 @@ public class MainController {
     private final MainService mainService;
 
     @GetMapping("/")
-    private String main(ModelMap modelMap, @AuthenticationPrincipal CurrentUser currentUser) {
+    private String main() {
         return "index";
     }
 
