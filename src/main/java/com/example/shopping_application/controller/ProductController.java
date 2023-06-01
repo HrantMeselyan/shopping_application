@@ -46,12 +46,13 @@ public class ProductController {
             modelMap.addAttribute("pageNumbers", pageNumbers);
         }
         List<Product> content = result.getContent();
-        String firstImageName = content.stream()
-                .findFirst()
-                .flatMap(product -> product.getImages().stream()
-                        .findFirst())
-                .map(Image::getImage)
-                .orElse(null);
+        String firstImageName = null;
+        if (!content.isEmpty()) {
+            List<Image> firstProductImages = content.get(0).getImages();
+            if (!firstProductImages.isEmpty()) {
+                firstImageName = firstProductImages.get(0).getImage();
+            }
+        }
         modelMap.addAttribute("firstImageName", firstImageName);
         modelMap.addAttribute("products", result);
         return "products";
