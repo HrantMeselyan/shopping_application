@@ -11,7 +11,7 @@ import java.util.List;
 
 @Entity
 @Data
-@Table(name = "products")
+@Table(name = "product")
 public class Product {
 
     @Id
@@ -20,17 +20,16 @@ public class Product {
     @Column(nullable = false)
     private String name;
     @Column(nullable = false)
-    private int productCode;
+    private String productCode;
     private String description;
     @Column(nullable = false)
     private double price;
     @Column(nullable = false)
     private int count;
-    @Enumerated(EnumType.STRING)
-    private Moderate moderate;
-    private String profilePic;
     @ManyToOne(optional = false)
     private User user;
+    @OneToMany
+    private List<Image> images;
     @ManyToMany
     @JoinTable(name = "category_product", uniqueConstraints = @UniqueConstraint(columnNames = {"product_id", "category_id"}),
             joinColumns = @JoinColumn(name = "product_id"),

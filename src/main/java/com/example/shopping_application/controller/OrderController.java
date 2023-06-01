@@ -23,7 +23,7 @@ public class OrderController {
     @PostMapping("/add")
     public String addOrder(@ModelAttribute Order order) {
         orderService.save(order);
-        return "redirect:/order/" + order.getProduct().getId();
+        return "redirect:/order";
     }
 
     @GetMapping("/remove")

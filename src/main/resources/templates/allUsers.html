@@ -41,7 +41,7 @@
         <td th:text="${user.gender}"></td>
         <td th:text="${user.phoneNumber}"></td>
         <td th:text="${user.postCode}"></td>
-        <td th:text="${user.userType}"></td>
+        <td th:text="${user.getRole}"></td>
         <td><a th:href="@{/user/remove(id=${user.id})}">delete</a>/<a th:href="@{/user/update(id=${user.id})}">update</a></td>
     </tr>
     </tbody>

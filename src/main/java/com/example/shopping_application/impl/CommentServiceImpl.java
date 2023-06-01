@@ -1,6 +1,6 @@
 package com.example.shopping_application.impl;
 
-import com.example.shopping_application.entity.Comments;
+import com.example.shopping_application.entity.Comment;
 import com.example.shopping_application.repository.CommentsRepository;
 import com.example.shopping_application.service.CommentService;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ public class CommentServiceImpl implements CommentService {
 
 
     @Override
-    public List<Comments> findAllCategory() {
+    public List<Comment> findAllCategory() {
         return commentsRepository.findAll();
     }
 
@@ -29,12 +29,12 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void save(Comments comment) {
+    public void save(Comment comment) {
         commentsRepository.save(comment);
     }
 
     @Override
-    public List<Comments> findAllByProductId(int id) {
+    public List<Comment> findAllByProductId(int id) {
         return commentsRepository.findAllByProduct_Id(id);
     }
 }
