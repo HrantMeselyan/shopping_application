@@ -1,6 +1,5 @@
 package com.example.shopping_application.controller;
 
-import com.example.shopping_application.entity.Image;
 import com.example.shopping_application.entity.Product;
 import com.example.shopping_application.security.CurrentUser;
 import com.example.shopping_application.service.CategoryService;
@@ -36,7 +35,7 @@ public class ProductController {
                               @RequestParam("size") Optional<Integer> size) {
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(5);
-        Pageable pageable =PageRequest.of(currentPage - 1, pageSize);
+        Pageable pageable = PageRequest.of(currentPage - 1, pageSize);
         Page<Product> result = productService.findAllProducts(pageable);
         int totalPages = result.getTotalPages();
         if (totalPages > 0) {
@@ -45,15 +44,8 @@ public class ProductController {
                     .collect(Collectors.toList());
             modelMap.addAttribute("pageNumbers", pageNumbers);
         }
-        List<Product> content = result.getContent();
-        String firstImageName = null;
-        if (!content.isEmpty()) {
-            List<Image> firstProductImages = content.get(0).getImages();
-            if (!firstProductImages.isEmpty()) {
-                firstImageName = firstProductImages.get(0).getImage();
-            }
-        }
-        modelMap.addAttribute("firstImageName", firstImageName);
+        modelMap.addAttribute("totalPages", totalPages);
+        modelMap.addAttribute("currentPage", currentPage);
         modelMap.addAttribute("products", result);
         return "products";
     }
