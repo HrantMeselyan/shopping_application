@@ -1,6 +1,7 @@
 package com.example.shopping_application.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 
 import java.util.List;
@@ -17,12 +18,19 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @NotNull
+    @Size(min = 2,max = 10,message = "Name length it should be min 2 max 10 characters")
     @Column(nullable = false)
     private String name;
+    @NotNull
+    @Size(min = 2,message = "Surname length it should be min 2 max 10 characters")
     @Column(nullable = false)
     private String surname;
+    @Email(regexp = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$", message = "Email is no valid")
     @Column(nullable = false)
     private String email;
+    @Pattern(regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$",
+            message = "Should be min 8 character,include digit and capital letter")
     @Column(nullable = false)
     private String password;
     private String phoneNumber;
@@ -31,8 +39,9 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
+    @NotNull(message = "Gender is required")
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private Gender gender;
 
     @ManyToMany

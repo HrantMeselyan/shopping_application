@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zxx">
+<html lang="zxx" xmlns:th="http://www.thymeleaf.org">
 <head><!-- metas -->
     <meta charset="utf-8">
     <meta name="author" content="pxdraft">
@@ -33,7 +33,8 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="mb-3"><label class="form-label">Email address</label> <input type="email" name="email"
+                            <div class="mb-3"><label class="form-label">Email address</label> <input type="email"
+                                                                                                     name="email"
                                                                                                      class="form-control"
                                                                                                      placeholder="E-mail">
                             </div>
@@ -1024,47 +1025,57 @@
                         <div class="card">
                             <div class="card-header bg-transparent py-3"><h3 class="h4 mb-0">Register</h3></div>
                             <div class="card-body">
-                                <form action="/user/register" method="post">
+                                <form action="/user/register" method="post" th:object="${user}">
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group mb-3"><label for="name_1"
                                                                                 class="form-label">Name<span
-                                                    class="text-danger">*</span></label> <input type="text" id="name_1" name="name"
+                                                    class="text-danger">*</span></label> <input type="text" id="name_1"
+                                                                                                name="name"
                                                                                                 class="form-control"
-                                                                                                placeholder="Name">
+                                                                                                placeholder="Name" th:field="*{name}">
+                                                <span style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"> name errors</span>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group mb-3"><label for="email_1"
                                                                                 class="form-label">Surname<span
                                                     class="text-danger">*</span></label> <input type="text"
-                                                                                                id="email_1" name="surname"
+                                                                                                id="email_1"
+                                                                                                name="surname"
                                                                                                 class="form-control"
-                                                                                                placeholder="Surname">
+                                                                                                placeholder="Surname" th:field="*{surname}">
+                                                <span style="color: red" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"> surname errors</span>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group mb-3"><label class="form-label col"
                                                                                 for="exampleInputPassword_1">Email
                                                 <span class="text-danger">*</span></label> <input
-                                                    type="text" class="form-control" id="exampleInputPassword_1" name="email"
-                                                    placeholder="Email"></div>
+                                                    type="text" class="form-control" id="exampleInputPassword_1"
+                                                    name="email"
+                                                    placeholder="Email" th:field="*{email}">
+                                                <span style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"> email errors</span>
+                                            </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group mb-3"><label class="form-label col"
                                                                                 for="exampleInputPassword_01">Password<span
                                                     class="text-danger">*</span></label> <input type="password"
-                                                                                                class="form-control" name="password"
+                                                                                                class="form-control"
+                                                                                                name="password"
                                                                                                 id="exampleInputPassword_01"
-                                                                                                placeholder="*********">
+                                                                                                placeholder="*********" th:field="*{password}">
+                                                <span style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"> password errors</span>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <label for="male">Male</label>
-                                        <input id="male" type="radio" name="gender" value="MALE">
+                                        <input id="male" type="radio" name="gender" value="MALE" th:field="*{gender}">
                                         <label for="female">Female</label>
-                                        <input id="female" type="radio" name="gender" value="FEMALE">
+                                        <input id="female" type="radio" name="gender" value="FEMALE" th:field="*{gender}">
+                                        <span style="color: red" th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"> gender errors</span>
                                     </div>
                                     <div class="form-group row align-items-center">
                                         <div class="col">
