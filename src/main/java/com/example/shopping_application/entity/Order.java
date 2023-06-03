@@ -30,9 +30,6 @@ public class Order {
     @ManyToOne(optional = false)
     private User user;
 
-    @ManyToMany
-    @JoinTable(name = "orders_product", uniqueConstraints = @UniqueConstraint(columnNames = {"orders_id", "product_id"}),
-            joinColumns = @JoinColumn(name = "orders_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id"))
-    private List<Product> products;
+    @OneToMany
+    private List<OrderItem> orderItems;
 }
