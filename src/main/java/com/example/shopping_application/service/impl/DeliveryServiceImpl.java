@@ -1,4 +1,4 @@
-package com.example.shopping_application.impl;
+package com.example.shopping_application.service.impl;
 
 import com.example.shopping_application.entity.Delivery;
 import com.example.shopping_application.repository.DeliveryRepository;
