@@ -41,7 +41,7 @@ public class User {
     private Role role;
     @NotNull(message = "Gender is required")
     @Enumerated(EnumType.STRING)
-//    @Column(nullable = false)
+    @Column(nullable = false)
     private Gender gender;
 
     @ManyToMany

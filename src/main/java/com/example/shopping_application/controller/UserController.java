@@ -1,7 +1,7 @@
 package com.example.shopping_application.controller;
 
-import com.example.shopping_application.entity.User;
 import com.example.shopping_application.entity.Role;
+import com.example.shopping_application.entity.User;
 import com.example.shopping_application.security.CurrentUser;
 import com.example.shopping_application.service.NotificationService;
 import com.example.shopping_application.service.UserService;
@@ -36,7 +36,7 @@ public class UserController {
     @PostMapping("/register")
     public String register(@Valid @ModelAttribute User user,
                            Errors errors) {
-        if (errors.hasErrors()){
+        if (errors.hasErrors()) {
             return "register";
         }
         String encodedPassword = passwordEncoder.encode(user.getPassword());
