@@ -1,15 +1,17 @@
 package com.example.shopping_application.controller;
 
-import com.example.shopping_application.entity.User;
 import com.example.shopping_application.entity.Role;
+import com.example.shopping_application.entity.User;
 import com.example.shopping_application.security.CurrentUser;
 import com.example.shopping_application.service.NotificationService;
 import com.example.shopping_application.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,12 +28,17 @@ public class UserController {
     private final NotificationService notificationService;
 
     @GetMapping("/register")
-    public String registerPage() {
-        return "/register";
+    public String registerPage(ModelMap modelMap) {
+        modelMap.addAttribute("user", new User());
+        return "register";
     }
 
     @PostMapping("/register")
-    public String register(@ModelAttribute User user) {
+    public String register(@Valid @ModelAttribute User user,
+                           Errors errors) {
+        if (errors.hasErrors()) {
+            return "register";
+        }
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
         user.setRole(Role.USER);
