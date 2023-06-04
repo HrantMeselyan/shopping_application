@@ -3,6 +3,7 @@ package com.example.shopping_application.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,7 +20,10 @@ public class Cart {
     @ManyToOne
     private User user;
 
-    @OneToMany
-    private List<Product> products;
 
+    @ManyToMany
+    @JoinTable(name = "cart_product",
+            joinColumns = @JoinColumn(name = "cart_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id"))
+    private List<Product> products = new ArrayList<>();
 }

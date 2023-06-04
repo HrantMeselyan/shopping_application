@@ -1267,7 +1267,7 @@
                                                  th:unless="${product.images[0] != null}"
                                                  src="/image/product-5806313-4863042.webp">
                                         </a>
-                                            <div class="product-cart-btn"><a href="shop.html#"
+                                            <div class="product-cart-btn"><a th:href="@{/cart/add/{productId}(productId=${product.id})}"
                                                                              class="btn btn-primary btn-sm w-100"><i
                                                     class="fi-shopping-cart"></i> Add to cart</a></div>
                                         </div>

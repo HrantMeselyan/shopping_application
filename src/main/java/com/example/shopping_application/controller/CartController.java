@@ -1,13 +1,15 @@
 package com.example.shopping_application.controller;
 
-import com.example.shopping_application.repository.CartRepository;
 import com.example.shopping_application.security.CurrentUser;
 import com.example.shopping_application.service.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/cart")
@@ -21,7 +23,7 @@ public class CartController {
         return "cart";
     }
 
-    @PostMapping("/add/{productId}")
+    @GetMapping("/add/{productId}")
     public String saveCart(@PathVariable("productId") int id, @AuthenticationPrincipal CurrentUser currentUser) {
         cartService.save(id, currentUser);
         return "redirect:/products";
