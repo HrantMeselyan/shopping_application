@@ -5,7 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 
 public interface CategoryService {
 
@@ -15,5 +15,7 @@ public interface CategoryService {
 
     void save(Category category, MultipartFile multipartFile) throws IOException;
 
-    Optional<Category> findById(Integer id);
+    Category findById(Integer id);
+
+    Map<String, List<Category>> getParentCategoriesWithChildren();
 }

@@ -10,8 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Created by Ashot Simonyan on 21.05.23.
@@ -47,7 +46,24 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Optional<Category> findById(Integer id) {
-        return categoryRepository.findById(id);
+    public Category findById(Integer id) {
+        Optional<Category> byId = categoryRepository.findById(id);
+        return byId.get();
+    }
+
+    public Map<String, List<Category>> getParentCategoriesWithChildren() {
+        List<Category> categories = categoryRepository.findAll();
+
+        Map<String, List<Category>> parentCategoriesMap = new HashMap<>();
+
+        for (Category category : categories) {
+            String parentCategory = category.getParentCategory();
+            if (!parentCategoriesMap.containsKey(parentCategory)) {
+                parentCategoriesMap.put(parentCategory, new ArrayList<>());
+            }
+            parentCategoriesMap.get(parentCategory).add(category);
+        }
+
+        return parentCategoriesMap;
     }
 }
