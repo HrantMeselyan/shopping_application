@@ -9,7 +9,7 @@ import java.util.List;
 public interface UserService {
     List<User> findAll();
 
-    void updatePicName(MultipartFile multipartFile, int id) throws IOException;
+    void updatePicName(MultipartFile multipartFile,User user) throws IOException;
 
     void remove(int id);
 
@@ -20,4 +20,6 @@ public interface UserService {
     void removeById(int id);
 
     User findById(int id);
+
+    User findByIdWithAddresses(int id);
 }

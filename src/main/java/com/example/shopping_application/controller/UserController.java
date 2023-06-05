@@ -46,17 +46,17 @@ public class UserController {
         return "redirect:/";
     }
 
-    @GetMapping("{id}")
-    public String currentUserPage(ModelMap modelmap, @PathVariable("id") int id) {
-        modelmap.addAttribute("singleUser", userService.findById(id));
+    @GetMapping()
+    public String currentUserPage(ModelMap modelmap, @AuthenticationPrincipal CurrentUser currentUser) {
+        modelmap.addAttribute("user", userService.findByIdWithAddresses(currentUser.getUser().getId()));
         return "singleUserPage";
     }
 
-    @PostMapping("{id}")
+    @PostMapping()
     public String updateCurrentUser(@AuthenticationPrincipal CurrentUser currentUser,
                                     @RequestParam("profile_pic") MultipartFile multipartFile) throws IOException {
-        userService.updatePicName(multipartFile, currentUser.getUser().getId());
-        return "redirect:/user/" + currentUser.getUser().getId();
+        userService.updatePicName(multipartFile, currentUser.getUser());
+        return "redirect:/user";
     }
 
     @GetMapping("/notifications/{userId}")
