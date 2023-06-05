@@ -1260,7 +1260,7 @@
                                                                               href="javascript:void(0)"
                                                                               class="btn btn-outline-primary"><i
                                                 class="fi-eye"></i></a></div>
-                                        <div class="product-media"><a href="shop.html#"><img class="img-fluid"
+                                        <div class="product-media"><a th:href="@{'/products/' + ${product.id}}"><img class="img-fluid"
                                                                                              th:if="${product.images[0] != null}"
                                                                                              th:src="@{/getImage(profilePic=${product.images[0].image})}">
                                             <img class="img-fluid"

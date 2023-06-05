@@ -52,7 +52,8 @@ public class ProductController {
 
     @GetMapping("{id}")
     public String currentProductPage(ModelMap modelmap, @PathVariable("id") int id) {
-        modelmap.addAttribute("product", productService.findById(id));
+        modelmap.addAttribute("currentProduct", productService.findById(id));
+        modelmap.addAttribute("products", productService.findAll());
         modelmap.addAttribute("comm", commentService.findAllByProductId(id));
         return "singleProductPage";
     }

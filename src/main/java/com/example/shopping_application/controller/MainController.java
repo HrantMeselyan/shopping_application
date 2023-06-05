@@ -1,14 +1,13 @@
 package com.example.shopping_application.controller;
 
-import com.example.shopping_application.entity.User;
 import com.example.shopping_application.entity.Role;
+import com.example.shopping_application.entity.User;
 import com.example.shopping_application.security.CurrentUser;
 import com.example.shopping_application.service.MainService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
