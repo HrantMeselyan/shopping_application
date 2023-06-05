@@ -5,10 +5,9 @@
             <div class="col-lg-6 lightbox-gallery product-gallery">
                 <div class="swiper swiper_gallery">
                     <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <div class="pd-gallery-slide" th:each="img : ${currentProduct.getImages()}"><a
-                                    class="gallery-link"
-                                    th:href="@{/getImage(profilePic=${img.image})}"><i
+                        <div class="swiper-slide" th:each="img : ${currentProduct.getImages()}">
+                            <div class="pd-gallery-slide"><a class="gallery-link"
+                                                             th:href="@{/getImage(profilePic=${img.image})}"><i
                                     class="bi bi-arrows-fullscreen"></i></a> <img
                                     th:src="@{/getImage(profilePic=${img.image})}" class="img-fluid" title=""
                                     alt=""></div>
@@ -17,10 +16,10 @@
                 </div>
                 <div class="swiper swiper_thumb_gallery product-thumb">
                     <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <div class="pd-gallery-slide-thumb" th:each="img : ${currentProduct.getImages()}">
-                                <img th:src="@{/getImage(profilePic=${img.image})}" class="img-fluid" title=""
-                                     alt=""></div>
+                        <div class="swiper-slide" th:each="img : ${currentProduct.getImages()}">
+                            <div class="pd-gallery-slide-thumb"><img
+                                    th:src="@{/getImage(profilePic=${img.image})}" class="img-fluid" title=""
+                                    alt=""></div>
                         </div>
                     </div>
                     <div class="swiper-arrow-style-03 swiper-next swiper-next-pd-details_thumb"><i
@@ -118,7 +117,7 @@
                                 class="bi bi-instagram"></i> </a><a class="icon icon-sm icon-secondary me-2"
                                                                     href="product-details.html#"><i
                                 class="bi bi-linkedin"></i></a></p></div>
-                    <div class="pt-4"><img class="img-fluid" src="../../assets/img/fashion/payment-details.png"
+                    <div class="pt-4"><img class="img-fluid" src="/img/fashion2/payment-details.png"
                                            title="" alt=""></div>
                 </div>
             </div><!-- End Product Details --></div>
