@@ -97,6 +97,11 @@ public class UserController {
         return "admin";
     }
 
+    @GetMapping("/forgotPassword")
+    public String forgotPasswordPage() {
+        return "reset-password";
+    }
+
     @GetMapping("/admin/all")
     public String allUsersPage(ModelMap modelMap, @AuthenticationPrincipal CurrentUser currentUser) {
         modelMap.addAttribute("currentUser", currentUser.getUser());
