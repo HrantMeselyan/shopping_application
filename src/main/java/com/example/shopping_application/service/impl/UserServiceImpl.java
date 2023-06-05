@@ -11,6 +11,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,12 +43,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updatePicName(MultipartFile multipartFile, int id) throws IOException {
+    public void updatePicName(MultipartFile multipartFile, User user) throws IOException {
+        deleteProfilePicture(user);
         if (multipartFile != null && !multipartFile.isEmpty()) {
             String fileName = System.nanoTime() + "_" + multipartFile.getOriginalFilename();
             File file = new File(imageUploadPath + fileName);
             multipartFile.transferTo(file);
-            userRepository.updatePicName(id, fileName);
+
+            user.setProfilePic(fileName);
+            userRepository.save(user);
         }
     }
 
@@ -72,5 +78,23 @@ public class UserServiceImpl implements UserService {
             return byId.get();
         }
         return null;
+    }
+
+    @Override
+    public User findByIdWithAddresses(int id) {
+        Optional<User> byId = userRepository.findById(id);
+        return byId.get();
+    }
+
+    private void deleteProfilePicture(User user) {
+        String existingProfilePic = user.getProfilePic();
+        if (existingProfilePic != null) {
+            try {
+                Path path = Paths.get(imageUploadPath + existingProfilePic);
+                Files.deleteIfExists(path);
+            } catch (IOException e) {
+                System.out.println("Failed to delete the existing profile picture: " + e.getMessage());
+            }
+        }
     }
 }
