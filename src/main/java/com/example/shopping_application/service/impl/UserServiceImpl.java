@@ -1,7 +1,6 @@
 package com.example.shopping_application.service.impl;
 
 import com.example.shopping_application.entity.User;
-import com.example.shopping_application.entity.UserMapper;
 import com.example.shopping_application.repository.UserRepository;
 import com.example.shopping_application.service.UserService;
 import lombok.RequiredArgsConstructor;
