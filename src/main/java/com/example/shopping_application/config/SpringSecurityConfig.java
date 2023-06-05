@@ -29,6 +29,7 @@ public class SpringSecurityConfig {
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry
                         .requestMatchers("/").permitAll()
                         .requestMatchers("/user/register").permitAll()
+                        .requestMatchers("/user/forgotPassword").permitAll()
                         .requestMatchers("/user/admin").hasAuthority("ADMIN")
                         .requestMatchers("/img/**").permitAll()
                         .requestMatchers("/vendor/**").permitAll()
