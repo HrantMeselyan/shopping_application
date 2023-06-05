@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -47,18 +48,22 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public void save(Product product, MultipartFile multipartFile, CurrentUser currentUser) throws IOException {
+    public void save(Product product, MultipartFile[] files, CurrentUser currentUser) throws IOException {
         product.getCategories().removeIf(category -> category.getId() == 0);
+        List<Image> imageList = new ArrayList<>();
         if (currentUser != null) {
             product.setUser(currentUser.getUser());
-            if (multipartFile != null && !multipartFile.isEmpty()) {
-                String fileName = System.nanoTime() + "_" + multipartFile.getOriginalFilename();
-                File file = new File(imageUploadPath + fileName);
-                multipartFile.transferTo(file);
-                Image image = new Image();
-                image.setImage(fileName);
-                product.setImages(Arrays.asList(image));
+            for (MultipartFile multipartFile : files) {
+                if (multipartFile != null && !multipartFile.isEmpty()) {
+                    String fileName = System.nanoTime() + "_" + multipartFile.getOriginalFilename();
+                    File file = new File(imageUploadPath + fileName);
+                    multipartFile.transferTo(file);
+                    Image image = new Image();
+                    image.setImage(fileName);
+                    imageList.add(image);
+                }
             }
+            product.setImages(imageList);
             productRepository.save(product);
         }
     }

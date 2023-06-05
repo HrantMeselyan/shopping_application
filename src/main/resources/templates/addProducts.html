@@ -5,7 +5,7 @@
         <input type="text" name="productCode" placeholder="Product Code"><br>
         <input type="text" name="price" placeholder="Price"><br>
         <input type="text" name="count" placeholder="Count"><br>
-        <input type="file" name="profile_pic"><br>
+        <input type="file" name="files" multiple><br>
         <textarea name="description" placeholder="Product Description"></textarea><br>
         <div th:each="category, status: ${categories}">
             <span th:text="${category.name}"></span>
