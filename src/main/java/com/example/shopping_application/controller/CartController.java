@@ -4,12 +4,10 @@ import com.example.shopping_application.security.CurrentUser;
 import com.example.shopping_application.service.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/cart")
@@ -27,5 +25,11 @@ public class CartController {
     public String saveCart(@PathVariable("productId") int id, @AuthenticationPrincipal CurrentUser currentUser) {
         cartService.save(id, currentUser);
         return "redirect:/products";
+    }
+
+    @PostMapping("/remove")
+    public String removeFromCart(@AuthenticationPrincipal CurrentUser currentUser, @RequestParam("productId") int productId) {
+        cartService.remove(currentUser.getUser().getId(),productId);
+        return "cart";
     }
 }

@@ -16,8 +16,8 @@ public class OrderController {
 
     @GetMapping
     public String orderPage(ModelMap modelMap) {
-        modelMap.addAttribute(orderService.findAllOrder());
-        return "orders";
+        modelMap.addAttribute("orders",orderService.findAllOrder());
+        return "checkout";
     }
 
     @PostMapping("/add")
