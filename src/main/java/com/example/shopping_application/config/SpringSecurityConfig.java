@@ -28,6 +28,8 @@ public class SpringSecurityConfig {
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry
                         .requestMatchers("/").permitAll()
+                        .requestMatchers("/products").permitAll()
+                        .requestMatchers("/getImage").permitAll()
                         .requestMatchers("/user/register").permitAll()
                         .requestMatchers("/user/forgotPassword").permitAll()
                         .requestMatchers("/user/admin").hasAuthority("ADMIN")

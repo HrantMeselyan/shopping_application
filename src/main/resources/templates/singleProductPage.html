@@ -39,7 +39,7 @@
                                 <i class="bi bi-star-fill active"></i> <i class="bi bi-star"></i> <small>(4
                                     Reviews )</small></div>
                         </div>
-                        <div class="product-wishlist"><a href="singleProductPage.html#" class="btn"><i
+                        <div class="product-wishlist"><a th:href="@{/wishList/add(productId=${currentProduct.id})}" class="btn"><i
                                 class="fi-heart"></i></a></div>
                     </div>
                     <div class="product-description" style="white-space: pre-wrap" ><p th:text="${currentProduct.description}">Lorem ipsum dolor sit amet, consectetur adipisicing

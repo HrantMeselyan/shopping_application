@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zxx">
+<html lang="zxx" xmlns:th="http://www.thymeleaf.org">
 <head><!-- metas -->
     <meta charset="utf-8">
     <meta name="author" content="pxdraft">
@@ -983,7 +983,7 @@
                                                                                         href="shop.html#">My account</a>
                         </div>
                     </div><!-- Wishlist -->
-                    <div class="nav-item d-none d-xl-block"><a class="nav-link" href="shop.html#"><i
+                    <div class="nav-item d-none d-xl-block"><a class="nav-link" th:if="${currentUser != null}" th:href="@{/wishList(userid=${currentUser.id})}"><i
                             class="fi-heart"></i></a></div><!-- Cart -->
                     <div class="nav-item"><a class="nav-link" data-bs-toggle="offcanvas" href="shop.html#modalMiniCart"
                                              role="button" aria-controls="modalMiniCart"><span class=""
@@ -1251,7 +1251,7 @@
                                 <div class="product-card-1">
                                     <div class="product-card-image">
                                         <div class="badge-ribbon"><span class="badge bg-danger">Sale</span></div>
-                                        <div class="product-action"><a th:href="@{'/products/' + ${product.id}}"
+                                        <div class="product-action"><a th:href="@{/wishList/add(productId=${product.id})}"
                                                                        class="btn btn-outline-primary"><i
                                                 class="fi-heart"></i> </a><a href="shop.html#"
                                                                              class="btn btn-outline-primary"><i

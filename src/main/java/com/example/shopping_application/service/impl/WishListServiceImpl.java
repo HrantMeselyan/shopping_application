@@ -1,5 +1,6 @@
 package com.example.shopping_application.service.impl;
 
+import com.example.shopping_application.entity.Product;
 import com.example.shopping_application.entity.WishList;
 import com.example.shopping_application.repository.WishListRepository;
 import com.example.shopping_application.service.WishListService;
@@ -7,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by Ashot Simonyan on 21.05.23.
@@ -23,12 +25,27 @@ public class WishListServiceImpl implements WishListService {
     }
 
     @Override
+    public List<WishList> findAllByUserId(int id) {
+        return wishListRepository.findAllByUser_Id(id);
+    }
+
+    @Override
     public void remove(int id) {
         wishListRepository.deleteById(id);
     }
 
     @Override
+    public void removeByProductId(int id) {
+        wishListRepository.deleteAllByProduct_Id(id);
+    }
+
+    @Override
     public void save(WishList wishList) {
         wishListRepository.save(wishList);
+    }
+
+    @Override
+    public Optional<WishList> findByProduct(Product product) {
+        return wishListRepository.findByProduct(product);
     }
 }
