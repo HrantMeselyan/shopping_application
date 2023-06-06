@@ -26,11 +26,11 @@ public class User {
     @Size(min = 2,message = "Surname length it should be min 2 max 10 characters")
     @Column(nullable = false)
     private String surname;
-//    @Email(regexp = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$", message = "Email is no valid")
-//    @Column(nullable = false)
+    @Email(regexp = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$", message = "Email is no valid")
+    @Column(nullable = false)
     private String email;
-//    @Pattern(regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$",
-//            message = "Should be min 8 character,include digit and capital letter")
+    @Pattern(regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$",
+            message = "Should be min 8 character,include digit and capital letter")
     @Column(nullable = false)
     private String password;
     private String phoneNumber;
