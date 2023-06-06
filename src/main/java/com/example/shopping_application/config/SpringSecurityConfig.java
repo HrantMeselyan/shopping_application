@@ -40,7 +40,7 @@ public class SpringSecurityConfig {
                         .anyRequest().authenticated())
                 .formLogin(httpSecurityFormLoginConfigurer -> httpSecurityFormLoginConfigurer
                         .loginPage("/customLogin")
-                        .defaultSuccessUrl("/customSuccessLogin")
+                        .defaultSuccessUrl("/customSuccessLogin",true)
                         .loginProcessingUrl("/login")
                         .permitAll())
                 .logout(httpSecurityLogoutConfigurer -> httpSecurityLogoutConfigurer

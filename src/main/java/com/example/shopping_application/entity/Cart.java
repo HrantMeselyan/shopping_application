@@ -20,7 +20,6 @@ public class Cart {
     @ManyToOne
     private User user;
 
-
     @ManyToMany
     @JoinTable(name = "cart_product",
             joinColumns = @JoinColumn(name = "cart_id"),

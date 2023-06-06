@@ -26,7 +26,7 @@ public class MainController {
     private final CategoryService categoryService;
 
     @GetMapping("/")
-    private String main(ModelMap modelmap) {
+    public String main(ModelMap modelmap) {
         Map<String, List<Category>> parentCategoriesMap = categoryService.getParentCategoriesWithChildren();
         modelmap.addAttribute("parentCategoriesMap", parentCategoriesMap);
         return "index";
