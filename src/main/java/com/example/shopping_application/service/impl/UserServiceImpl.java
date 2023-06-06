@@ -39,12 +39,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updatePicName(MultipartFile multipartFile, int id) throws IOException {
+    public void updatePicName(MultipartFile multipartFile, User user) throws IOException {
+        String imgName = user.getProfilePic();
         if (multipartFile != null && !multipartFile.isEmpty()) {
             String fileName = System.nanoTime() + "_" + multipartFile.getOriginalFilename();
             File file = new File(imageUploadPath + fileName);
             multipartFile.transferTo(file);
-            userRepository.updatePicName(id, fileName);
+
+            user.setProfilePic(fileName);
+            userRepository.save(user);
+            deleteProfilePicture(imgName);
         }
     }
 
@@ -71,5 +75,20 @@ public class UserServiceImpl implements UserService {
             return byId.get();
         }
         return null;
+    }
+
+    @Override
+    public User findByIdWithAddresses(int id) {
+        Optional<User> byId = userRepository.findById(id);
+        return byId.get();
+    }
+
+    private void deleteProfilePicture(String existingProfilePic) {
+        if (existingProfilePic != null) {
+            File file = new File(imageUploadPath + existingProfilePic);
+            if (file.exists()) {
+                file.delete();
+            }
+        }
     }
 }

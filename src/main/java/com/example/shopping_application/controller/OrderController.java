@@ -1,11 +1,15 @@
 package com.example.shopping_application.controller;
 
 import com.example.shopping_application.entity.Order;
+import com.example.shopping_application.security.CurrentUser;
 import com.example.shopping_application.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/order")
@@ -16,14 +20,14 @@ public class OrderController {
 
     @GetMapping
     public String orderPage(ModelMap modelMap) {
-        modelMap.addAttribute(orderService.findAllOrder());
-        return "orders";
+        modelMap.addAttribute("orders", orderService.findAllOrder());
+        return "checkout";
     }
 
     @PostMapping("/add")
-    public String addOrder(@ModelAttribute Order order) {
-        orderService.save(order);
-        return "redirect:/order";
+    public String addOrder(@AuthenticationPrincipal CurrentUser currentUser, @RequestParam("productId") List<Integer> productIds) {
+        orderService.save(currentUser.getUser().getId(),productIds);
+        return "redirect:/cart";
     }
 
     @GetMapping("/remove")

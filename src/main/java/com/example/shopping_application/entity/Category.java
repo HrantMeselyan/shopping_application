@@ -17,6 +17,6 @@ public class Category {
     private int id;
     @Column(nullable = false)
     private String name;
-
+    private String parentCategory;
     private String image;
 }

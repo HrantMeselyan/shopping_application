@@ -54,7 +54,7 @@ public class ProductController {
     public String currentProductPage(ModelMap modelmap, @PathVariable("id") int id) {
         modelmap.addAttribute("currentProduct", productService.findById(id));
         modelmap.addAttribute("products", productService.findAll());
-        modelmap.addAttribute("comm", commentService.findAllByProductId(id));
+        modelmap.addAttribute("comments", commentService.findAllByProductId(id));
         return "singleProductPage";
     }
 
@@ -67,8 +67,8 @@ public class ProductController {
     @PostMapping("/add")
     public String addProduct(@ModelAttribute Product product,
                              @AuthenticationPrincipal CurrentUser currentUser,
-                             @RequestParam("profile_pic") MultipartFile multipartFile) throws IOException {
-        productService.save(product, multipartFile, currentUser);
+                             @RequestParam("files") MultipartFile[] files) throws IOException {
+        productService.save(product, files, currentUser);
         return "redirect:/";
     }
 
