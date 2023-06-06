@@ -14,6 +14,5 @@ public interface WishListRepository extends JpaRepository<WishList, Integer> {
 
     Optional<WishList> findByProduct(Product product);
 
-    @Transactional
     void deleteAllByProduct_Id(Integer id);
 }

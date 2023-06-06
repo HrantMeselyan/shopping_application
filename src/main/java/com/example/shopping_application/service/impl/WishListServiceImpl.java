@@ -4,6 +4,7 @@ import com.example.shopping_application.entity.Product;
 import com.example.shopping_application.entity.WishList;
 import com.example.shopping_application.repository.WishListRepository;
 import com.example.shopping_application.service.WishListService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,7 @@ import java.util.Optional;
  */
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class WishListServiceImpl implements WishListService {
 
     private final WishListRepository wishListRepository;
