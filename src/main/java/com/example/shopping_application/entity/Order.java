@@ -30,6 +30,6 @@ public class Order {
     @ManyToOne(optional = false)
     private User user;
 
-    @ManyToMany
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems;
 }
