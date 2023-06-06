@@ -10,5 +10,5 @@ public interface OrderService {
 
     void remove(int id);
 
-    void save(Order order);
+    void save(int userId, List<Integer> productsId);
 }

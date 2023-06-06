@@ -1,10 +1,10 @@
 package com.example.shopping_application.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -19,17 +19,17 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Column(nullable = false)
-    private Date orderDate;
-    private int totalAmount;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime dateTime;
+    @Column(nullable = false)
+    private double totalAmount;
     @Enumerated(EnumType.STRING)
     private Status status;
 
     @ManyToOne(optional = false)
     private User user;
 
-    @OneToMany
+    @ManyToMany
     private List<OrderItem> orderItems;
 }

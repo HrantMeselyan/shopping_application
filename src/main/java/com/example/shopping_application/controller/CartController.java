@@ -30,6 +30,6 @@ public class CartController {
     @PostMapping("/remove")
     public String removeFromCart(@AuthenticationPrincipal CurrentUser currentUser, @RequestParam("productId") int productId) {
         cartService.remove(currentUser.getUser().getId(),productId);
-        return "cart";
+        return "redirect:/cart";
     }
 }
