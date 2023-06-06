@@ -6,6 +6,7 @@ import com.example.shopping_application.repository.CartRepository;
 import com.example.shopping_application.repository.ProductRepository;
 import com.example.shopping_application.security.CurrentUser;
 import com.example.shopping_application.service.CartService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -33,5 +34,11 @@ public class CartServiceImpl implements CartService {
         productList.add(byId.get());
         cart.setProducts(productList);
         cartRepository.save(cart);
+    }
+
+    @Override
+    @Transactional
+    public void remove(int id, int productId) {
+        cartRepository.deleteByUserIdAndProducts_Id(id, productId);
     }
 }
