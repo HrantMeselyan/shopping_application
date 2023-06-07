@@ -11,7 +11,6 @@ import lombok.Data;
 @Data
 @Table(name = "order_item")
 public class OrderItem {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

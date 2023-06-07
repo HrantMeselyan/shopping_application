@@ -32,9 +32,9 @@ public class CartServiceImpl implements CartService {
     @Transactional
     public void save(int id, CurrentUser currentUser) {
         Optional<Cart> cartOptional = cartRepository.findAllByUser_Id(currentUser.getUser().getId());
-
+        Cart cart;
         if (cartOptional.isPresent()) {
-            Cart cart = cartOptional.get();
+            cart = cartOptional.get();
             List<CartItem> cartItems = cart.getCartItems();
             Optional<Product> productOptional = productRepository.findById(id);
 
@@ -56,15 +56,14 @@ public class CartServiceImpl implements CartService {
                     CartItem cartItem = new CartItem();
                     cartItem.setCount(1);
                     cartItem.setProduct(product);
-                    cartItem.setCart(cart); // Set the cart relationship
+                    cartItem.setCart(cart);
                     cartItemRepository.save(cartItem);
                     cartItems.add(cartItem);
                 }
             }
 
-            cartRepository.save(cart);
         } else {
-            Cart cart = new Cart();
+            cart = new Cart();
             cart.setUser(currentUser.getUser());
             List<CartItem> cartItems = new ArrayList<>();
             Optional<Product> productOptional = productRepository.findById(id);
@@ -80,8 +79,8 @@ public class CartServiceImpl implements CartService {
             }
 
             cart.setCartItems(cartItems);
-            cartRepository.save(cart);
         }
+        cartRepository.save(cart);
     }
 
     @Override
