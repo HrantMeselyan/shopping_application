@@ -74,7 +74,7 @@ public class CartServiceImpl implements CartService {
                 CartItem cartItem = new CartItem();
                 cartItem.setCount(1);
                 cartItem.setProduct(product);
-                cartItem.setCart(cart); // Set the cart relationship
+                cartItem.setCart(cart);
                 cartItemRepository.save(cartItem);
                 cartItems.add(cartItem);
             }
