@@ -8,18 +8,18 @@
                                                         th:href="@{/products}"><i
                         class="ci-arrow-left me-2"></i>Continue Shopping</a></div><!-- Item-->
                 <block th:each="cart :${carts}">
-                    <th:block th:each="product:${cart.getProducts()}">
+                    <th:block th:each="cartItem:${cart.getCartItems()}">
                         <div class="d-flex align-items-center flex-row w-100 pb-3 mb-3 border-bottom"><a
                                 class="d-inline-block flex-shrink-0 me-3" href="shop-cart.html#"><img
-                                th:src="@{/getImage(profilePic=${product.images[0].image})}" width="120" alt="Product"></a>
+                                th:src="@{/getImage(profilePic=${cartItem.product.images[0].image})}" width="120" alt="Product"></a>
                             <div class="d-flex flex-column flex-sm-row col">
                                 <div class="pe-sm-2"><h3 class="product-title fs-5 mb-1"><a class="text-reset"
                                                                                             href="shop-cart.html#"
-                                                                                            th:text="${product.name}">
+                                                                                            th:text="${cartItem.product.name}">
                                 </a></h3>
                                     <div class="small"><span class="text-muted me-2">Size:</span>XL</div>
                                     <div class="small"><span class="text-muted me-2">Color:</span>White &amp; Blue</div>
-                                    <div class="lead pt-1" th:text="${product.price}">$154.00</div>
+                                    <div class="lead pt-1" th:text="${cartItem.product.price}">$154.00</div>
                                 </div>
                                 <div class="pt-2 pt-sm-0 d-flex d-sm-block ms-sm-auto"><label
                                         class="form-label d-none d-sm-inline-block">Quantity</label>
@@ -30,7 +30,7 @@
                                         <div class="inc qty-btn qty_btn"><i class="bi bi-caret-down-fill"></i></div>
                                     </div>
                                     <form action="/cart/remove" method="post">
-                                        <input type="hidden" name="productId" th:value="${product.id}">
+                                        <input type="hidden" name="productId" th:value="${cartItem.product.id}">
                                         <button class="btn btn-link px-0 text-danger ms-auto" type="submit"><i
                                                 class="bi-trash3 me-2"></i><span class="">Remove</span></button>
                                     </form>
@@ -41,7 +41,7 @@
                 </block>
                 <form action="/order/add" method="POST">
                     <div th:each="cart : ${carts}">
-                        <input type="hidden" th:each="product : ${cart.products}" name="productId"
+                        <input type="hidden" th:each="product : ${cart.cartItems}" name="productId"
                                th:value="${product.id}">
                     </div>
                     <button class="btn btn-primary d-block w-100 mt-4" type="submit"><i

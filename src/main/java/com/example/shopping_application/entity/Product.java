@@ -2,6 +2,9 @@ package com.example.shopping_application.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
@@ -10,7 +13,9 @@ import java.util.List;
  */
 
 @Entity
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode(of = {"id", "name"})
 @Table(name = "product")
 public class Product {
 
