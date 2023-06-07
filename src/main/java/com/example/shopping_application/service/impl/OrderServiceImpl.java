@@ -44,8 +44,6 @@ public class OrderServiceImpl implements OrderService {
         Optional<User> user = userRepository.findById(userId);
 
         if (user.isPresent()) {
-            LocalDateTime dateTime = LocalDateTime.now();
-            order.setDateTime(dateTime);
             order.setUser(user.get());
             order.setTotalAmount(4.5);
 
@@ -63,7 +61,6 @@ public class OrderServiceImpl implements OrderService {
                 OrderItem orderItem = new OrderItem();
                 orderItem.setProduct(product);
                 orderItem.setCount(productCounts.get(product.getId()));
-                orderItemRepository.save(orderItem);
                 orderItemList.add(orderItem);
             }
 

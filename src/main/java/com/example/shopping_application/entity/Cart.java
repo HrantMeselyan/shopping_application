@@ -19,7 +19,7 @@ public class Cart {
     @ManyToOne(optional = false)
     private User user;
 
-
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
     private List<CartItem> cartItems;
+
 }

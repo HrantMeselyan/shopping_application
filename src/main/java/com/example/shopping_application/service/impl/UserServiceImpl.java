@@ -87,7 +87,8 @@ public class UserServiceImpl implements UserService {
         if (existingProfilePic != null) {
             File file = new File(imageUploadPath + existingProfilePic);
             if (file.exists()) {
-                file.delete();
+                boolean delete = file.delete();
+                System.out.println(delete);
             }
         }
     }
