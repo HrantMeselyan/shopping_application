@@ -1,5 +1,6 @@
 package com.example.shopping_application.controller;
 
+import com.example.shopping_application.dto.categoryDto.CategoryDto;
 import com.example.shopping_application.entity.Category;
 import com.example.shopping_application.entity.Role;
 import com.example.shopping_application.entity.User;
@@ -27,7 +28,7 @@ public class MainController {
 
     @GetMapping("/")
     public String main(ModelMap modelmap) {
-        Map<String, List<Category>> parentCategoriesMap = categoryService.getParentCategoriesWithChildren();
+        Map<String, List<CategoryDto>> parentCategoriesMap = categoryService.getParentCategoriesWithChildren();
         modelmap.addAttribute("parentCategoriesMap", parentCategoriesMap);
         return "index";
     }

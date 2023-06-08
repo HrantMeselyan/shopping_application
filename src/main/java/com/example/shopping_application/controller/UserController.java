@@ -47,7 +47,8 @@ public class UserController {
     }
 
     @GetMapping()
-    public String currentUserPage(ModelMap modelmap, @AuthenticationPrincipal CurrentUser currentUser) {
+    public String currentUserPage(ModelMap modelmap,
+                                  @AuthenticationPrincipal CurrentUser currentUser) {
         modelmap.addAttribute("user", userService.findByIdWithAddresses(currentUser.getUser().getId()));
         return "singleUserPage";
     }
@@ -60,7 +61,8 @@ public class UserController {
     }
 
     @GetMapping("/notifications/{userId}")
-    public String notificationPage(ModelMap modelmap, @PathVariable("userId") int id,
+    public String notificationPage(ModelMap modelmap,
+                                   @PathVariable("userId") int id,
                                    @AuthenticationPrincipal CurrentUser currentUser) {
         modelmap.addAttribute("notifications", notificationService.findAllByUserId(id));
         modelmap.addAttribute("currentUser", currentUser.getUser());
@@ -75,7 +77,8 @@ public class UserController {
     }
 
     @GetMapping("update")
-    public String updateUserPage(@RequestParam("id") int id, ModelMap modelMap) {
+    public String updateUserPage(@RequestParam("id") int id,
+                                 ModelMap modelMap) {
         modelMap.addAttribute("user", userService.findById(id));
         return "updateUser";
     }
@@ -92,7 +95,8 @@ public class UserController {
     }
 
     @GetMapping("/admin")
-    public String adminPage(ModelMap modelMap, @AuthenticationPrincipal CurrentUser currentUser) {
+    public String adminPage(ModelMap modelMap,
+                            @AuthenticationPrincipal CurrentUser currentUser) {
         modelMap.addAttribute("currentUser", currentUser.getUser());
         return "admin";
     }
@@ -103,7 +107,8 @@ public class UserController {
     }
 
     @GetMapping("/admin/all")
-    public String allUsersPage(ModelMap modelMap, @AuthenticationPrincipal CurrentUser currentUser) {
+    public String allUsersPage(ModelMap modelMap,
+                               @AuthenticationPrincipal CurrentUser currentUser) {
         modelMap.addAttribute("currentUser", currentUser.getUser());
         modelMap.addAttribute("users", userService.findAll());
         return "allUsers";

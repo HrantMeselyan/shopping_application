@@ -1,6 +1,8 @@
 package com.example.shopping_application.service.impl;
 
+import com.example.shopping_application.dto.categoryDto.CategoryDto;
 import com.example.shopping_application.entity.Category;
+import com.example.shopping_application.mapper.CategoryMapper;
 import com.example.shopping_application.repository.CategoryRepository;
 import com.example.shopping_application.service.CategoryService;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +37,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void save(Category category, MultipartFile multipartFile) throws IOException {
+    public void save(CategoryDto categoryDto, MultipartFile multipartFile) throws IOException {
+        Category category = CategoryMapper.dtoToCategory(categoryDto);
         if (multipartFile != null && !multipartFile.isEmpty()) {
             String fileName = System.nanoTime() + "_" + multipartFile.getOriginalFilename();
             File file = new File(imageUploadPath + fileName);
@@ -51,17 +54,21 @@ public class CategoryServiceImpl implements CategoryService {
         return byId.get();
     }
 
-    public Map<String, List<Category>> getParentCategoriesWithChildren() {
+    public Map<String, List<CategoryDto>> getParentCategoriesWithChildren() {
         List<Category> categories = categoryRepository.findAll();
-
-        Map<String, List<Category>> parentCategoriesMap = new HashMap<>();
-
+        List<CategoryDto> categoryDtos = new ArrayList<>();
         for (Category category : categories) {
-            String parentCategory = category.getParentCategory();
+            categoryDtos.add(CategoryMapper.categoryToDto(category));
+        }
+
+        Map<String, List<CategoryDto>> parentCategoriesMap = new HashMap<>();
+
+        for (CategoryDto categoryDto : categoryDtos) {
+            String parentCategory = categoryDto.getParentCategory();
             if (!parentCategoriesMap.containsKey(parentCategory)) {
                 parentCategoriesMap.put(parentCategory, new ArrayList<>());
             }
-            parentCategoriesMap.get(parentCategory).add(category);
+            parentCategoriesMap.get(parentCategory).add(categoryDto);
         }
 
         return parentCategoriesMap;

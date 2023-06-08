@@ -32,7 +32,8 @@ public class ProductController {
     private final CommentService commentService;
 
     @GetMapping
-    public String productPage(ModelMap modelMap, @RequestParam("page") Optional<Integer> page,
+    public String productPage(ModelMap modelMap,
+                              @RequestParam("page") Optional<Integer> page,
                               @RequestParam("size") Optional<Integer> size) {
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(5);
@@ -52,7 +53,8 @@ public class ProductController {
     }
 
     @GetMapping("{id}")
-    public String currentProductPage(ModelMap modelmap, @PathVariable("id") int id) {
+    public String currentProductPage(ModelMap modelmap,
+                                     @PathVariable("id") int id) {
         modelmap.addAttribute("currentProduct", productService.findById(id));
         modelmap.addAttribute("products", productService.findAll());
         modelmap.addAttribute("comments", commentService.findAllByProductId(id));

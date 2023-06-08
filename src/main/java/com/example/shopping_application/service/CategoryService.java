@@ -1,5 +1,6 @@
 package com.example.shopping_application.service;
 
+import com.example.shopping_application.dto.categoryDto.CategoryDto;
 import com.example.shopping_application.entity.Category;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,9 +14,9 @@ public interface CategoryService {
 
     void remove(int id);
 
-    void save(Category category, MultipartFile multipartFile) throws IOException;
+    void save(CategoryDto categoryDto, MultipartFile multipartFile) throws IOException;
 
     Category findById(Integer id);
 
-    Map<String, List<Category>> getParentCategoriesWithChildren();
+    Map<String, List<CategoryDto>> getParentCategoriesWithChildren();
 }

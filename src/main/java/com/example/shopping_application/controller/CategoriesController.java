@@ -1,5 +1,6 @@
 package com.example.shopping_application.controller;
 
+import com.example.shopping_application.dto.categoryDto.CategoryDto;
 import com.example.shopping_application.entity.Category;
 import com.example.shopping_application.service.CategoryService;
 import lombok.RequiredArgsConstructor;
@@ -22,8 +23,8 @@ public class CategoriesController {
     }
 
     @PostMapping("/add")
-    public String addCategory(@ModelAttribute Category category, @RequestParam("pic") MultipartFile multipartFile) throws IOException {
-        categoryService.save(category, multipartFile);
+    public String addCategory(@ModelAttribute CategoryDto categoryDto, @RequestParam("pic") MultipartFile multipartFile) throws IOException {
+        categoryService.save(categoryDto, multipartFile);
         return "redirect:/";
     }
 
