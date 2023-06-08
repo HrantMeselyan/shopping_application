@@ -2,6 +2,7 @@ package com.example.shopping_application.controller;
 
 import com.example.shopping_application.entity.Comment;
 import com.example.shopping_application.entity.Product;
+import com.example.shopping_application.mapper.UserMapper;
 import com.example.shopping_application.security.CurrentUser;
 import com.example.shopping_application.service.CommentService;
 import com.example.shopping_application.service.ProductService;
@@ -28,7 +29,7 @@ public class CommentController {
         if (byId != null) {
             modelMap.addAttribute("product", byId);
             modelMap.addAttribute("comments", commentService.findAllByProductId(id));
-            modelMap.addAttribute("user", currentUser.getUser());
+            modelMap.addAttribute("user", UserMapper.currentUserToUser(currentUser));
             return "singleProductPage";
         } else {
             return "redirect:/products/" + id;
@@ -44,7 +45,7 @@ public class CommentController {
         Product byId = productService.findById(id);
         if (byId != null) {
             comment.setProduct(byId);
-            comment.setUser(currentUser.getUser());
+            comment.setUser(UserMapper.currentUserToUser(currentUser));
             comment.setCommentDateTime(new Date());
             commentService.save(comment);
             return "redirect:/comments/product/" + id;

@@ -4,6 +4,7 @@ import com.example.shopping_application.dto.productDto.CreateProductRequestDto;
 import com.example.shopping_application.entity.Image;
 import com.example.shopping_application.entity.Product;
 import com.example.shopping_application.mapper.ProductMapper;
+import com.example.shopping_application.mapper.UserMapper;
 import com.example.shopping_application.repository.ProductRepository;
 import com.example.shopping_application.security.CurrentUser;
 import com.example.shopping_application.service.ProductService;
@@ -53,38 +54,30 @@ public class ProductServiceImpl implements ProductService {
         Product product = ProductMapper.map(productRequestDto);
         product.getCategories().removeIf(category -> category.getId() == 0);
         List<Image> imageList = new ArrayList<>();
-        if (currentUser != null) {
-            product.setUser(currentUser.getUser());
-            for (MultipartFile multipartFile : files) {
-                if (multipartFile != null && !multipartFile.isEmpty()) {
-                    String fileName = System.nanoTime() + "_" + multipartFile.getOriginalFilename();
-                    File file = new File(imageUploadPath + fileName);
-                    multipartFile.transferTo(file);
-                    Image image = new Image();
-                    image.setImage(fileName);
-                    imageList.add(image);
-                }
+        product.setUser(UserMapper.currentUserToUser(currentUser));
+        for (MultipartFile multipartFile : files) {
+            if (multipartFile != null && !multipartFile.isEmpty()) {
+                String fileName = System.nanoTime() + "_" + multipartFile.getOriginalFilename();
+                File file = new File(imageUploadPath + fileName);
+                multipartFile.transferTo(file);
+                Image image = new Image();
+                image.setImage(fileName);
+                imageList.add(image);
             }
-            product.setImages(imageList);
-            productRepository.save(product);
         }
+        product.setImages(imageList);
+        productRepository.save(product);
     }
 
     @Override
     public Product findByUserId(int id) {
         Optional<Product> allByUserId = productRepository.findAllByUser_Id(id);
-        if (allByUserId.isPresent()) {
-            return allByUserId.get();
-        }
-        return null;
+        return allByUserId.orElse(null);
     }
 
     @Override
     public Product findById(int id) {
         Optional<Product> byId = productRepository.findById(id);
-        if (byId.isPresent()) {
-            return byId.get();
-        }
-        return null;
+        return byId.orElse(null);
     }
 }

@@ -1,7 +1,10 @@
 package com.example.shopping_application.controller;
 
+import com.example.shopping_application.dto.userDto.UserDto;
+import com.example.shopping_application.dto.userDto.UserRegisterDto;
 import com.example.shopping_application.entity.Role;
 import com.example.shopping_application.entity.User;
+import com.example.shopping_application.mapper.UserMapper;
 import com.example.shopping_application.security.CurrentUser;
 import com.example.shopping_application.service.NotificationService;
 import com.example.shopping_application.service.UserService;
@@ -16,6 +19,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -29,16 +34,17 @@ public class UserController {
 
     @GetMapping("/register")
     public String registerPage(ModelMap modelMap) {
-        modelMap.addAttribute("user", new User());
+        modelMap.addAttribute("userRegisterDto", UserMapper.userToUserRegisterDto(new User()));
         return "register";
     }
 
     @PostMapping("/register")
-    public String register(@Valid @ModelAttribute User user,
+    public String register(@Valid @ModelAttribute UserRegisterDto userRegisterDto,
                            Errors errors) {
         if (errors.hasErrors()) {
             return "register";
         }
+        User user = UserMapper.userRegisterDtoToUser(userRegisterDto);
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
         user.setRole(Role.USER);
@@ -49,14 +55,14 @@ public class UserController {
     @GetMapping()
     public String currentUserPage(ModelMap modelmap,
                                   @AuthenticationPrincipal CurrentUser currentUser) {
-        modelmap.addAttribute("user", userService.findByIdWithAddresses(currentUser.getUser().getId()));
+        modelmap.addAttribute("user", userService.findByIdWithAddresses(UserMapper.currentUserToUser(currentUser).getId()));
         return "singleUserPage";
     }
 
     @PostMapping()
     public String updateCurrentUser(@AuthenticationPrincipal CurrentUser currentUser,
                                     @RequestParam("profile_pic") MultipartFile multipartFile) throws IOException {
-        userService.updatePicName(multipartFile, currentUser.getUser());
+        userService.updatePicName(multipartFile, UserMapper.currentUserToUser(currentUser));
         return "redirect:/user";
     }
 
@@ -65,7 +71,7 @@ public class UserController {
                                    @PathVariable("userId") int id,
                                    @AuthenticationPrincipal CurrentUser currentUser) {
         modelmap.addAttribute("notifications", notificationService.findAllByUserId(id));
-        modelmap.addAttribute("currentUser", currentUser.getUser());
+        modelmap.addAttribute("currentUser", UserMapper.currentUserToUser(currentUser));
         return "notifications";
     }
 
@@ -85,8 +91,9 @@ public class UserController {
 
     @PostMapping("update/{id}")
     public String updateUser(@PathVariable("id") int id,
-                             @ModelAttribute User user,
+                             @ModelAttribute UserDto userDto,
                              @RequestParam("profile_pic") MultipartFile multipartFile) throws IOException {
+        User user = UserMapper.userDtoToUser(userDto);
         User byId = userService.findById(id);
         user.setProfilePic(byId.getProfilePic());
         user.setPassword(byId.getPassword());
@@ -97,7 +104,7 @@ public class UserController {
     @GetMapping("/admin")
     public String adminPage(ModelMap modelMap,
                             @AuthenticationPrincipal CurrentUser currentUser) {
-        modelMap.addAttribute("currentUser", currentUser.getUser());
+        modelMap.addAttribute("currentUser", UserMapper.currentUserToUser(currentUser));
         return "admin";
     }
 
@@ -109,8 +116,13 @@ public class UserController {
     @GetMapping("/admin/all")
     public String allUsersPage(ModelMap modelMap,
                                @AuthenticationPrincipal CurrentUser currentUser) {
-        modelMap.addAttribute("currentUser", currentUser.getUser());
-        modelMap.addAttribute("users", userService.findAll());
+        modelMap.addAttribute("currentUser", UserMapper.currentUserToUser(currentUser));
+        List<User> all = userService.findAll();
+        List<UserDto> userDtos = new ArrayList<>();
+        for (User user : all) {
+            userDtos.add(UserMapper.userToUserDto(user));
+        }
+        modelMap.addAttribute("users", userDtos);
         return "allUsers";
     }
 }

@@ -1,9 +1,9 @@
 package com.example.shopping_application.controller;
 
 import com.example.shopping_application.dto.categoryDto.CategoryDto;
-import com.example.shopping_application.entity.Category;
 import com.example.shopping_application.entity.Role;
 import com.example.shopping_application.entity.User;
+import com.example.shopping_application.mapper.UserMapper;
 import com.example.shopping_application.security.CurrentUser;
 import com.example.shopping_application.service.CategoryService;
 import com.example.shopping_application.service.MainService;
@@ -45,8 +45,8 @@ public class MainController {
 
     @GetMapping("/customSuccessLogin")
     public String customSuccessLogin(@AuthenticationPrincipal CurrentUser currentUser) {
-        if (currentUser != null) {
-            User user = currentUser.getUser();
+        User user = UserMapper.currentUserToUser(currentUser);
+        if (user != null) {
             if (user.getRole() == Role.ADMIN) {
                 return "redirect:/user/admin";
             } else if (user.getRole() == Role.USER) {

@@ -1,5 +1,6 @@
 package com.example.shopping_application.controller;
 
+import com.example.shopping_application.mapper.UserMapper;
 import com.example.shopping_application.security.CurrentUser;
 import com.example.shopping_application.service.CartService;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +17,7 @@ public class CartController {
 
     @GetMapping()
     public String cartPage(ModelMap modelMap, @AuthenticationPrincipal CurrentUser currentUser) {
-        modelMap.addAttribute("carts", cartService.findAllByUser_id(currentUser.getUser().getId()));
+        modelMap.addAttribute("carts", cartService.findAllByUser_id(UserMapper.currentUserToUser(currentUser).getId()));
         return "cart";
     }
 
@@ -28,7 +29,7 @@ public class CartController {
 
     @PostMapping("/remove")
     public String removeFromCart(@AuthenticationPrincipal CurrentUser currentUser, @RequestParam("productId") int productId) {
-        cartService.remove(currentUser.getUser().getId(),productId);
+        cartService.remove(UserMapper.currentUserToUser(currentUser).getId(), productId);
         return "redirect:/cart";
     }
 }

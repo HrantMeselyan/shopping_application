@@ -5,6 +5,7 @@ import com.example.shopping_application.entity.Cart;
 import com.example.shopping_application.entity.CartItem;
 import com.example.shopping_application.entity.Product;
 import com.example.shopping_application.mapper.CartMapper;
+import com.example.shopping_application.mapper.UserMapper;
 import com.example.shopping_application.repository.CartItemRepository;
 import com.example.shopping_application.repository.CartRepository;
 import com.example.shopping_application.repository.ProductRepository;
@@ -35,7 +36,7 @@ public class CartServiceImpl implements CartService {
     @Override
     @Transactional
     public void save(int id, CurrentUser currentUser) {
-        Optional<Cart> cartOptional = cartRepository.findAllByUser_Id(currentUser.getUser().getId());
+        Optional<Cart> cartOptional = cartRepository.findAllByUser_Id(UserMapper.currentUserToUser(currentUser).getId());
         Cart cart;
         if (cartOptional.isPresent()) {
             cart = cartOptional.get();
@@ -68,7 +69,7 @@ public class CartServiceImpl implements CartService {
 
         } else {
             cart = new Cart();
-            cart.setUser(currentUser.getUser());
+            cart.setUser(UserMapper.currentUserToUser(currentUser));
             List<CartItem> cartItems = new ArrayList<>();
             Optional<Product> productOptional = productRepository.findById(id);
 
