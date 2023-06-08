@@ -11,7 +11,6 @@ import java.util.List;
 public class CartMapper {
     public static CartDto convertToDto(Cart cart) {
         CartDto cartDto = new CartDto();
-        cartDto.setUserId(cart.getUser().getId());
 
         List<CartItemDto> cartItemDTOs = new ArrayList<>();
         for (CartItem cartItem : cart.getCartItems()) {
@@ -30,13 +29,9 @@ public class CartMapper {
         List<CartDto> cartDtoList = new ArrayList<>();
         for (Cart cart : allByUserId) {
             CartDto cartDto = new CartDto();
-            cartDto.setId(cart.getId());
-            cartDto.setUserId(cart.getUser().getId());
-
             List<CartItemDto> cartItemDtoList = new ArrayList<>();
             for (CartItem cartItem : cart.getCartItems()) {
                 CartItemDto cartItemDto = new CartItemDto();
-                cartItemDto.setId(cartItem.getId());
                 cartItemDto.setCount(cartItem.getCount());
                 cartItemDto.setProductId(cartItem.getProduct().getId());
                 cartItemDtoList.add(cartItemDto);
