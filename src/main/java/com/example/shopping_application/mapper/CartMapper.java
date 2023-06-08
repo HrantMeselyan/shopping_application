@@ -2,6 +2,7 @@ package com.example.shopping_application.mapper;
 
 import com.example.shopping_application.dto.cartDto.CartDto;
 import com.example.shopping_application.dto.cartDto.CartItemDto;
+import com.example.shopping_application.dto.productDto.ProductDto;
 import com.example.shopping_application.entity.Cart;
 import com.example.shopping_application.entity.CartItem;
 
@@ -17,7 +18,8 @@ public class CartMapper {
         for (CartItem cartItem : cart.getCartItems()) {
             CartItemDto cartItemDto = new CartItemDto();
             cartItemDto.setCount(cartItem.getCount());
-            cartItemDto.setProduct(cartItem.getProduct());
+            ProductDto productDto = ProductMapper.mapToDto(cartItem.getProduct());
+            cartItemDto.setProduct(productDto);
             cartItemDTOs.add(cartItemDto);
         }
         cartDto.setCartItems(cartItemDTOs);
@@ -37,7 +39,8 @@ public class CartMapper {
             for (CartItem cartItem : cart.getCartItems()) {
                 CartItemDto cartItemDto = new CartItemDto();
                 cartItemDto.setCount(cartItem.getCount());
-                cartItemDto.setProduct(cartItem.getProduct());
+                ProductDto productDto = ProductMapper.mapToDto(cartItem.getProduct());
+                cartItemDto.setProduct(productDto);
                 cartItemDtoList.add(cartItemDto);
             }
             cartDto.setCartItems(cartItemDtoList);

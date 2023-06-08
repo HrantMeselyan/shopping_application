@@ -1,6 +1,6 @@
 package com.example.shopping_application.dto.cartDto;
 
-import com.example.shopping_application.entity.Product;
+import com.example.shopping_application.dto.productDto.ProductDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CartItemDto {
     private int count;
-    private Product product;
+    private ProductDto product;
 }
