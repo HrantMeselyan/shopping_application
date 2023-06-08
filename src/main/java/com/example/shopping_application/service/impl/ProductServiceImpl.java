@@ -1,6 +1,6 @@
 package com.example.shopping_application.service.impl;
 
-import com.example.shopping_application.dto.ProductDto.CreateProductRequestDto;
+import com.example.shopping_application.dto.productDto.CreateProductRequestDto;
 import com.example.shopping_application.entity.Image;
 import com.example.shopping_application.entity.Product;
 import com.example.shopping_application.mapper.ProductMapper;
@@ -31,8 +31,6 @@ public class ProductServiceImpl implements ProductService {
     private String imageUploadPath;
 
     private final ProductRepository productRepository;
-    private final ProductMapper productMapper;
-
 
     @Override
     public Page<Product> findAllProducts(Pageable pageable) {
@@ -52,7 +50,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void save(CreateProductRequestDto productRequestDto, MultipartFile[] files, CurrentUser currentUser) throws IOException {
-        Product product = productMapper.map(productRequestDto);
+        Product product = ProductMapper.map(productRequestDto);
         product.getCategories().removeIf(category -> category.getId() == 0);
         List<Image> imageList = new ArrayList<>();
         if (currentUser != null) {

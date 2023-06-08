@@ -1,4 +1,4 @@
-package com.example.shopping_application.dto.ProductDto;
+package com.example.shopping_application.dto.productDto;
 
 import com.example.shopping_application.entity.Category;
 import com.example.shopping_application.entity.Image;
