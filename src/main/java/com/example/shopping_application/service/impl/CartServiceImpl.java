@@ -90,7 +90,7 @@ public class CartServiceImpl implements CartService {
     @Override
     @Transactional
     public void remove(int id, int productId) {
-        cartRepository.deleteByUserIdAndCartItems_Product_Id(id, productId);
-
+        Optional<Cart> byId = cartRepository.findAllByUser_Id(id);
+        cartItemRepository.deleteByCart_IdAndProduct_Id(byId.get().getId(), productId);
     }
 }
