@@ -40,10 +40,6 @@
                     </th:block>
                 </block>
                 <form action="/order/add" method="POST">
-                    <div th:each="cart : ${carts}">
-                        <input type="hidden" th:each="product : ${cart.cartItems}" name="productId"
-                               th:value="${product.id}">
-                    </div>
                     <button class="btn btn-primary d-block w-100 mt-4" type="submit"><i
                             class="bi-credit-card-2-back me-2"></i>Order
                     </button>

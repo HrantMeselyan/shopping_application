@@ -1,9 +1,6 @@
 package com.example.shopping_application.service.impl;
 
-import com.example.shopping_application.entity.Order;
-import com.example.shopping_application.entity.OrderItem;
-import com.example.shopping_application.entity.Product;
-import com.example.shopping_application.entity.User;
+import com.example.shopping_application.entity.*;
 import com.example.shopping_application.repository.*;
 import com.example.shopping_application.service.OrderService;
 import jakarta.transaction.Transactional;
@@ -38,35 +35,30 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public void save(int userId, List<Integer> productsId) {
-        Order order = new Order();
-        List<OrderItem> orderItemList = new ArrayList<>();
+    public void save(int userId) {
         Optional<User> user = userRepository.findById(userId);
+        List<Cart> cartList = cartRepository.findAllByUserId(userId);
+        int totalAmount = 0;
 
-        if (user.isPresent()) {
-            order.setUser(user.get());
-            order.setTotalAmount(4.5);
+        Order order = new Order();
+        order.setUser(user.get());
+        order.setOrderItems(new ArrayList<>());
 
-            Set<Product> uniqueProducts = new HashSet<>();
-            Map<Integer, Integer> productCounts = new HashMap<>();
-
-            for (Integer productId : productsId) {
-                Optional<Product> productOptional = productRepository.findById(productId);
-                productOptional.ifPresent(uniqueProducts::add);
-
-                productCounts.put(productId, productCounts.getOrDefault(productId, 0) + 1);
-            }
-
-            for (Product product : uniqueProducts) {
+        for (Cart cart : cartList) {
+            List<CartItem> cartItems = cart.getCartItems();
+            for (CartItem cartItem : cartItems) {
                 OrderItem orderItem = new OrderItem();
-                orderItem.setProduct(product);
-                orderItem.setCount(productCounts.get(product.getId()));
-                orderItemList.add(orderItem);
+                totalAmount += cartItem.getProduct().getPrice() * cartItem.getCount();
+                orderItem.setCount(cartItem.getCount());
+                orderItem.setProduct(cartItem.getProduct());
+                orderItem.setOrder(order);
+                orderItemRepository.save(orderItem);
             }
-
-            order.setOrderItems(orderItemList);
-            orderRepository.save(order);
-            cartRepository.deleteByUserId(userId);
         }
+        order.setTotalAmount(totalAmount);
+        orderRepository.save(order);
+        cartRepository.deleteByUserId(userId);
     }
+
 }
+
