@@ -1,6 +1,10 @@
 package com.example.shopping_application.service.impl;
 
+import com.example.shopping_application.dto.notificationDto.NotificationRequestDto;
+import com.example.shopping_application.dto.notificationDto.NotificationResponseDto;
 import com.example.shopping_application.entity.Notification;
+import com.example.shopping_application.entity.User;
+import com.example.shopping_application.mapper.NotificationMapper;
 import com.example.shopping_application.repository.NotificationRepository;
 import com.example.shopping_application.service.NotificationService;
 import lombok.RequiredArgsConstructor;
@@ -19,9 +23,9 @@ public class NotificationServiceImpl implements NotificationService {
 
 
     @Override
-    public List<Notification> findAllByUserId(int id) {
+    public List<NotificationResponseDto> findAllByUserId(int id) {
         List<Notification> allByUserId = notificationRepository.findAllByUser_Id(id);
-        return allByUserId;
+        return NotificationMapper.map(allByUserId);
     }
 
     @Override
@@ -30,7 +34,8 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public void save(Notification notification) {
-        notificationRepository.save(notification);
+    public void save(NotificationRequestDto notificationRequestDto, User user) {
+        notificationRepository.save(NotificationMapper.map(notificationRequestDto, user));
     }
+
 }

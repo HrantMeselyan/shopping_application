@@ -1,7 +1,6 @@
 package com.example.shopping_application.controller;
 
-import com.example.shopping_application.entity.Comment;
-import com.example.shopping_application.entity.Product;
+import com.example.shopping_application.dto.commentDto.CommentRequestDto;
 import com.example.shopping_application.mapper.UserMapper;
 import com.example.shopping_application.security.CurrentUser;
 import com.example.shopping_application.service.CommentService;
@@ -11,8 +10,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Date;
 
 @Controller
 @RequestMapping("/comments")
@@ -25,34 +22,18 @@ public class CommentController {
     public String singleProductPageComment(@PathVariable("id") int id,
                                            ModelMap modelMap,
                                            @AuthenticationPrincipal CurrentUser currentUser) {
-        Product byId = productService.findById(id);
-        if (byId != null) {
-            modelMap.addAttribute("product", byId);
-            modelMap.addAttribute("comments", commentService.findAllByProductId(id));
-            modelMap.addAttribute("user", UserMapper.currentUserToUser(currentUser));
-            return "singleProductPage";
-        } else {
-            return "redirect:/products/" + id;
-        }
+        modelMap.addAttribute("product", productService.findById(id));
+        modelMap.addAttribute("comments", commentService.findAllByProductId(id));
+        modelMap.addAttribute("user", UserMapper.currentUserToUser(currentUser));
+        return "singleProductPage";
     }
 
     @PostMapping("product/{id}")
     public String singleProductPageAddComment(@PathVariable("id") int id,
-                                              @RequestParam("comm") String comm,
+                                              @ModelAttribute CommentRequestDto commentRequestDto,
                                               @AuthenticationPrincipal CurrentUser currentUser) {
-        Comment comment = new Comment();
-        comment.setComment(comm);
-        Product byId = productService.findById(id);
-        if (byId != null) {
-            comment.setProduct(byId);
-            comment.setUser(UserMapper.currentUserToUser(currentUser));
-            comment.setCommentDateTime(new Date());
-            commentService.save(comment);
-            return "redirect:/comments/product/" + id;
-        } else {
-            return "singleProductPage";
-        }
-
+        commentService.save(commentRequestDto,currentUser.getUser());
+        return "redirect:/comments/product/" + id;
     }
 
     @GetMapping("/remove")

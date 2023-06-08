@@ -36,7 +36,7 @@ public class WishListController {
     @GetMapping("/add")
     public String addWishList(@RequestParam("productId") int productId,
                               @AuthenticationPrincipal CurrentUser currentUser) {
-        Product byId = productService.findById(productId);
+        Product byId = productService.findBy_Id(productId);
         User user = UserMapper.currentUserToUser(currentUser);
         Optional<WishList> byUserId = wishListService.findByUserId(user.getId());
         if (byUserId.isEmpty()) {
@@ -62,7 +62,7 @@ public class WishListController {
         User user = UserMapper.currentUserToUser(currentUser);
         Optional<WishList> byUserId = wishListService.findByUserId(user.getId());
         if (byUserId.isPresent()) {
-            Product byId = productService.findById(id);
+            Product byId = productService.findBy_Id(id);
             WishList wishList = byUserId.get();
             Set<Product> product = wishList.getProduct();
             product.remove(byId);
