@@ -1,6 +1,6 @@
 package com.example.shopping_application.controller;
 
-import com.example.shopping_application.dto.ProductDto.CreateProductRequestDto;
+import com.example.shopping_application.dto.productDto.CreateProductRequestDto;
 import com.example.shopping_application.entity.Product;
 import com.example.shopping_application.security.CurrentUser;
 import com.example.shopping_application.service.CategoryService;

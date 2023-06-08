@@ -1,8 +1,8 @@
 package com.example.shopping_application.mapper;
 
-import com.example.shopping_application.dto.ProductDto.CreateProductRequestDto;
-import com.example.shopping_application.dto.ProductDto.CreateProductResponseDto;
-import com.example.shopping_application.dto.ProductDto.ProductDto;
+import com.example.shopping_application.dto.productDto.CreateProductRequestDto;
+import com.example.shopping_application.dto.productDto.CreateProductResponseDto;
+import com.example.shopping_application.dto.productDto.ProductDto;
 import com.example.shopping_application.entity.Category;
 import com.example.shopping_application.entity.Image;
 import com.example.shopping_application.entity.Product;

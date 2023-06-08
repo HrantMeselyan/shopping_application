@@ -1,8 +1,10 @@
 package com.example.shopping_application.service.impl;
 
+import com.example.shopping_application.dto.cartDto.CartDto;
 import com.example.shopping_application.entity.Cart;
 import com.example.shopping_application.entity.CartItem;
 import com.example.shopping_application.entity.Product;
+import com.example.shopping_application.mapper.CartMapper;
 import com.example.shopping_application.repository.CartItemRepository;
 import com.example.shopping_application.repository.CartRepository;
 import com.example.shopping_application.repository.ProductRepository;
@@ -24,8 +26,10 @@ public class CartServiceImpl implements CartService {
     private final CartItemRepository cartItemRepository;
 
     @Override
-    public List<Cart> findAllByUser_id(int id) {
-        return cartRepository.findAllByUserId(id);
+    public List<CartDto> findAllByUser_id(int id) {
+        List<Cart> allByUserId = cartRepository.findAllByUserId(id);
+        return CartMapper.findAllByUser_id(allByUserId);
+
     }
 
     @Override
