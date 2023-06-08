@@ -12,7 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/wishList")
@@ -25,24 +27,31 @@ public class WishListController {
     @GetMapping
     public String wishListPage(ModelMap modelMap,
                                @RequestParam("userid") int id) {
-        modelMap.addAttribute("wishlistById", wishListService.findAllByUserId(id));
+        Optional<WishList> byUserId = wishListService.findByUserId(id);
+        byUserId.ifPresent(wishList -> modelMap.addAttribute("wishlistById", wishList));
         return "wishlist";
     }
 
     @GetMapping("/add")
-    public String addWishList(@ModelAttribute WishList wishList,
-                              @RequestParam("productId") int productId,
+    public String addWishList(@RequestParam("productId") int productId,
                               @AuthenticationPrincipal CurrentUser currentUser) {
         Product byId = productService.findById(productId);
-        Optional<WishList> wishList1 = wishListService.findByProduct(byId);
         if (currentUser != null) {
-            if (wishList1.isEmpty()) {
-                User user = currentUser.getUser();
-                wishList.setUser(user);
-                wishList.setProduct(byId);
+            Optional<WishList> byUserId = wishListService.findByUserId(currentUser.getUser().getId());
+            if (byUserId.isEmpty()) {
+                Set<Product> products = new HashSet<>();
+                products.add(byId);
+                WishList wishList = new WishList();
+                wishList.setUser(currentUser.getUser());
+                wishList.setProduct(products);
                 wishListService.save(wishList);
                 return "redirect:/products";
             }
+            WishList wishList = byUserId.get();
+            Set<Product> productset = wishList.getProduct();
+            productset.add(byId);
+            wishList.setProduct(productset);
+            wishListService.save(wishList);
             return "redirect:/products";
         }
         return "redirect:/user/register";
@@ -51,7 +60,19 @@ public class WishListController {
     @GetMapping("/remove")
     public String removeWishList(@RequestParam("id") int id,
                                  @AuthenticationPrincipal CurrentUser currentUser) {
-        wishListService.removeByProductId(id);
-        return "redirect:/wishList?userid=" + currentUser.getUser().getId();
+        if (currentUser != null) {
+            Optional<WishList> byUserId = wishListService.findByUserId(currentUser.getUser().getId());
+            if (byUserId.isPresent()) {
+                Product byId = productService.findById(id);
+                WishList wishList = byUserId.get();
+                Set<Product> product = wishList.getProduct();
+                product.remove(byId);
+                wishList.setProduct(product);
+                wishListService.save(wishList);
+                return "redirect:/wishList?userid=" + currentUser.getUser().getId();
+            }
+            return "redirect:/wishList?userid=" + currentUser.getUser().getId();
+        }
+        return "redirect:/customLogin";
     }
 }

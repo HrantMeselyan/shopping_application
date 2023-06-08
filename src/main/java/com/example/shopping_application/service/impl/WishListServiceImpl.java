@@ -27,8 +27,8 @@ public class WishListServiceImpl implements WishListService {
     }
 
     @Override
-    public List<WishList> findAllByUserId(int id) {
-        return wishListRepository.findAllByUser_Id(id);
+    public Optional<WishList> findByUserId(int id) {
+        return wishListRepository.findByUserId(id);
     }
 
     @Override

@@ -10,7 +10,7 @@ public interface WishListService {
 
     List<WishList> findAll();
 
-    List<WishList> findAllByUserId(int id);
+    Optional<WishList> findByUserId(int id);
 
     void remove(int id);
     void removeByProductId(int id);
