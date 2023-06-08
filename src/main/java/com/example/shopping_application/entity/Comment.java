@@ -2,9 +2,9 @@ package com.example.shopping_application.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.hibernate.annotations.CreationTimestamp;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * Created by Ashot Simonyan on 21.05.23.
@@ -21,8 +21,8 @@ public class Comment {
     @Column(nullable = false)
     private String comment;
     @Column(nullable = false)
-    @DateTimeFormat(pattern = "HH:ss dd/MM/yyyy")
-    private Date commentDateTime;
+    @CreationTimestamp
+    private LocalDateTime dateTime;
 
     @ManyToOne(optional = false)
     private User user;

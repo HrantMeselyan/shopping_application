@@ -1,16 +1,18 @@
 package com.example.shopping_application.service;
 
-import com.example.shopping_application.entity.Comment;
+import com.example.shopping_application.dto.commentDto.CommentRequestDto;
+import com.example.shopping_application.dto.commentDto.CommentResponseDto;
+import com.example.shopping_application.entity.User;
 
 import java.util.List;
 
 public interface CommentService {
 
-    List<Comment> findAllCategory();
+    List<CommentResponseDto> findAllCategory();
 
     void remove(int id);
 
-    void save(Comment comment);
+    void save(CommentRequestDto commentRequestDto, User user);
 
-    List<Comment> findAllByProductId(int id);
+    List<CommentResponseDto> findAllByProductId(int id);
 }

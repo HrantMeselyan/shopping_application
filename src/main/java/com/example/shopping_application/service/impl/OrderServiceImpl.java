@@ -1,14 +1,20 @@
 package com.example.shopping_application.service.impl;
 
+import com.example.shopping_application.dto.orderDto.OrderResponseDto;
 import com.example.shopping_application.entity.*;
-import com.example.shopping_application.repository.*;
+import com.example.shopping_application.mapper.OrderMapper;
+import com.example.shopping_application.repository.CartRepository;
+import com.example.shopping_application.repository.OrderItemRepository;
+import com.example.shopping_application.repository.OrderRepository;
+import com.example.shopping_application.repository.UserRepository;
 import com.example.shopping_application.service.OrderService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by Ashot Simonyan on 21.05.23.
@@ -18,14 +24,14 @@ import java.util.*;
 public class OrderServiceImpl implements OrderService {
     private final UserRepository userRepository;
     private final OrderRepository orderRepository;
-    private final ProductRepository productRepository;
     private final CartRepository cartRepository;
     private final OrderItemRepository orderItemRepository;
 
 
     @Override
-    public List<Order> findAllOrder() {
-        return orderRepository.findAll();
+    public List<OrderResponseDto> findAllOrder() {
+        List<Order> all = orderRepository.findAll();
+        return OrderMapper.findAll(all);
     }
 
     @Override

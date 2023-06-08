@@ -1,6 +1,7 @@
 package com.example.shopping_application.service.impl;
 
 import com.example.shopping_application.dto.productDto.CreateProductRequestDto;
+import com.example.shopping_application.dto.productDto.CreateProductResponseDto;
 import com.example.shopping_application.entity.Image;
 import com.example.shopping_application.entity.Product;
 import com.example.shopping_application.mapper.ProductMapper;
@@ -70,14 +71,15 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product findByUserId(int id) {
-        Optional<Product> allByUserId = productRepository.findAllByUser_Id(id);
-        return allByUserId.orElse(null);
+    public Product findBy_Id(int id) {
+        Optional<Product> byId = productRepository.findById(id);
+        return byId.get();
     }
 
     @Override
-    public Product findById(int id) {
+    public CreateProductResponseDto findById(int id) {
         Optional<Product> byId = productRepository.findById(id);
-        return byId.orElse(null);
+        return ProductMapper.map(byId.get());
     }
+
 }
