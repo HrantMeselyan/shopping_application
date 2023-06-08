@@ -26,7 +26,7 @@ public class OrderController {
 
     @PostMapping("/add")
     public String addOrder(@AuthenticationPrincipal CurrentUser currentUser, @RequestParam("productId") List<Integer> productIds) {
-        orderService.save(currentUser.getUser().getId(),productIds);
+        orderService.save(currentUser.getUser().getId(), productIds);
         return "redirect:/cart";
     }
 

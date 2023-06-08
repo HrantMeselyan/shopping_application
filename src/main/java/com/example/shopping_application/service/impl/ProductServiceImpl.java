@@ -1,7 +1,9 @@
 package com.example.shopping_application.service.impl;
 
+import com.example.shopping_application.dto.ProductDto.CreateProductRequestDto;
 import com.example.shopping_application.entity.Image;
 import com.example.shopping_application.entity.Product;
+import com.example.shopping_application.mapper.ProductMapper;
 import com.example.shopping_application.repository.ProductRepository;
 import com.example.shopping_application.security.CurrentUser;
 import com.example.shopping_application.service.ProductService;
@@ -15,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,6 +31,8 @@ public class ProductServiceImpl implements ProductService {
     private String imageUploadPath;
 
     private final ProductRepository productRepository;
+    private final ProductMapper productMapper;
+
 
     @Override
     public Page<Product> findAllProducts(Pageable pageable) {
@@ -48,7 +51,8 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public void save(Product product, MultipartFile[] files, CurrentUser currentUser) throws IOException {
+    public void save(CreateProductRequestDto productRequestDto, MultipartFile[] files, CurrentUser currentUser) throws IOException {
+        Product product = productMapper.map(productRequestDto);
         product.getCategories().removeIf(category -> category.getId() == 0);
         List<Image> imageList = new ArrayList<>();
         if (currentUser != null) {

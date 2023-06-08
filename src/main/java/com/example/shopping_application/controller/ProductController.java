@@ -1,6 +1,8 @@
 package com.example.shopping_application.controller;
 
+import com.example.shopping_application.dto.ProductDto.CreateProductRequestDto;
 import com.example.shopping_application.entity.Product;
+import com.example.shopping_application.mapper.ProductMapper;
 import com.example.shopping_application.security.CurrentUser;
 import com.example.shopping_application.service.CategoryService;
 import com.example.shopping_application.service.CommentService;
@@ -10,7 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -66,10 +67,10 @@ public class ProductController {
     }
 
     @PostMapping("/add")
-    public String addProduct(@ModelAttribute Product product,
+    public String addProduct(@ModelAttribute CreateProductRequestDto createProductRequestDto,
                              @AuthenticationPrincipal CurrentUser currentUser,
                              @RequestParam("files") MultipartFile[] files) throws IOException {
-        productService.save(product, files, currentUser);
+        productService.save(createProductRequestDto, files, currentUser);
         return "redirect:/";
     }
 
