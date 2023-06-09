@@ -1,9 +1,11 @@
 package com.example.shopping_application.service.impl;
 
+import com.example.shopping_application.dto.wishlistDto.WishlistResponseDto;
 import com.example.shopping_application.entity.Product;
 import com.example.shopping_application.entity.User;
 import com.example.shopping_application.entity.WishList;
 import com.example.shopping_application.mapper.UserMapper;
+import com.example.shopping_application.mapper.WishListMapper;
 import com.example.shopping_application.repository.ProductRepository;
 import com.example.shopping_application.repository.WishListRepository;
 import com.example.shopping_application.security.CurrentUser;
@@ -34,8 +36,9 @@ public class WishListServiceImpl implements WishListService {
     }
 
     @Override
-    public Optional<WishList> findByUserId(int id) {
-        return wishListRepository.findByUserId(id);
+    public WishlistResponseDto findByUserId(int id) {
+        WishList wishlist = wishListRepository.findByUserId(id).get();
+        return WishListMapper.map(wishlist);
     }
 
     @Override
