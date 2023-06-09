@@ -1,5 +1,6 @@
 package com.example.shopping_application.dto.userDto;
 
+import com.example.shopping_application.dto.addressDto.AddressDto;
 import com.example.shopping_application.entity.Address;
 import com.example.shopping_application.entity.Gender;
 import com.example.shopping_application.entity.Role;
@@ -28,5 +29,5 @@ public class UserDto {
     private String profilePic;
     private Role role;
     private Gender gender;
-    private List<Address> addresses;
+    private List<AddressDto> addresses;
 }

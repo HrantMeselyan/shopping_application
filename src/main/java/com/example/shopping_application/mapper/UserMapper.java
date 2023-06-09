@@ -1,10 +1,15 @@
 package com.example.shopping_application.mapper;
 
+import com.example.shopping_application.dto.addressDto.AddressDto;
 import com.example.shopping_application.dto.userDto.UserDto;
 import com.example.shopping_application.dto.userDto.UserRegisterDto;
 import com.example.shopping_application.dto.userDto.UserShortDto;
+import com.example.shopping_application.entity.Address;
 import com.example.shopping_application.entity.User;
 import com.example.shopping_application.security.CurrentUser;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Ashot Simonyan on 08.06.23.
@@ -52,7 +57,12 @@ public class UserMapper {
         user.setProfilePic(userDto.getProfilePic());
         user.setRole(userDto.getRole());
         user.setGender(userDto.getGender());
-        user.setAddresses(userDto.getAddresses());
+        List<AddressDto> addresses = userDto.getAddresses();
+        List<Address> addresses1 = new ArrayList<>();
+        for (AddressDto address : addresses) {
+            addresses1.add(AddressMapper.addressDtoToAddress(address));
+        }
+        user.setAddresses(addresses1);
         return user;
     }
 
@@ -96,11 +106,16 @@ public class UserMapper {
         userDto.setProfilePic(user.getProfilePic());
         userDto.setRole(user.getRole());
         userDto.setGender(user.getGender());
-        userDto.setAddresses(user.getAddresses());
+        List<Address> addresses = user.getAddresses();
+        List<AddressDto> addressDtos = new ArrayList<>();
+        for (Address address : addresses) {
+            addressDtos.add(AddressMapper.addressToAddressDto(address));
+        }
+        userDto.setAddresses(addressDtos);
         return userDto;
     }
 
-    public static User currentUserToUser (CurrentUser currentUser){
+    public static User currentUserToUser(CurrentUser currentUser) {
         if (currentUser != null) {
             return currentUser.getUser();
         }
