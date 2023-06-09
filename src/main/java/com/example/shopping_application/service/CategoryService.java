@@ -10,7 +10,7 @@ import java.util.Map;
 
 public interface CategoryService {
 
-    List<Category> findAllCategory();
+    List<CategoryDto> findAllCategory();
 
     void remove(int id);
 

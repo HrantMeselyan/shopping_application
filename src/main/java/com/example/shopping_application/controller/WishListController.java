@@ -1,9 +1,10 @@
 package com.example.shopping_application.controller;
 
+import com.example.shopping_application.dto.wishlistDto.WishlistDto;
+import com.example.shopping_application.dto.wishlistDto.WishlistResponseDto;
 import com.example.shopping_application.entity.WishList;
 import com.example.shopping_application.mapper.UserMapper;
 import com.example.shopping_application.security.CurrentUser;
-import com.example.shopping_application.service.ProductService;
 import com.example.shopping_application.service.WishListService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -20,28 +21,26 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class WishListController {
     private final WishListService wishListService;
-    private final ProductService productService;
 
 
     @GetMapping
     public String wishListPage(ModelMap modelMap,
                                @RequestParam("userid") int id) {
-        Optional<WishList> byUserId = wishListService.findByUserId(id);
-        byUserId.ifPresent(wishList -> modelMap.addAttribute("wishlistById", wishList));
+        modelMap.addAttribute("wishlistById", wishListService.findByUserId(id));
         return "wishlist";
     }
 
     @GetMapping("/add")
     public String addWishList(@RequestParam("productId") int productId,
                               @AuthenticationPrincipal CurrentUser currentUser) {
-        wishListService.save(productId,currentUser);
+        wishListService.save(productId, currentUser);
         return "redirect:/products";
     }
 
     @GetMapping("/remove")
     public String removeWishList(@RequestParam("id") int id,
                                  @AuthenticationPrincipal CurrentUser currentUser) {
-        wishListService.remove(id,currentUser);
+        wishListService.remove(id, currentUser);
         return "redirect:/wishList?userid=" + UserMapper.currentUserToUser(currentUser).getId();
     }
 }
