@@ -1,5 +1,6 @@
 package com.example.shopping_application.service;
 
+import com.example.shopping_application.dto.userDto.UserRegisterDto;
 import com.example.shopping_application.entity.User;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,4 +23,6 @@ public interface UserService {
     User findById(int id);
 
     User findByIdWithAddresses(int id);
+
+    User setUserEncodedPassword(UserRegisterDto userRegisterDto);
 }

@@ -2,7 +2,6 @@ package com.example.shopping_application.controller;
 
 import com.example.shopping_application.dto.userDto.UserDto;
 import com.example.shopping_application.dto.userDto.UserRegisterDto;
-import com.example.shopping_application.entity.Role;
 import com.example.shopping_application.entity.User;
 import com.example.shopping_application.mapper.UserMapper;
 import com.example.shopping_application.security.CurrentUser;
@@ -11,7 +10,6 @@ import com.example.shopping_application.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.Errors;
@@ -29,7 +27,6 @@ public class UserController {
 
     private final UserService userService;
 
-    private final PasswordEncoder passwordEncoder;
     private final NotificationService notificationService;
 
     @GetMapping("/register")
@@ -44,10 +41,7 @@ public class UserController {
         if (errors.hasErrors()) {
             return "register";
         }
-        User user = UserMapper.userRegisterDtoToUser(userRegisterDto);
-        String encodedPassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(encodedPassword);
-        user.setRole(Role.USER);
+        User user = userService.setUserEncodedPassword(userRegisterDto);
         userService.save(user);
         return "redirect:/";
     }

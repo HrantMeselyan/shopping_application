@@ -1,10 +1,14 @@
 package com.example.shopping_application.service.impl;
 
+import com.example.shopping_application.dto.userDto.UserRegisterDto;
+import com.example.shopping_application.entity.Role;
 import com.example.shopping_application.entity.User;
+import com.example.shopping_application.mapper.UserMapper;
 import com.example.shopping_application.repository.UserRepository;
 import com.example.shopping_application.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,6 +24,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
     @Value("${shopping-app.upload.image.path}")
     private String imageUploadPath;
 
@@ -81,6 +86,15 @@ public class UserServiceImpl implements UserService {
     public User findByIdWithAddresses(int id) {
         Optional<User> byId = userRepository.findById(id);
         return byId.get();
+    }
+
+    @Override
+    public User setUserEncodedPassword(UserRegisterDto userRegisterDto) {
+        User user = UserMapper.userRegisterDtoToUser(userRegisterDto);
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
+        user.setRole(Role.USER);
+        return user;
     }
 
     private void deleteProfilePicture(String existingProfilePic) {
