@@ -8,7 +8,9 @@ import com.example.shopping_application.entity.Image;
 import com.example.shopping_application.entity.Product;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ProductMapper {
     public static Product map(CreateProductRequestDto dto) {
@@ -80,6 +82,32 @@ public class ProductMapper {
         }
 
         return productDto;
+    }
+
+    public static Set<CreateProductResponseDto> mapToDto(Set<Product> entity) {
+        if (entity == null) {
+            return null;
+        }
+        Set<CreateProductResponseDto> productResponseDtoSet = new HashSet<>();
+        for (Product product : entity) {
+            CreateProductResponseDto productResponseDto = new CreateProductResponseDto();
+            productResponseDto.setId(product.getId());
+            productResponseDto.setName(product.getName());
+            productResponseDto.setProductCode(product.getProductCode());
+            productResponseDto.setDescription(product.getDescription());
+            productResponseDto.setPrice(product.getPrice());
+            List<Image> images = product.getImages();
+            if (images != null) {
+                productResponseDto.setImages(new ArrayList<>(images));
+            }
+            List<Category> categories = product.getCategories();
+            if (categories != null) {
+                productResponseDto.setCategories(new ArrayList<>(categories));
+            }
+
+            productResponseDtoSet.add(productResponseDto);
+        }
+        return productResponseDtoSet;
     }
 }
 

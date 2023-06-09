@@ -3,6 +3,9 @@ package com.example.shopping_application.mapper;
 import com.example.shopping_application.dto.categoryDto.CategoryDto;
 import com.example.shopping_application.entity.Category;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Ashot Simonyan on 08.06.23.
  */
@@ -29,5 +32,20 @@ public class CategoryMapper {
         categoryDto.setParentCategory(category.getParentCategory());
         categoryDto.setImage(category.getImage());
         return categoryDto;
+    }
+
+    public static List<CategoryDto> categoryDtoList(List<Category> categories) {
+        if (categories == null) {
+            return null;
+        }
+        List<CategoryDto> categoryDtoList = new ArrayList<>();
+        CategoryDto categoryDto = new CategoryDto();
+        for (Category category : categories) {
+            categoryDto.setImage(category.getImage());
+            categoryDto.setParentCategory(category.getParentCategory());
+            categoryDto.setName(category.getName());
+            categoryDtoList.add(categoryDto);
+        }
+        return categoryDtoList;
     }
 }
