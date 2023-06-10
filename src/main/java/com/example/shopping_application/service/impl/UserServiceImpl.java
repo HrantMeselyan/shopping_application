@@ -1,5 +1,6 @@
 package com.example.shopping_application.service.impl;
 
+import com.example.shopping_application.dto.userDto.UserDto;
 import com.example.shopping_application.dto.userDto.UserRegisterDto;
 import com.example.shopping_application.entity.Role;
 import com.example.shopping_application.entity.User;
@@ -53,19 +54,18 @@ public class UserServiceImpl implements UserService {
 
             user.setProfilePic(fileName);
             userRepository.save(user);
-            deleteProfilePicture(imgName);
         }
     }
 
     @Override
-    public void update(User user, MultipartFile multipartFile) throws IOException {
+    public void update(int id, UserDto userDto, MultipartFile multipartFile) throws IOException {
         if (multipartFile != null && !multipartFile.isEmpty()) {
             String fileName = System.nanoTime() + "_" + multipartFile.getOriginalFilename();
             File file = new File(imageUploadPath + fileName);
             multipartFile.transferTo(file);
-            user.setProfilePic(fileName);
+            userDto.setProfilePic(fileName);
+            userRepository.save(UserMapper.userDtoToUser(userDto));
         }
-        userRepository.save(user);
     }
 
     @Override
@@ -97,7 +97,7 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    private void deleteProfilePicture(String existingProfilePic) {
+    public void deleteProfilePicture(String existingProfilePic) {
         if (existingProfilePic != null) {
             File file = new File(imageUploadPath + existingProfilePic);
             if (file.exists()) {
