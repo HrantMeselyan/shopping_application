@@ -2,6 +2,8 @@ package com.example.shopping_application.service.impl;
 
 import com.example.shopping_application.dto.commentDto.CommentRequestDto;
 import com.example.shopping_application.dto.commentDto.CommentResponseDto;
+import com.example.shopping_application.entity.Comment;
+import com.example.shopping_application.entity.Product;
 import com.example.shopping_application.entity.User;
 import com.example.shopping_application.mapper.CommentMapper;
 import com.example.shopping_application.repository.CommentsRepository;
@@ -23,7 +25,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<CommentResponseDto> findAllCategory() {
-        return CommentMapper.map(commentsRepository.findAll());
+        return CommentMapper.commentRequestDtoToComment(commentsRepository.findAll());
     }
 
     @Override
@@ -32,12 +34,15 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void save(CommentRequestDto commentRequestDto, User user) {
-        commentsRepository.save(CommentMapper.map(commentRequestDto, user));
+    public void save(CommentRequestDto commentRequestDto, User user, Product product) {
+        Comment comment = CommentMapper.commentRequestDtoToComment(commentRequestDto);
+        comment.setUser(user);
+        comment.setProduct(product);
+        commentsRepository.save(comment);
     }
 
     @Override
     public List<CommentResponseDto> findAllByProductId(int id) {
-        return CommentMapper.map(commentsRepository.findAllByProduct_Id(id));
+        return CommentMapper.commentRequestDtoToComment(commentsRepository.findAllByProduct_Id(id));
     }
 }

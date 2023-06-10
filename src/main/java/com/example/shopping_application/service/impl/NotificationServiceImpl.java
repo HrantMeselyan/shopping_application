@@ -35,7 +35,9 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public void save(NotificationRequestDto notificationRequestDto, User user) {
-        notificationRepository.save(NotificationMapper.map(notificationRequestDto, user));
+        Notification notification = NotificationMapper.map(notificationRequestDto);
+        notification.setUser(user);
+        notificationRepository.save(notification);
     }
 
 }
