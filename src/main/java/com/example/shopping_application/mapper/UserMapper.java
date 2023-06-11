@@ -35,6 +35,7 @@ public class UserMapper {
             return null;
         }
         User user = new User();
+        user.setId(userShortDto.getId());
         user.setName(userShortDto.getName());
         user.setSurname(userShortDto.getSurname());
         user.setEmail(userShortDto.getEmail());
@@ -84,6 +85,7 @@ public class UserMapper {
             return null;
         }
         UserShortDto userShortDto = new UserShortDto();
+        userShortDto.setId(user.getId());
         userShortDto.setName(user.getName());
         userShortDto.setSurname(user.getSurname());
         userShortDto.setEmail(user.getEmail());
