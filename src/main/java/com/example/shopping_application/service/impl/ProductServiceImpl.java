@@ -79,7 +79,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public CreateProductResponseDto findById(int id) {
         Optional<Product> byId = productRepository.findById(id);
-        return ProductMapper.map(byId.get());
+        return ProductMapper.mapToResponseDto(byId.get());
     }
 
 }

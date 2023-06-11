@@ -1,5 +1,7 @@
 package com.example.shopping_application.mapper;
 
+import com.example.shopping_application.dto.categoryDto.CategoryDto;
+import com.example.shopping_application.dto.imageDto.ImageDto;
 import com.example.shopping_application.dto.productDto.CreateProductRequestDto;
 import com.example.shopping_application.dto.productDto.CreateProductResponseDto;
 import com.example.shopping_application.dto.productDto.ProductDto;
@@ -24,19 +26,28 @@ public class ProductMapper {
         product.setProductCode(dto.getProductCode());
         product.setDescription(dto.getDescription());
         product.setPrice(dto.getPrice());
-        List<Image> list = dto.getImages();
-        if (list != null) {
-            product.setImages(new ArrayList<Image>(list));
+        List<ImageDto> images = dto.getImages();
+        List<Image> images1 = new ArrayList<>();
+        for (ImageDto image : images) {
+            images1.add(ImageMapper.imageDtoToImage(image));
         }
-        List<Category> list1 = dto.getCategories();
-        if (list1 != null) {
-            product.setCategories(new ArrayList<Category>(list1));
+        if (images1 != null) {
+            product.setImages(new ArrayList<Image>(images1));
+        }
+
+        List<CategoryDto> categories = dto.getCategories();
+        List<Category> categories1 = new ArrayList<>();
+        for (CategoryDto category : categories) {
+            categories1.add(CategoryMapper.dtoToCategory(category));
+        }
+        if (categories1 != null) {
+            product.setCategories(new ArrayList<Category>(categories1));
         }
 
         return product;
     }
 
-    public static CreateProductResponseDto map(Product entity) {
+    public static CreateProductResponseDto mapToResponseDto(Product entity) {
         if (entity == null) {
             return null;
         }
@@ -49,15 +60,53 @@ public class ProductMapper {
         createProductResponseDto.setDescription(entity.getDescription());
         createProductResponseDto.setPrice(entity.getPrice());
         List<Image> list = entity.getImages();
-        if (list != null) {
-            createProductResponseDto.setImages(new ArrayList<Image>(list));
+        List<ImageDto> imageDtos = new ArrayList<>();
+        for (Image image : list) {
+            imageDtos.add(ImageMapper.imageToImageDto(image));
+        }
+        if (imageDtos != null) {
+            createProductResponseDto.setImages(imageDtos);
         }
         List<Category> list1 = entity.getCategories();
-        if (list1 != null) {
-            createProductResponseDto.setCategories(new ArrayList<Category>(list1));
+        List<CategoryDto> categoryDtos = new ArrayList<>();
+        for (Category category : list1) {
+            categoryDtos.add(CategoryMapper.categoryToDto(category));
+        }
+        if (categoryDtos != null) {
+            createProductResponseDto.setCategories(categoryDtos);
         }
 
         return createProductResponseDto;
+    }
+
+    public static CreateProductRequestDto mapToRequestDto(Product entity) {
+        if (entity == null) {
+            return null;
+        }
+
+        CreateProductRequestDto createProductRequestDto = new CreateProductRequestDto();
+
+        createProductRequestDto.setName(entity.getName());
+        createProductRequestDto.setProductCode(entity.getProductCode());
+        createProductRequestDto.setDescription(entity.getDescription());
+        createProductRequestDto.setPrice(entity.getPrice());
+        List<Image> list = entity.getImages();
+        List<ImageDto> imageDtos = new ArrayList<>();
+        for (Image image : list) {
+            imageDtos.add(ImageMapper.imageToImageDto(image));
+        }
+        if (imageDtos != null) {
+            createProductRequestDto.setImages(imageDtos);
+        }
+        List<Category> list1 = entity.getCategories();
+        List<CategoryDto> categoryDtos = new ArrayList<>();
+        for (Category category : list1) {
+            categoryDtos.add(CategoryMapper.categoryToDto(category));
+        }
+        if (categoryDtos != null) {
+            createProductRequestDto.setCategories(categoryDtos);
+        }
+        return createProductRequestDto;
     }
 
     public static ProductDto mapToDto(Product entity) {
@@ -73,12 +122,20 @@ public class ProductMapper {
         productDto.setDescription(entity.getDescription());
         productDto.setPrice(entity.getPrice());
         List<Image> list = entity.getImages();
-        if (list != null) {
-            productDto.setImages(new ArrayList<Image>(list));
+        List<ImageDto> imageDtos = new ArrayList<>();
+        for (Image image : list) {
+            imageDtos.add(ImageMapper.imageToImageDto(image));
+        }
+        if (imageDtos != null) {
+            productDto.setImages(imageDtos);
         }
         List<Category> list1 = entity.getCategories();
-        if (list1 != null) {
-            productDto.setCategories(new ArrayList<Category>(list1));
+        List<CategoryDto> categoryDtos = new ArrayList<>();
+        for (Category category : list1) {
+            categoryDtos.add(CategoryMapper.categoryToDto(category));
+        }
+        if (categoryDtos != null) {
+            productDto.setCategories(categoryDtos);
         }
 
         return productDto;
@@ -96,13 +153,21 @@ public class ProductMapper {
             productResponseDto.setProductCode(product.getProductCode());
             productResponseDto.setDescription(product.getDescription());
             productResponseDto.setPrice(product.getPrice());
-            List<Image> images = product.getImages();
-            if (images != null) {
-                productResponseDto.setImages(new ArrayList<>(images));
+            List<Image> list = product.getImages();
+            List<ImageDto> imageDtos = new ArrayList<>();
+            for (Image image : list) {
+                imageDtos.add(ImageMapper.imageToImageDto(image));
             }
-            List<Category> categories = product.getCategories();
-            if (categories != null) {
-                productResponseDto.setCategories(new ArrayList<>(categories));
+            if (imageDtos != null) {
+                productResponseDto.setImages(imageDtos);
+            }
+            List<Category> list1 = product.getCategories();
+            List<CategoryDto> categoryDtos = new ArrayList<>();
+            for (Category category : list1) {
+                categoryDtos.add(CategoryMapper.categoryToDto(category));
+            }
+            if (categoryDtos != null) {
+                productResponseDto.setCategories(categoryDtos);
             }
 
             productResponseDtoSet.add(productResponseDto);

@@ -1,5 +1,7 @@
 package com.example.shopping_application.dto.productDto;
 
+import com.example.shopping_application.dto.categoryDto.CategoryDto;
+import com.example.shopping_application.dto.imageDto.ImageDto;
 import com.example.shopping_application.entity.Category;
 import com.example.shopping_application.entity.Image;
 import lombok.AllArgsConstructor;
@@ -17,6 +19,6 @@ public class CreateProductRequestDto {
     private String productCode;
     private String description;
     private double price;
-    private List<Image> images;
-    private List<Category> categories;
+    private List<ImageDto> images;
+    private List<CategoryDto> categories;
 }

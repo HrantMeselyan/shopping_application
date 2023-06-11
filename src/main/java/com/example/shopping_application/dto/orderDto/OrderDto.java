@@ -22,5 +22,5 @@ public class OrderDto {
     private double totalAmount;
     private Status status;
     private User user;
-    private List<OrderItem> orderItems;
+    private List<OrderItemDto> orderItems;
 }
