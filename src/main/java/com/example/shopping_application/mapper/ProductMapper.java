@@ -26,15 +26,6 @@ public class ProductMapper {
         product.setProductCode(dto.getProductCode());
         product.setDescription(dto.getDescription());
         product.setPrice(dto.getPrice());
-        List<ImageDto> images = dto.getImages();
-        List<Image> images1 = new ArrayList<>();
-        for (ImageDto image : images) {
-            images1.add(ImageMapper.imageDtoToImage(image));
-        }
-        if (images1 != null) {
-            product.setImages(new ArrayList<Image>(images1));
-        }
-
         List<CategoryDto> categories = dto.getCategories();
         List<Category> categories1 = new ArrayList<>();
         for (CategoryDto category : categories) {
