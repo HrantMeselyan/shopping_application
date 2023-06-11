@@ -87,7 +87,8 @@ public class UserController {
     public String updateUser(@PathVariable("id") int id,
                              @ModelAttribute UserDto userDto,
                              @RequestParam("profile_pic") MultipartFile multipartFile) throws IOException {
-        userService.update(id,userDto, multipartFile);
+        User user = UserMapper.userDtoToUser(userDto);
+        userService.update(user, multipartFile);
         return "redirect:/user/admin/all";
     }
 

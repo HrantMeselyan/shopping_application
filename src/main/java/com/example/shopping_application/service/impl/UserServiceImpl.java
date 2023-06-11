@@ -58,13 +58,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void update(int id, UserDto userDto, MultipartFile multipartFile) throws IOException {
+    public void update(User user, MultipartFile multipartFile) throws IOException {
         if (multipartFile != null && !multipartFile.isEmpty()) {
             String fileName = System.nanoTime() + "_" + multipartFile.getOriginalFilename();
             File file = new File(imageUploadPath + fileName);
             multipartFile.transferTo(file);
-            userDto.setProfilePic(fileName);
-            userRepository.save(UserMapper.userDtoToUser(userDto));
+            user.setProfilePic(fileName);
+            userRepository.save(user);
         }
     }
 
