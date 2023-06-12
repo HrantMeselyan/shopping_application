@@ -17,6 +17,7 @@ public class CategoryMapper {
             return null;
         }
         Category category = new Category();
+        category.setId(categoryDto.getId());
         category.setName(categoryDto.getName());
         category.setParentCategory(categoryDto.getParentCategory());
         category.setImage(categoryDto.getImage());
@@ -39,8 +40,9 @@ public class CategoryMapper {
             return null;
         }
         List<CategoryDto> categoryDtoList = new ArrayList<>();
-        CategoryDto categoryDto = new CategoryDto();
         for (Category category : categories) {
+            CategoryDto categoryDto = new CategoryDto();
+            categoryDto.setId(category.getId());
             categoryDto.setImage(category.getImage());
             categoryDto.setParentCategory(category.getParentCategory());
             categoryDto.setName(category.getName());
@@ -48,4 +50,5 @@ public class CategoryMapper {
         }
         return categoryDtoList;
     }
+
 }

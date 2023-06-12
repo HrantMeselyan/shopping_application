@@ -14,6 +14,7 @@ import java.util.List;
 public interface ProductService {
 
     Page<Product> findAllProducts(Pageable pageable);
+
     List<Product> findAll();
 
     void remove(int id);

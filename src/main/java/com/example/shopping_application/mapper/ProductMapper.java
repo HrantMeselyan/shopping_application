@@ -27,12 +27,12 @@ public class ProductMapper {
         product.setDescription(dto.getDescription());
         product.setPrice(dto.getPrice());
         List<CategoryDto> categories = dto.getCategories();
-        List<Category> categories1 = new ArrayList<>();
+        List<Category> categoriesList = new ArrayList<>();
         for (CategoryDto category : categories) {
-            categories1.add(CategoryMapper.dtoToCategory(category));
+            categoriesList.add(CategoryMapper.dtoToCategory(category));
         }
-        if (categories1 != null) {
-            product.setCategories(new ArrayList<Category>(categories1));
+        if (categoriesList != null) {
+            product.setCategories(new ArrayList<Category>(categoriesList));
         }
 
         return product;
