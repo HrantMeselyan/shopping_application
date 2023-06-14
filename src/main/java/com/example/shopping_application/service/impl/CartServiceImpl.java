@@ -36,7 +36,7 @@ public class CartServiceImpl implements CartService {
     @Override
     @Transactional
     public void save(int id, CurrentUser currentUser) {
-        Optional<Cart> cartOptional = cartRepository.findAllByUser_Id(UserMapper.currentUserToUser(currentUser).getId());
+        Optional<Cart> cartOptional = cartRepository.findAllByUser_Id(currentUser.getUser().getId());
         Cart cart;
         if (cartOptional.isPresent()) {
             cart = cartOptional.get();
@@ -56,8 +56,12 @@ public class CartServiceImpl implements CartService {
 
                 if (existingCartItem != null) {
                     existingCartItem.setCount(existingCartItem.getCount() + 1);
+                    existingCartItem.getProduct().setCount(product.getCount() - 1);
                     cartItemRepository.save(existingCartItem);
                 } else {
+                    product.setCount(product.getCount() - 1);
+                    productRepository.save(product);
+
                     CartItem cartItem = new CartItem();
                     cartItem.setCount(1);
                     cartItem.setProduct(product);
@@ -75,6 +79,8 @@ public class CartServiceImpl implements CartService {
 
             if (productOptional.isPresent()) {
                 Product product = productOptional.get();
+                product.setCount(product.getCount() - 1);
+                productRepository.save(product);
                 CartItem cartItem = new CartItem();
                 cartItem.setCount(1);
                 cartItem.setProduct(product);
