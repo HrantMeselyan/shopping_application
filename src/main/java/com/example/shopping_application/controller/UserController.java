@@ -79,7 +79,7 @@ public class UserController {
     @GetMapping("update")
     public String updateUserPage(@RequestParam("id") int id,
                                  ModelMap modelMap) {
-        modelMap.addAttribute("user", userService.findById(id));
+        modelMap.addAttribute("user", UserMapper.userToUserDto(userService.findById(id)));
         return "updateUser";
     }
 

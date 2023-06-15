@@ -17,8 +17,17 @@
         <input id="surname" type="text" name="surname" th:value="${user.surname}"><br>
         <label for="email">Email:</label>
         <input id="email" type="text" name="email" th:value="${user.email}"><br>
-        <label for="address">Address:</label>
-        <input id="address" type="text" name="address" th:value="${user.addresses}"><br>
+        //add some logic
+
+
+        <div th:if="${user.addresses.size() == 0}">
+            <label for="address1">Address: </label>
+            <input id="address1" type="text" name="address"><br>
+        </div>
+        <div th:each="address : ${user.addresses}">
+            <label for="address" th:text="'Address: ' + ${user.addresses.indexOf(address)}">Address:</label>
+            <input id="address" type="text" name="address" th:value="${address}"><br>
+        </div>
         <label for="gender">Gender:</label>
         <select name="gender" id="gender">
             <option value="MALE">Male</option>

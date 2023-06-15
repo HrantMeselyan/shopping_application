@@ -1,5 +1,6 @@
 package com.example.shopping_application.controller;
 
+import com.example.shopping_application.dto.categoryDto.CategoryDto;
 import com.example.shopping_application.dto.productDto.CreateProductRequestDto;
 import com.example.shopping_application.entity.Product;
 import com.example.shopping_application.security.CurrentUser;
@@ -64,7 +65,8 @@ public class ProductController {
 
     @GetMapping("/add")
     public String addProductPage(ModelMap modelMap) {
-        modelMap.addAttribute("categories", categoryService.findAllCategory());
+        List<CategoryDto> allCategory = categoryService.findAllCategory();
+        modelMap.addAttribute("categories", allCategory);
         return "addProducts";
     }
 
