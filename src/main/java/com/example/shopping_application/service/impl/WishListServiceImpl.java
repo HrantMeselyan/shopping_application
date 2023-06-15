@@ -60,6 +60,7 @@ public class WishListServiceImpl implements WishListService {
                 wishListRepository.save(wishList);
             }
         }
+
     }
 
 
