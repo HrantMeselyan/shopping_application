@@ -1,5 +1,7 @@
 package com.example.shopping_application.controller;
 
+import com.example.shopping_application.mapper.OrderMapper;
+import com.example.shopping_application.mapper.UserMapper;
 import com.example.shopping_application.security.CurrentUser;
 import com.example.shopping_application.service.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -19,8 +21,10 @@ public class OrderController {
 
 
     @GetMapping
-    public String orderPage(ModelMap modelMap) {
-        modelMap.addAttribute("orders", orderService.findAllOrder());
+    public String orderPage(ModelMap modelMap,
+                            @AuthenticationPrincipal CurrentUser currentUser) {
+//        modelMap.addAttribute("order", OrderMapper.orderToOrderDto(orderService
+//                .findByUserId((UserMapper.currentUserToUser(currentUser)).getId())));
         return "checkout";
     }
 
