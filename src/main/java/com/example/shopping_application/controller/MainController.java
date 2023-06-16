@@ -60,6 +60,6 @@ public class MainController {
     @GetMapping("/search")
     public String searchPage(@RequestParam("value") String value, ModelMap modelMap) {
         modelMap.addAttribute("results", mainService.search(value));
-        return "resultPage";
+        return "result";
     }
 }
