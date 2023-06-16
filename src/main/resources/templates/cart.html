@@ -20,8 +20,6 @@
                                 </a></h3>
                                     <input type="hidden" id="cartItemInput" name="cartItemId"
                                            th:value="${cartItem.id}">
-                                    <input type="hidden" id="productInput" name="productId"
-                                           th:value="${cartItem.product.id}">
                                     <div class="small"><span class="text-muted me-2">Size:</span>XL</div>
                                     <div class="small"><span class="text-muted me-2">Color:</span>White &amp; Blue</div>
                                     <div class="lead pt-1" th:text="${cartItem.product.price}">$154.00</div>
@@ -35,7 +33,8 @@
                                         <div class="inc qty-btn qty_btn"><i class="bi bi-caret-down-fill"></i></div>
                                     </div>
                                     <form action="/cart/remove" method="post">
-                                        <input type="hidden" name="productId" th:value="${cartItem.product.id}">
+                                        <input type="hidden" name="countRemove" th:value="${cartItem.count}">
+                                        <input type="hidden" name="productRemoveId" th:value="${cartItem.product.id}">
                                         <button class="btn btn-link px-0 text-danger ms-auto" type="submit"><i
                                                 class="bi-trash3 me-2"></i><span class="">Remove</span></button>
                                     </form>
@@ -50,7 +49,7 @@
                     <input id="hiddenCountInput" type="hidden" name="count" value="">
                     <input id="hiddenCartInput" type="hidden" name="cartItem" value="">
                     <button class="btn btn-primary d-block w-100 mt-4" type="submit"><i
-                            class="bi-credit-card-2-back me-2"></i>Order
+                            class="bi-arrow-repeat fs-base me-2"></i>Update
                     </button>
                 </form>
 
