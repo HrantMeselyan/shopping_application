@@ -54,8 +54,8 @@ public class MainController {
         return "redirect:/";
     }
 
-    @GetMapping("/search/{value}")
-    public String searchPage(@PathVariable("value") String value, ModelMap modelMap) {
+    @PostMapping ("/search")
+    public String searchPage(@RequestParam("value") String value, ModelMap modelMap) {
         modelMap.addAttribute("results", mainService.search(value));
         return "result";
     }

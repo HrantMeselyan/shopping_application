@@ -98,8 +98,8 @@
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
-        <form class="position-relative w-100">
-            <div class="input-group"><!-- Search input --> <input class="form-control shadow-none" type="text"
+        <form class="position-relative w-100" action="/search" method="post">
+            <div class="input-group"><!-- Search input --> <input class=" shadow-none" type="text"
                                                                   name="search" placeholder="What are you looking for?">
                 <!-- Search button -->
                 <button type="button" class="btn btn-primary shadow-none"><i class="fi-search"></i></button>
@@ -500,7 +500,7 @@
                                                                                               href="https://www.pxdraft.com/wrap/shopapp/index.html"><img
                             src="/img/logo-light.svg" title="" alt=""> </a><!-- Logo --></div>
                     <div class="col-lg-6 d-lg-block collapse h-search" id="header_06_search">
-                        <form><!-- Search input --> <input class="form-control" type="text" name="search"
+                        <form action="/search" method="post"><!-- Search input --> <input class="form-control" type="text" name="value"
                                                            placeholder="What are you looking for?">
                             <!-- Search button -->
                             <button type="button" class="btn shadow-none"><i class="fi-search"></i></button>
