@@ -53,6 +53,27 @@ public class ProductController {
         return "products";
     }
 
+    @GetMapping("/list")
+    public String productListPage(ModelMap modelMap,
+                              @RequestParam("page") Optional<Integer> page,
+                              @RequestParam("size") Optional<Integer> size) {
+        int currentPage = page.orElse(1);
+        int pageSize = size.orElse(5);
+        Pageable pageable = PageRequest.of(currentPage - 1, pageSize);
+        Page<Product> result = productService.findAllProducts(pageable);
+        int totalPages = result.getTotalPages();
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                    .boxed()
+                    .collect(Collectors.toList());
+            modelMap.addAttribute("pageNumbers", pageNumbers);
+        }
+        modelMap.addAttribute("totalPages", totalPages);
+        modelMap.addAttribute("currentPage", currentPage);
+        modelMap.addAttribute("products", result);
+        return "products-list";
+    }
+
     @GetMapping("{id}")
     public String currentProductPage(ModelMap modelmap,
                                      @PathVariable("id") int id) {

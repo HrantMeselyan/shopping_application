@@ -35,6 +35,12 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public Order findByUserId(int id) {
+        Optional<Order> byUserId = orderRepository.findByUserId(id);
+        return byUserId.orElse(null);
+    }
+
+    @Override
     public void remove(int id) {
         orderRepository.deleteById(id);
     }
