@@ -17,6 +17,7 @@ public class CartMapper {
         List<CartItemDto> cartItemDTOs = new ArrayList<>();
         for (CartItem cartItem : cart.getCartItems()) {
             CartItemDto cartItemDto = new CartItemDto();
+            cartItemDto.setId(cartItem.getId());
             cartItemDto.setCount(cartItem.getCount());
             ProductDto productDto = ProductMapper.mapToDto(cartItem.getProduct());
             cartItemDto.setProduct(productDto);
@@ -39,6 +40,7 @@ public class CartMapper {
             for (CartItem cartItem : cart.getCartItems()) {
                 CartItemDto cartItemDto = new CartItemDto();
                 cartItemDto.setCount(cartItem.getCount());
+                cartItemDto.setId(cartItem.getId());
                 ProductDto productDto = ProductMapper.mapToDto(cartItem.getProduct());
                 cartItemDto.setProduct(productDto);
                 cartItemDtoList.add(cartItemDto);

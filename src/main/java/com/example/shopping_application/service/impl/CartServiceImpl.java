@@ -4,6 +4,7 @@ import com.example.shopping_application.dto.cartDto.CartDto;
 import com.example.shopping_application.entity.Cart;
 import com.example.shopping_application.entity.CartItem;
 import com.example.shopping_application.entity.Product;
+import com.example.shopping_application.entity.User;
 import com.example.shopping_application.mapper.CartMapper;
 import com.example.shopping_application.mapper.UserMapper;
 import com.example.shopping_application.repository.CartItemRepository;
@@ -96,8 +97,27 @@ public class CartServiceImpl implements CartService {
 
     @Override
     @Transactional
-    public void remove(int id, int productId) {
-        Optional<Cart> byId = cartRepository.findAllByUser_Id(id);
+    public void remove(int cartId, int productId, int count) {
+        Optional<Cart> byId = cartRepository.findAllByUser_Id(cartId);
+        Optional<Product> productById = productRepository.findById(productId);
+        if (productById.isPresent()) {
+            Product product = productById.get();
+            product.setCount(product.getCount() + count);
+        }
         cartItemRepository.deleteByCart_IdAndProduct_Id(byId.get().getId(), productId);
+    }
+
+    @Override
+    public void update(int count, int cartItemId) {
+        Optional<CartItem> cartItemOptional = cartItemRepository.findById(cartItemId);
+        if (cartItemOptional.isPresent()) {
+            CartItem cartItem = cartItemOptional.get();
+            cartItem.setCount(count);
+            cartItemRepository.save(cartItem);
+            Optional<Product> productOptional = productRepository.findById(cartItem.getProduct().getId());
+            Product product = productOptional.get();
+            product.setCount(product.getCount() - count);
+            productRepository.save(product);
+        }
     }
 }
