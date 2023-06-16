@@ -1,6 +1,8 @@
 package com.example.shopping_application.service.impl;
 
 
+import com.example.shopping_application.entity.Product;
+import com.example.shopping_application.repository.ProductRepository;
 import com.example.shopping_application.service.MainService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.IOUtils;
@@ -10,10 +12,13 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class MainImpl implements MainService {
+    private final ProductRepository productRepository;
+
     @Value("${shopping-app.upload.image.path}")
     private String imageUploadPath;
 
@@ -25,5 +30,11 @@ public class MainImpl implements MainService {
             return IOUtils.toByteArray(fis);
         }
         return null;
+    }
+
+    @Override
+    public List<Product> search(String value) {
+        List<Product> byNameContainingIgnoreCase = productRepository.findByNameContainingIgnoreCase(value);
+        return byNameContainingIgnoreCase;
     }
 }
