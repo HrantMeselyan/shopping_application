@@ -1247,7 +1247,7 @@
                             </div>
                         </div>
                         <div class="row g-3"><!-- Product Box -->
-                            <div class="col-sm-6 col-lg-4" th:each="product : ${results.content}">
+                            <div class="col-sm-6 col-lg-4" th:each="product : ${results}">
                                 <div class="product-card-1">
                                     <div class="product-card-image">
                                         <div class="badge-ribbon"><span class="badge bg-danger">Sale</span></div>
@@ -1288,26 +1288,7 @@
                                     </div>
                                 </div>
                             </div><!-- End Product Box --></div>
-                        <!-- end products-->
-                        <div class="shop-bottom-bar d-flex align-items-center mt-3" th:if="${products.totalPages > 0}">
-                            <div>Showing: 1 - 12 of 17</div>
-                            <div class="ms-auto">
-                                <!-- Previous button -->
-                                <ul class="pagination">
-                                    <li class="page-item"><a class="page-link" th:if="${currentPage > 1}" th:href="@{/products(page=${currentPage - 1},size=${products.size})}"
-                                                             aria-label="Previous"><span
-                                            aria-hidden="true">&laquo;</span></a></li>
-                                    <li class="page-item" th:each="pageNumber : ${pageNumbers}"
-                                        th:class="${pageNumber==products.number + 1} ? active">
-                                        <a class="page-link"
-                                           th:href="@{/products(size=${products.size}, page=${pageNumber})}"
-                                           aria-label="Previous" th:text="${pageNumber}"></a></li>
-                                    <li class="page-item"><a class="page-link" th:if="${currentPage < totalPages}" th:href="@{/products(page=${currentPage + 1},size=${products.size})}"
-                                                             aria-label="Next"><span
-                                            aria-hidden="true">&raquo;</span></a></li>
-                                </ul>
-                            </div>
-                        </div>
+
                     </div><!-- End Product Box --></div>
             </div>
         </section><!-- End Shop --></main><!-- End Main --><!-- Footer -->
