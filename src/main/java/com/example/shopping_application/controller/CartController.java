@@ -28,7 +28,7 @@ public class CartController {
     }
 
     @PostMapping("/remove")
-    public String removeFromCart(@RequestParam("count") int count, @AuthenticationPrincipal CurrentUser currentUser, @RequestParam("productId") int productId) {
+    public String removeFromCart(@RequestParam("countRemove") int count, @AuthenticationPrincipal CurrentUser currentUser, @RequestParam("productRemoveId") int productId) {
         cartService.remove(currentUser.getUser().getId(), productId, count);
         return "redirect:/cart";
     }
