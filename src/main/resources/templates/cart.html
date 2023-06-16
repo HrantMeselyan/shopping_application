@@ -11,12 +11,17 @@
                     <th:block th:each="cartItem:${cart.getCartItems()}">
                         <div class="d-flex align-items-center flex-row w-100 pb-3 mb-3 border-bottom"><a
                                 class="d-inline-block flex-shrink-0 me-3" href="shop-cart.html#"><img
-                                th:src="@{/getImage(profilePic=${cartItem.product.images[0].image})}" width="120" alt="Product"></a>
+                                th:src="@{/getImage(profilePic=${cartItem.product.images[0].image})}" width="120"
+                                alt="Product"></a>
                             <div class="d-flex flex-column flex-sm-row col">
                                 <div class="pe-sm-2"><h3 class="product-title fs-5 mb-1"><a class="text-reset"
                                                                                             href="shop-cart.html#"
                                                                                             th:text="${cartItem.product.name}">
                                 </a></h3>
+                                    <input type="hidden" id="cartItemInput" name="cartItemId"
+                                           th:value="${cartItem.id}">
+                                    <input type="hidden" id="productInput" name="productId"
+                                           th:value="${cartItem.product.id}">
                                     <div class="small"><span class="text-muted me-2">Size:</span>XL</div>
                                     <div class="small"><span class="text-muted me-2">Color:</span>White &amp; Blue</div>
                                     <div class="lead pt-1" th:text="${cartItem.product.price}">$154.00</div>
@@ -25,8 +30,8 @@
                                         class="form-label d-none d-sm-inline-block">Quantity</label>
                                     <div class="cart-qty-01">
                                         <div class="dec qty-btn qty_btn"><i class="bi bi-caret-up-fill"></i></div>
-                                        <input class="cart-qty-input form-control" type="text" name="qtybutton"
-                                               value="1">
+                                        <input id="countInput" class="cart-qty-input form-control" type="text"
+                                               name="count" th:value="${cartItem.count}">
                                         <div class="inc qty-btn qty_btn"><i class="bi bi-caret-down-fill"></i></div>
                                     </div>
                                     <form action="/cart/remove" method="post">
@@ -37,13 +42,18 @@
                                 </div>
                             </div>
                         </div>
+
                     </th:block>
                 </block>
-                <form action="/order/add" method="POST">
+
+                <form action="/cart/update" method="POST" onsubmit="updateCount(event)">
+                    <input id="hiddenCountInput" type="hidden" name="count" value="">
+                    <input id="hiddenCartInput" type="hidden" name="cartItem" value="">
                     <button class="btn btn-primary d-block w-100 mt-4" type="submit"><i
                             class="bi-credit-card-2-back me-2"></i>Order
                     </button>
                 </form>
+
             </div><!-- Cart Sidebar -->
             <div class="col-lg-4 ps-xl-7"><!-- Shipping estimates -->
                 <div class="card mb-4">
@@ -97,21 +107,42 @@
                                 <h6 class="me-2">Grand Total</h6><span class="text-end text-mode">$265.00</span>
                             </li>
                         </ul>
+
                         <div class="pt-2 pb-4">
                             <div class="d-flex"><input type="text" name="promo" placeholder="Apply promo code"
                                                        class="form-control form-control-sm">
                                 <button class="btn btn-dark btn-sm ms-2">Apply</button>
                             </div>
                         </div>
-                        <div class="d-grid gap-2 mx-auto"><a class="btn btn-primary"
-                                                             href="https://www.pxdraft.com/wrap/shopapp/html/account/checkout-shipping.html"><i
-                                class="bi-credit-card-2-back me-2"></i> Proceed to Checkout</a></div>
+                        <form action="/order/add" method="POST">
+                            <button class="btn btn-primary d-block w-100 mt-4" type="submit"><i
+                                    class="bi-credit-card-2-back me-2"></i>Proceed to Checkout
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section></main><!-- End Main --><!-- Footer -->
+<script>
+    function updateCount(event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        // Get the updated count value
+        var count = document.getElementById('countInput').value;
+
+        // Assign the count value to the hidden input field
+        document.getElementById('hiddenCountInput').value = count;
+
+        var cartItemId = document.getElementById('cartItemInput').value;
+        document.getElementById('hiddenCartInput').value = cartItemId;
+
+        // Submit the form
+        event.target.submit();
+    }
+
+</script>
 <block th:include="fragment/footer::footer"></block>
 </body>
 </html>

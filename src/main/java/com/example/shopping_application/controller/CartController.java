@@ -17,7 +17,7 @@ public class CartController {
 
     @GetMapping()
     public String cartPage(ModelMap modelMap, @AuthenticationPrincipal CurrentUser currentUser) {
-        modelMap.addAttribute("carts", cartService.findAllByUser_id(UserMapper.currentUserToUser(currentUser).getId()));
+        modelMap.addAttribute("carts", cartService.findAllByUser_id(currentUser.getUser().getId()));
         return "cart";
     }
 
@@ -28,8 +28,14 @@ public class CartController {
     }
 
     @PostMapping("/remove")
-    public String removeFromCart(@AuthenticationPrincipal CurrentUser currentUser, @RequestParam("productId") int productId) {
-        cartService.remove(UserMapper.currentUserToUser(currentUser).getId(), productId);
+    public String removeFromCart(@RequestParam("count") int count, @AuthenticationPrincipal CurrentUser currentUser, @RequestParam("productId") int productId) {
+        cartService.remove(currentUser.getUser().getId(), productId, count);
+        return "redirect:/cart";
+    }
+
+    @PostMapping("/update")
+    public String cartUpdate(@RequestParam("count") int count, @RequestParam("cartItem") int cartItemId, @AuthenticationPrincipal CurrentUser currentUser) {
+        cartService.update(count, cartItemId);
         return "redirect:/cart";
     }
 }
