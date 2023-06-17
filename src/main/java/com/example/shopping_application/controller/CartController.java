@@ -1,13 +1,17 @@
 package com.example.shopping_application.controller;
 
-import com.example.shopping_application.mapper.UserMapper;
 import com.example.shopping_application.security.CurrentUser;
 import com.example.shopping_application.service.CartService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/cart")
@@ -34,8 +38,21 @@ public class CartController {
     }
 
     @PostMapping("/update")
-    public String cartUpdate(@RequestParam("count") int count, @RequestParam("cartItem") int cartItemId, @AuthenticationPrincipal CurrentUser currentUser) {
-        cartService.update(count, cartItemId);
+    public String updateCartItemCounts(@RequestParam("count") String countJson,
+                                       @RequestParam("cartItem") String cartItemJson) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            List<Integer> counts = objectMapper.readValue(countJson, new TypeReference<List<Integer>>() {
+            });
+            List<Integer> cartItemIds = objectMapper.readValue(cartItemJson, new TypeReference<List<Integer>>() {
+            });
+
+            cartService.updateCartItemCounts(cartItemIds, counts);
+
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
         return "redirect:/cart";
     }
+
 }

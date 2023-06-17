@@ -108,16 +108,16 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void update(int count, int cartItemId) {
-        Optional<CartItem> cartItemOptional = cartItemRepository.findById(cartItemId);
-        if (cartItemOptional.isPresent()) {
-            CartItem cartItem = cartItemOptional.get();
-            cartItem.setCount(count);
-            cartItemRepository.save(cartItem);
+    public void updateCartItemCounts(List<Integer> cartItemIds, List<Integer> counts) {
+        for (int i = 0; i < cartItemIds.size(); i++) {
+            Optional<CartItem> byId = cartItemRepository.findById(cartItemIds.get(i));
+            CartItem cartItem = byId.get();
             Optional<Product> productOptional = productRepository.findById(cartItem.getProduct().getId());
             Product product = productOptional.get();
-            product.setCount(product.getCount() - count);
+            product.setCount((product.getCount() - counts.get(i)) + cartItem.getCount());
             productRepository.save(product);
+            cartItem.setCount(counts.get(i));
+            cartItemRepository.save(cartItem);
         }
     }
 }
