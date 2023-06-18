@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -67,22 +66,18 @@ public class MainController {
 
     @GetMapping("/search")
     public String searchPage(@RequestParam("value") String value,
-                             ModelMap modelMap,
-                             @RequestParam("page") Optional<Integer> page,
-                             @RequestParam("size") Optional<Integer> size) {
-        int currentPage = page.orElse(1);
-        int pageSize = size.orElse(9);
-        Pageable pageable = PageRequest.of(currentPage - 1, pageSize);
+                             @RequestParam(value = "page", defaultValue = "1") Integer page,
+                             @RequestParam(value = "size", defaultValue = "2") Integer size, ModelMap modelMap) {
+        Pageable pageable = PageRequest.of(page - 1, size);
         Page<Product> result = productService.findByName(value, pageable);
         int totalPages = result.getTotalPages();
         if (totalPages > 0) {
             List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
-                    .boxed()
-                    .collect(Collectors.toList());
+                    .boxed().toList();
             modelMap.addAttribute("pageNumbers", pageNumbers);
         }
         modelMap.addAttribute("totalPages", totalPages);
-        modelMap.addAttribute("currentPage", currentPage);
+        modelMap.addAttribute("currentPage", page);
         modelMap.addAttribute("products", result);
         modelMap.addAttribute("value", value);
         return "result";

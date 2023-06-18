@@ -39,7 +39,7 @@ public class CartController {
 
     @PostMapping("/update")
     public String updateCartItemCounts(@RequestParam("count") String countJson,
-                                       @RequestParam("cartItem") String cartItemJson, ModelMap modelMap) {
+                                       @RequestParam("cartItem") String cartItemJson, ModelMap modelMap, @AuthenticationPrincipal CurrentUser currentUser) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             List<Integer> counts = objectMapper.readValue(countJson, new TypeReference<List<Integer>>() {
@@ -47,12 +47,14 @@ public class CartController {
             List<Integer> cartItemIds = objectMapper.readValue(cartItemJson, new TypeReference<List<Integer>>() {
             });
 
-            cartService.updateCartItemCounts(cartItemIds, counts);
+            boolean isValid = cartService.updateCartItemCounts(cartItemIds, counts);
+            modelMap.addAttribute("carts", cartService.findAllByUser_id(currentUser.getUser().getId()));
+            modelMap.addAttribute("isValid", isValid);
 
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        return "redirect:/cart";
+        return "cart";
     }
 
 }
