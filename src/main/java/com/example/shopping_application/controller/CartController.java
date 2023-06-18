@@ -39,7 +39,7 @@ public class CartController {
 
     @PostMapping("/update")
     public String updateCartItemCounts(@RequestParam("count") String countJson,
-                                       @RequestParam("cartItem") String cartItemJson) {
+                                       @RequestParam("cartItem") String cartItemJson, ModelMap modelMap) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             List<Integer> counts = objectMapper.readValue(countJson, new TypeReference<List<Integer>>() {

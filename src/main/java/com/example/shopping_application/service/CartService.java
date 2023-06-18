@@ -13,5 +13,5 @@ public interface CartService {
 
     void remove(int id, int productId, int count);
 
-    void updateCartItemCounts(List<Integer> cartItemIds, List<Integer> counts);
+    boolean updateCartItemCounts(List<Integer> cartItemIds, List<Integer> counts);
 }
