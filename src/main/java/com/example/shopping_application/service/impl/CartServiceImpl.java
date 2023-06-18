@@ -4,7 +4,6 @@ import com.example.shopping_application.dto.cartDto.CartDto;
 import com.example.shopping_application.entity.Cart;
 import com.example.shopping_application.entity.CartItem;
 import com.example.shopping_application.entity.Product;
-import com.example.shopping_application.entity.User;
 import com.example.shopping_application.mapper.CartMapper;
 import com.example.shopping_application.mapper.UserMapper;
 import com.example.shopping_application.repository.CartItemRepository;
@@ -12,9 +11,9 @@ import com.example.shopping_application.repository.CartRepository;
 import com.example.shopping_application.repository.ProductRepository;
 import com.example.shopping_application.security.CurrentUser;
 import com.example.shopping_application.service.CartService;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,7 +106,9 @@ public class CartServiceImpl implements CartService {
         cartItemRepository.deleteByCart_IdAndProduct_Id(byId.get().getId(), productId);
     }
 
+
     @Override
+    @Transactional
     public boolean updateCartItemCounts(List<Integer> cartItemIds, List<Integer> counts) {
         boolean isValid = false;
         for (int i = 0; i < cartItemIds.size(); i++) {
@@ -118,13 +119,11 @@ public class CartServiceImpl implements CartService {
             CartItem cartItem = byId.get();
             Optional<Product> productOptional = productRepository.findById(cartItem.getProduct().getId());
             Product product = productOptional.get();
-            if ((product.getCount() - counts.get(i)) + cartItem.getCount() < 0) {
+            if ((product.getCount() - counts.get(i)) + cartItem.getCount() <= 0) {
                 return isValid;
             }
             product.setCount((product.getCount() - counts.get(i)) + cartItem.getCount());
-            productRepository.save(product);
             cartItem.setCount(counts.get(i));
-            cartItemRepository.save(cartItem);
             isValid = true;
         }
         return isValid;
