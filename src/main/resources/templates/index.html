@@ -497,13 +497,14 @@
             <div class="container">
                 <div class="row justify-content-around align-items-center">
                     <div class="col-md-4 col-lg-3 text-center text-md-start"><!-- Logo --> <a class="navbar-brand"
-                                                                                              href="https://www.pxdraft.com/wrap/shopapp/index.html"><img
+                                                                                              href="/"><img
                             src="/img/logo-light.svg" title="" alt=""> </a><!-- Logo --></div>
                     <div class="col-lg-6 d-lg-block collapse h-search" id="header_06_search">
-                        <form action="/search" method="post"><!-- Search input --> <input class="form-control" type="text" name="value"
+                        <form action="/search" method="get"><!-- Search input -->
+                            <input class="form-control" type="text" name="value"
                                                            placeholder="What are you looking for?">
                             <!-- Search button -->
-                            <button type="button" class="btn shadow-none"><i class="fi-search"></i></button>
+                            <button type="submit" class="btn shadow-none"><i class="fi-search"></i></button>
                         </form>
                     </div>
                     <div class="col-md-8 col-lg-3 header-right">

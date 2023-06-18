@@ -1,3 +1,4 @@
+<html lang="zxx" xmlns:th="http://www.thymeleaf.org">
 <th:block th:include="/fragment/header::header"></th:block>
 <main><!-- Breadcrumb -->
     <div class="py-3 bg-gray-100">
@@ -251,7 +252,7 @@
                         </div>
                     </div>
                     <div class="row g-3"><!-- Product Box -->
-                        <div class="col-sm-6 col-lg-4" th:each="product : ${results.content}">
+                        <div class="col-sm-6 col-lg-4" th:each="product : ${products.content}">
                             <div class="product-card-1">
                                 <div class="product-card-image">
                                     <div class="badge-ribbon"><span class="badge bg-danger">Sale</span></div>
@@ -301,22 +302,23 @@
                             <!-- Previous button -->
                             <ul class="pagination">
                                 <li class="page-item"><a class="page-link" th:if="${currentPage > 1}"
-                                                         th:href="@{/products(page=${currentPage - 1},size=${products.size})}"
+                                                         th:href="@{/search(page=${currentPage - 1},size=${products.size})}"
                                                          aria-label="Previous"><span
                                         aria-hidden="true">&laquo;</span></a></li>
                                 <li class="page-item" th:each="pageNumber : ${pageNumbers}"
                                     th:class="${pageNumber==products.number + 1} ? active">
                                     <a class="page-link"
-                                       th:href="@{/products(size=${products.size}, page=${pageNumber})}"
+                                       th:href="@{/search(size=${products.size}, page=${pageNumber},value=${value})}"
                                        aria-label="Previous" th:text="${pageNumber}"></a></li>
                                 <li class="page-item"><a class="page-link" th:if="${currentPage < totalPages}"
-                                                         th:href="@{/products(page=${currentPage + 1},size=${products.size})}"
+                                                         th:href="@{/search(page=${currentPage + 1},size=${products.size},value=${value})}"
                                                          aria-label="Next"><span
                                         aria-hidden="true">&raquo;</span></a></li>
                             </ul>
                         </div>
                     </div>
-                </div><!-- End Product Box --></div>
+                </div><!-- End Product Box -->
+            </div>
         </div>
     </section><!-- End Shop -->
 </main>

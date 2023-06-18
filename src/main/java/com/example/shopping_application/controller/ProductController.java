@@ -9,6 +9,7 @@ import com.example.shopping_application.service.CommentService;
 import com.example.shopping_application.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -37,7 +38,7 @@ public class ProductController {
                               @RequestParam("page") Optional<Integer> page,
                               @RequestParam("size") Optional<Integer> size) {
         int currentPage = page.orElse(1);
-        int pageSize = size.orElse(5);
+        int pageSize = size.orElse(9);
         Pageable pageable = PageRequest.of(currentPage - 1, pageSize);
         Page<Product> result = productService.findAllProducts(pageable);
         int totalPages = result.getTotalPages();
@@ -58,7 +59,7 @@ public class ProductController {
                               @RequestParam("page") Optional<Integer> page,
                               @RequestParam("size") Optional<Integer> size) {
         int currentPage = page.orElse(1);
-        int pageSize = size.orElse(5);
+        int pageSize = size.orElse(9);
         Pageable pageable = PageRequest.of(currentPage - 1, pageSize);
         Page<Product> result = productService.findAllProducts(pageable);
         int totalPages = result.getTotalPages();

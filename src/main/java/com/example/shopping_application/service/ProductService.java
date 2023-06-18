@@ -15,6 +15,8 @@ public interface ProductService {
 
     Page<Product> findAllProducts(Pageable pageable);
 
+    Page<Product> findByName(String name,Pageable pageable);
+
     List<Product> findAll();
 
     void remove(int id);

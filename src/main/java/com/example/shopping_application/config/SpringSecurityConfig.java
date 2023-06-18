@@ -2,6 +2,7 @@ package com.example.shopping_application.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -29,6 +30,8 @@ public class SpringSecurityConfig {
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry
                         .requestMatchers("/").permitAll()
                         .requestMatchers("/products").permitAll()
+                        .requestMatchers("/search").permitAll()
+                        .requestMatchers("/products/list").permitAll()
                         .requestMatchers("/getImage").permitAll()
                         .requestMatchers("/user/register").permitAll()
                         .requestMatchers("/user/forgotPassword").permitAll()

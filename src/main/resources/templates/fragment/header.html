@@ -1,5 +1,5 @@
 <th:block th:fragment="header">
-  <!doctype html>
+  <!Doctype html>
   <html lang="zxx" xmlns:th="http://www.thymeleaf.org">
   <head><!-- metas -->
     <meta charset="utf-8">
@@ -876,13 +876,15 @@
             <div class="nav-item d-none d-xl-block"><a class="nav-link" th:if="${currentUser != null}" th:href="@{/wishList(userid=${currentUser.id})}"><i
                     class="fi-heart"></i></a></div><!-- Cart -->
             <div class="nav-item"><a class="nav-link" data-bs-toggle="offcanvas" href="./html/account/login.html#modalMiniCart"
-                                     role="button" aria-controls="modalMiniCart"><span class=""
-                                                                                       data-cart-items="8"><i
-                    class="fi-shopping-cart"></i></span></a></div><!-- Mobile Toggle -->
+                                     role="button" aria-controls="modalMiniCart">
+              <span class="" data-cart-items="7"><i class="fi-shopping-cart"></i></span></a>
+            </div><!-- Mobile Toggle -->
             <button class="navbar-toggler ms-2" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation"><span
-                    class="px-navbar-toggler-icon"></span></button><!-- End Mobile Toggle --></div>
+                    class="px-navbar-toggler-icon"></span>
+            </button><!-- End Mobile Toggle -->
+          </div>
         </div>
       </nav>
     </header>
