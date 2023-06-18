@@ -1,4 +1,4 @@
-<th:block th:include="/fragment/header::header"></th:block>
+<div th:replace="header.html"></div>
 <div>
     <form action="/categories/add" method="post" enctype="multipart/form-data">
         <input type="text" name="name" placeholder="Name"><br>

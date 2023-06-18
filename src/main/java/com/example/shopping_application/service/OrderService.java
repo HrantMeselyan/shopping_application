@@ -10,7 +10,7 @@ public interface OrderService {
 
     List<OrderResponseDto> findAllOrder();
 
-    Order  findByUserId(int id);
+    List<Order>  findByUserId(int id);
 
     void remove(int id);
 

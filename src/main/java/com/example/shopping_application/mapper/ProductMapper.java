@@ -38,6 +38,30 @@ public class ProductMapper {
         return product;
     }
 
+    public static Product map(CreateProductResponseDto dto) {
+        if (dto == null) {
+            return null;
+        }
+
+        Product product = new Product();
+
+        product.setId(dto.getId());
+        product.setName(dto.getName());
+        product.setProductCode(dto.getProductCode());
+        product.setDescription(dto.getDescription());
+        product.setPrice(dto.getPrice());
+        List<CategoryDto> categories = dto.getCategories();
+        List<Category> categoriesList = new ArrayList<>();
+        for (CategoryDto category : categories) {
+            categoriesList.add(CategoryMapper.dtoToCategory(category));
+        }
+        if (categoriesList != null) {
+            product.setCategories(new ArrayList<Category>(categoriesList));
+        }
+
+        return product;
+    }
+
     public static CreateProductResponseDto mapToResponseDto(Product entity) {
         if (entity == null) {
             return null;

@@ -8,11 +8,12 @@ import com.example.shopping_application.repository.OrderItemRepository;
 import com.example.shopping_application.repository.OrderRepository;
 import com.example.shopping_application.repository.UserRepository;
 import com.example.shopping_application.service.OrderService;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,9 +36,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order findByUserId(int id) {
-        Optional<Order> byUserId = orderRepository.findByUserId(id);
-        return byUserId.orElse(null);
+    @Transactional
+    public List<Order> findByUserId(int id) {
+        List<Order> orders = orderRepository.findAllByUserId(id);
+        List<OrderItem> list = orders.stream().map(Order::getOrderItems).flatMap(Collection::stream).toList();
+        return orders;
     }
 
     @Override
@@ -53,8 +56,8 @@ public class OrderServiceImpl implements OrderService {
         int totalAmount = 0;
 
         Order order = new Order();
-        order.setUser(user.get());
-        order.setOrderItems(new ArrayList<>());
+        order.setUser(user.orElse(null));
+        List<OrderItem> orderItems = new ArrayList<>();
 
         for (Cart cart : cartList) {
             List<CartItem> cartItems = cart.getCartItems();
@@ -63,10 +66,10 @@ public class OrderServiceImpl implements OrderService {
                 totalAmount += cartItem.getProduct().getPrice() * cartItem.getCount();
                 orderItem.setCount(cartItem.getCount());
                 orderItem.setProduct(cartItem.getProduct());
-                orderItem.setOrder(order);
-                orderItemRepository.save(orderItem);
+                orderItems.add(orderItem);
             }
         }
+        order.setOrderItems(orderItems);
         order.setTotalAmount(totalAmount);
         orderRepository.save(order);
         cartRepository.deleteByUserId(userId);

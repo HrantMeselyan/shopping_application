@@ -1,3 +1,4 @@
+<html lang="zxx" xmlns:th="http://www.thymeleaf.org">
 <th:block th:include="/fragment/header::header"></th:block><!-- End Page Title --><!-- Section -->
 <section class="section">
     <div class="container">
@@ -174,46 +175,21 @@
                 </form>
             </div>
             <div class="col-md-5 col-lg-4 offset-lg-1 sticky-lg-top sticky-lg-top-header">
-                <ul class="list-group mb-6">
-                    <li class="list-group-item p-3">
-                        <div class="row g-2">
-                            <div class="col-3 col-md-2"><!-- Image --> <a href="checkout-02.html#"><img
-                                    src="/img/fashion2/product-1.jpg" alt="..."
-                                    class="img-fluid"></a></div>
+                <ul class="list-group mb-6" >
+                    <li class="list-group-item p-3" th:each="order: ${orders}">
+                        <div class="row g-2" th:each="prod : ${order.orderItems}">
+                            <div class="col-3 col-md-2"><!-- Image --> <a th:href="@{'/products/' + ${prod.product.id}}"><img
+                                    class="img-fluid"
+                                    th:if="${prod.product.images[0] != null}"
+                                    th:src="@{/getImage(profilePic=${prod.product.images[0].image})}">
+                                <img class="img-fluid"
+                                     th:unless="${prod.product.images[0] != null}"
+                                     src="/image/product-5806313-4863042.webp">
+                            </a></div>
                             <div class="col"><!-- Title -->
-                                <div class="fw-600"><a class="text-mode" href="checkout-02.html#">Fine-knit
+                                <div class="fw-600"><a class="text-mode" th:href="@{'/products/' + ${prod.product.id}}" th:text="${prod.product.name}">Fine-knit
                                     sweater</a></div><!--Footer -->
-                                <div class="d-flex align-items-center"><span class="text-body">$40.00</span>
-                                    <!-- Remove --> <a class="ms-auto text-danger fs-sm"
-                                                       href="checkout-02.html#!"><i class="bi bi-x"></i> Remove</a>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="list-group-item p-3">
-                        <div class="row g-2">
-                            <div class="col-3 col-md-2"><!-- Image --> <a href="checkout-02.html#"><img
-                                    src="/img/fashion2/product-2.jpg" alt="..."
-                                    class="img-fluid"></a></div>
-                            <div class="col"><!-- Title -->
-                                <div class="fw-600"><a class="text-mode" href="checkout-02.html#">Fine-knit
-                                    sweater</a></div><!--Footer -->
-                                <div class="d-flex align-items-center"><span class="text-body">$40.00</span>
-                                    <!-- Remove --> <a class="ms-auto text-danger fs-sm"
-                                                       href="checkout-02.html#!"><i class="bi bi-x"></i> Remove</a>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="list-group-item p-3">
-                        <div class="row g-2">
-                            <div class="col-3 col-md-2"><!-- Image --> <a href="checkout-02.html#"><img
-                                    src="/img/fashion2/product-3.jpg" alt="..."
-                                    class="img-fluid"></a></div>
-                            <div class="col"><!-- Title -->
-                                <div class="fw-600"><a class="text-mode" href="checkout-02.html#">Fine-knit
-                                    sweater</a></div><!--Footer -->
-                                <div class="d-flex align-items-center"><span class="text-body">$40.00</span>
+                                <div class="d-flex align-items-center"><span class="text-body" th:text="${prod.product.price}">$40.00</span>
                                     <!-- Remove --> <a class="ms-auto text-danger fs-sm"
                                                        href="checkout-02.html#!"><i class="bi bi-x"></i> Remove</a>
                                 </div>

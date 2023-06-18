@@ -37,7 +37,7 @@ public class OrderMapper {
             List<OrderItemDto> orderItemsDto = new ArrayList<>();
             for (OrderItem orderItem : order.getOrderItems()) {
                 OrderItemDto orderItemDto = new OrderItemDto();
-                orderItemDto.setProduct(ProductMapper.mapToRequestDto(orderItem.getProduct()));
+                orderItemDto.setProduct(ProductMapper.mapToResponseDto(orderItem.getProduct()));
                 orderItemDto.setCount(orderItem.getCount());
                 orderItemsDto.add(orderItemDto);
             }
@@ -69,5 +69,16 @@ public class OrderMapper {
                 .user(order.getUser())
                 .orderItems(orderItemDtos)
                 .build();
+    }
+
+    public static List<OrderDto> listOrderToListOrderDto(List<Order> orders) {
+        if (orders == null) {
+            return null;
+        }
+        List<OrderDto> list = new ArrayList<>(orders.size());
+        for (Order order : orders) {
+            list.add(OrderMapper.orderToOrderDto(order));
+        }
+        return list;
     }
 }

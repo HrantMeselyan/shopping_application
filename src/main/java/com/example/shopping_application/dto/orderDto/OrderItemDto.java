@@ -1,8 +1,6 @@
 package com.example.shopping_application.dto.orderDto;
 
-import com.example.shopping_application.dto.productDto.CreateProductRequestDto;
-import com.example.shopping_application.dto.productDto.ProductDto;
-import com.example.shopping_application.entity.Order;
+import com.example.shopping_application.dto.productDto.CreateProductResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,6 +12,6 @@ import lombok.NoArgsConstructor;
 @Data
 public class OrderItemDto {
     private int count;
-    private CreateProductRequestDto product;
+    private CreateProductResponseDto product;
     private OrderDto order;
 }

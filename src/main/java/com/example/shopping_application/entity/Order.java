@@ -30,6 +30,7 @@ public class Order {
     @ManyToOne(optional = false)
     private User user;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
+    @JoinColumn(name = "order_id")
     private List<OrderItem> orderItems;
 }

@@ -23,8 +23,8 @@ public class OrderController {
     @GetMapping
     public String orderPage(ModelMap modelMap,
                             @AuthenticationPrincipal CurrentUser currentUser) {
-//        modelMap.addAttribute("order", OrderMapper.orderToOrderDto(orderService
-//                .findByUserId((UserMapper.currentUserToUser(currentUser)).getId())));
+        modelMap.addAttribute("orders", OrderMapper.listOrderToListOrderDto(orderService
+                .findByUserId((UserMapper.currentUserToUser(currentUser)).getId())));
         return "checkout";
     }
 
