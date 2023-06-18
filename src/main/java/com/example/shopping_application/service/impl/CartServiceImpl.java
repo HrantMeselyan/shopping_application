@@ -119,7 +119,7 @@ public class CartServiceImpl implements CartService {
             CartItem cartItem = byId.get();
             Optional<Product> productOptional = productRepository.findById(cartItem.getProduct().getId());
             Product product = productOptional.get();
-            if ((product.getCount() - counts.get(i)) + cartItem.getCount() <= 0) {
+            if (product.getCount() - counts.get(i) + cartItem.getCount() < 0) {
                 return isValid;
             }
             product.setCount((product.getCount() - counts.get(i)) + cartItem.getCount());
