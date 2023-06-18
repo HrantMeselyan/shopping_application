@@ -42,8 +42,10 @@
                                 </div>
                             </div>
                         </div>
-
                     </th:block>
+                    <div class="invalid-feedback" id="quantityErrorMessage" style="display: none;">Invalid quantity
+                        entered. Please enter another number.
+                    </div>
                 </block>
 
                 <form action="/cart/update" method="POST" onsubmit="updateCount(event)">
@@ -135,22 +137,40 @@
         var countArray = [];
         var cartItemArray = [];
 
-        countInputs.forEach(function(input) {
+        countInputs.forEach(function (input) {
             if (input.parentNode.classList.contains('cart-qty-01')) {
                 countArray.push(input.value);
             }
         });
 
-        cartItemInputs.forEach(function(input) {
-            cartItemArray.push(input.value);
-        });
+        var errorMessage = '';
 
-        document.getElementById('hiddenCountInput').value = JSON.stringify(countArray);
-        document.getElementById('hiddenCartInput').value = JSON.stringify(cartItemArray);
+        for (var i = 0; i < countArray.length; i++) {
+            var count = countArray[i];
 
-        event.target.submit();
+            if (count < 1 || count === null || count === "") {
+                errorMessage = 'Invalid count value  ';
+                break;
+            }
+        }
+
+        if (errorMessage) {
+            var errorDiv = document.getElementById('quantityErrorMessage');
+            errorDiv.innerText = errorMessage;
+            errorDiv.style.display = 'block';
+        } else {
+            cartItemInputs.forEach(function (input) {
+                cartItemArray.push(input.value);
+            });
+
+            document.getElementById('hiddenCountInput').value = JSON.stringify(countArray);
+            document.getElementById('hiddenCartInput').value = JSON.stringify(cartItemArray);
+
+            event.target.submit();
+        }
     }
 </script>
+
 
 <block th:include="fragment/footer::footer"></block>
 </body>
