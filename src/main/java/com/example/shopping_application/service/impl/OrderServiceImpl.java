@@ -47,7 +47,6 @@ public class OrderServiceImpl implements OrderService {
     public void remove(int id) {
         orderRepository.deleteById(id);
     }
-
     @Override
     @Transactional
     public void save(int userId) {
@@ -59,41 +58,75 @@ public class OrderServiceImpl implements OrderService {
             List<Cart> cartList = cartRepository.findAllByUserId(userId);
             int totalAmount = 0;
             Order byUserIdAndStatus = orderRepository.findByUserIdAndStatus(userId, Status.PENDING);
+
             if (byUserIdAndStatus == null) {
                 Order order = new Order();
                 order.setUser(user);
-                for (Cart cart : cartList) {
-                    List<CartItem> cartItems = cart.getCartItems();
-                    for (CartItem cartItem : cartItems) {
-                        OrderItem orderItem = new OrderItem();
-                        totalAmount += cartItem.getProduct().getPrice() * cartItem.getCount();
-                        orderItem.setCount(cartItem.getCount());
-                        orderItem.setProduct(cartItem.getProduct());
-                        orderItems.add(orderItem);
-                    }
-                }
-                order.setOrderItems(orderItems);
-                order.setTotalAmount(totalAmount);
-                orderRepository.save(order);
-                cartRepository.deleteByUserId(userId);
-            } else {
 
                 for (Cart cart : cartList) {
                     List<CartItem> cartItems = cart.getCartItems();
+
                     for (CartItem cartItem : cartItems) {
-                        OrderItem orderItem = new OrderItem();
+                        boolean found = false;
+
+                        for (OrderItem orderItem : orderItems) {
+                            if (orderItem.getProduct().getId() == cartItem.getProduct().getId()) {
+                                orderItem.setCount(orderItem.getCount() + cartItem.getCount());
+                                found = true;
+                                break;
+                            }
+                        }
+
+                        if (!found) {
+                            OrderItem orderItem = new OrderItem();
+                            orderItem.setCount(cartItem.getCount());
+                            orderItem.setProduct(cartItem.getProduct());
+                            orderItems.add(orderItem);
+                        }
+
                         totalAmount += cartItem.getProduct().getPrice() * cartItem.getCount();
-                        orderItem.setCount(cartItem.getCount());
-                        orderItem.setProduct(cartItem.getProduct());
-                        orderItems.add(orderItem);
                     }
                 }
-                byUserIdAndStatus.setOrderItems(orderItems);
-                byUserIdAndStatus.setTotalAmount(totalAmount);
-                orderRepository.save(byUserIdAndStatus);
+
+                order.setOrderItems(orderItems);
+                order.setTotalAmount(totalAmount);
+                order.setStatus(Status.PENDING);
+                orderRepository.save(order);
+                cartRepository.deleteByUserId(userId);
+            } else {
+                Order existingOrder = byUserIdAndStatus;
+
+                for (Cart cart : cartList) {
+                    List<CartItem> cartItems = cart.getCartItems();
+
+                    for (CartItem cartItem : cartItems) {
+                        boolean found = false;
+
+                        for (OrderItem orderItem : existingOrder.getOrderItems()) {
+                            if (orderItem.getProduct().getId() == cartItem.getProduct().getId()) {
+                                orderItem.setCount(orderItem.getCount() + cartItem.getCount());
+                                found = true;
+                                break;
+                            }
+                        }
+
+                        if (!found) {
+                            OrderItem orderItem = new OrderItem();
+                            orderItem.setCount(cartItem.getCount());
+                            orderItem.setProduct(cartItem.getProduct());
+                            existingOrder.getOrderItems().add(orderItem);
+                        }
+
+                        totalAmount += cartItem.getProduct().getPrice() * cartItem.getCount();
+                    }
+                }
+
+                existingOrder.setTotalAmount(existingOrder.getTotalAmount() + totalAmount);
+                orderRepository.save(existingOrder);
                 cartRepository.deleteByUserId(userId);
             }
         }
     }
+
 }
 
