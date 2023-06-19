@@ -16,7 +16,7 @@ public class OrderItem {
     private int id;
     private int count;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
 }

@@ -38,14 +38,13 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public List<Order> findByUserId(int id) {
-        List<Order> orders = orderRepository.findAllByUserId(id);
-        List<OrderItem> list = orders.stream().map(Order::getOrderItems).flatMap(Collection::stream).toList();
-        return orders;
+        return orderRepository.findAllByUserId(id);
     }
 
     @Override
-    public void remove(int id) {
-        orderRepository.deleteById(id);
+    @Transactional
+    public void removeByProductId(int id) {
+        orderItemRepository.deleteByProduct_Id(id);
     }
 
     @Override

@@ -12,7 +12,7 @@ public interface OrderService {
 
     List<Order>  findByUserId(int id);
 
-    void remove(int id);
+    void removeByProductId(int id);
 
     void save(int userId);
 }
