@@ -4,7 +4,6 @@ import com.example.shopping_application.dto.orderDto.OrderResponseDto;
 import com.example.shopping_application.entity.Order;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface OrderService {
 
