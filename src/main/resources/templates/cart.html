@@ -7,8 +7,7 @@
                         class="h5 mb-0">Products</h2><a class="btn btn-outline-primary btn-sm ps-2"
                                                         th:href="@{/products}"><i
                         class="ci-arrow-left me-2"></i>Continue Shopping</a></div><!-- Item-->
-                <block th:each="cart :${carts}">
-                    <th:block th:each="cartItem:${cart.getCartItems()}">
+                <th:block th:if="${cartItems != null}" th:each="cartItem : ${cartItems}">
                         <div class="d-flex align-items-center flex-row w-100 pb-3 mb-3 border-bottom"><a
                                 class="d-inline-block flex-shrink-0 me-3" href="shop-cart.html#"><img
                                 th:src="@{/getImage(profilePic=${cartItem.product.images[0].image})}" width="120"
@@ -42,11 +41,10 @@
                                 </div>
                             </div>
                         </div>
-                    </th:block>
                     <div class="invalid-feedback" id="quantityErrorMessage" style="display: none;">Invalid quantity
                         entered. Please enter another number.
                     </div>
-                </block>
+                </th:block>
 
                 <form action="/cart/update" method="POST" onsubmit="updateCount(event)">
                     <input type="hidden" name="count" id="hiddenCountInput">
