@@ -27,10 +27,13 @@ public class CartServiceImpl implements CartService {
     private final CartItemRepository cartItemRepository;
 
     @Override
-    public List<CartDto> findAllByUser_id(int id) {
-        List<Cart> allByUserId = cartRepository.findAllByUserId(id);
-        return CartMapper.findAllByUser_id(allByUserId);
-
+    public CartDto findAllByUser_id(int id) {
+        Optional<Cart> allByUserId = cartRepository.findAllByUser_Id(id);
+        if (allByUserId.isPresent()) {
+            Cart cart = allByUserId.get();
+            return CartMapper.convertToDto(cart);
+        }
+        return null;
     }
 
     @Override

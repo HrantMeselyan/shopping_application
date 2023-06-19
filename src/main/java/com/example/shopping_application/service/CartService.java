@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface CartService {
 
-    List<CartDto> findAllByUser_id(int id);
+    CartDto findAllByUser_id(int id);
 
     void save(int id, CurrentUser currentUser);
 

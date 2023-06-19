@@ -1,5 +1,6 @@
 package com.example.shopping_application.controller;
 
+import com.example.shopping_application.dto.cartDto.CartDto;
 import com.example.shopping_application.dto.cartDto.UpdateCartItemRequestDto;
 import com.example.shopping_application.security.CurrentUser;
 import com.example.shopping_application.service.CartService;
@@ -22,7 +23,10 @@ public class CartController {
 
     @GetMapping()
     public String cartPage(ModelMap modelMap, @AuthenticationPrincipal CurrentUser currentUser) {
-        modelMap.addAttribute("carts", cartService.findAllByUser_id(currentUser.getUser().getId()));
+        CartDto allByUserId = cartService.findAllByUser_id(currentUser.getUser().getId());
+        if (allByUserId != null && allByUserId.getCartItems() != null) {
+            modelMap.addAttribute("cartItems", allByUserId.getCartItems());
+        }
         return "cart";
     }
 
