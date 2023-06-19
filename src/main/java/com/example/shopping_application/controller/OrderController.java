@@ -37,8 +37,8 @@ public class OrderController {
     }
 
     @GetMapping("/remove")
-    public String removeComment(@RequestParam("id") int id, @RequestParam("productId") int productId) {
-        orderService.remove(id);
-        return "redirect:/order/" + productId;
+    public String removeProduct(@RequestParam("id") int id) {
+        orderService.removeByProductId(id);
+        return "redirect:/order";
     }
 }
