@@ -102,7 +102,7 @@ public class ProductController {
     @GetMapping("/remove")
     public String removeProduct(@RequestParam("id") int id) {
         productService.remove(id);
-        return "redirect:/patients";
+        return "redirect:/products";
     }
 
 }

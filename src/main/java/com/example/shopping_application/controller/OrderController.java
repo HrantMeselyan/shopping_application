@@ -2,6 +2,7 @@ package com.example.shopping_application.controller;
 
 import com.example.shopping_application.mapper.OrderMapper;
 import com.example.shopping_application.mapper.UserMapper;
+import com.example.shopping_application.repository.OrderItemRepository;
 import com.example.shopping_application.security.CurrentUser;
 import com.example.shopping_application.service.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequiredArgsConstructor
 public class OrderController {
     private final OrderService orderService;
+    private final OrderItemRepository orderItemRepository;
 
 
     @GetMapping
