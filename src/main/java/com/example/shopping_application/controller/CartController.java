@@ -1,5 +1,6 @@
 package com.example.shopping_application.controller;
 
+import com.example.shopping_application.dto.cartDto.UpdateCartItemRequestDto;
 import com.example.shopping_application.security.CurrentUser;
 import com.example.shopping_application.service.CartService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -38,23 +39,11 @@ public class CartController {
     }
 
     @PostMapping("/update")
-    public String updateCartItemCounts(@RequestParam("count") String countJson,
-                                       @RequestParam("cartItem") String cartItemJson, ModelMap modelMap, @AuthenticationPrincipal CurrentUser currentUser) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            List<Integer> counts = objectMapper.readValue(countJson, new TypeReference<List<Integer>>() {
-            });
-            List<Integer> cartItemIds = objectMapper.readValue(cartItemJson, new TypeReference<List<Integer>>() {
-            });
-
-            boolean isValid = cartService.updateCartItemCounts(cartItemIds, counts);
-            modelMap.addAttribute("carts", cartService.findAllByUser_id(currentUser.getUser().getId()));
-            modelMap.addAttribute("isValid", isValid);
-
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return "cart";
+    public String updateCartItemCounts(@RequestBody UpdateCartItemRequestDto request) {
+        List<Integer> counts = request.getCount();
+        List<Integer> cartItemIds = request.getCartItem();
+        boolean isValid = cartService.updateCartItemCounts(cartItemIds, counts);
+        return "redirect:/cart";
     }
 
 }

@@ -139,7 +139,7 @@
 
         countInputs.forEach(function (input) {
             if (input.parentNode.classList.contains('cart-qty-01')) {
-                countArray.push(input.value);
+                countArray.push(parseInt(input.value));
             }
         });
 
@@ -149,26 +149,43 @@
             var count = countArray[i];
 
             if (count < 1 || count === null || count === "") {
-                errorMessage = 'Invalid count value  ';
+                errorMessage = 'Invalid count value';
                 break;
             }
         }
 
+        var errorDiv = document.getElementById('quantityErrorMessage');
         if (errorMessage) {
-            var errorDiv = document.getElementById('quantityErrorMessage');
             errorDiv.innerText = errorMessage;
             errorDiv.style.display = 'block';
         } else {
+            errorDiv.style.display = 'none';
+
             cartItemInputs.forEach(function (input) {
-                cartItemArray.push(input.value);
+                cartItemArray.push(parseInt(input.value));
             });
 
-            document.getElementById('hiddenCountInput').value = JSON.stringify(countArray);
-            document.getElementById('hiddenCartInput').value = JSON.stringify(cartItemArray);
+            var requestData = {
+                count: countArray,
+                cartItem: cartItemArray
+            };
 
-            event.target.submit();
+            fetch('/cart/update', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestData)
+            })
+                .then(response => {
+                    location.reload();
+                })
+                .catch(error => {
+                    console.error(error);
+                });
         }
     }
+
 </script>
 
 
