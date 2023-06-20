@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 public class OrderItemDto {
+    private int id;
     private int count;
     private CreateProductResponseDto product;
     private OrderDto order;
