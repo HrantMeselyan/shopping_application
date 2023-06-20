@@ -77,6 +77,7 @@ public class UserMapper {
         user.setSurname(userUpdateDto.getSurname());
         user.setEmail(userUpdateDto.getEmail());
         user.setPhoneNumber(userUpdateDto.getPhoneNumber());
+        user.setProfilePic(userUpdateDto.getProfilePic());
         return user;
     }
 

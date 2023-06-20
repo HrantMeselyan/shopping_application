@@ -19,7 +19,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @NotNull
-    @Size(min = 2,max = 10,message = "Name length it should be min 2 max 10 characters")
+    @Size(min = 2,max = 15,message = "Name length it should be min 2 max 10 characters")
     @Column(nullable = false)
     private String name;
     @NotNull
