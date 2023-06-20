@@ -1,7 +1,9 @@
 package com.example.shopping_application.service;
 
+import com.example.shopping_application.dto.userDto.UpdatePasswordDto;
 import com.example.shopping_application.dto.userDto.UserRegisterDto;
 import com.example.shopping_application.entity.User;
+import com.example.shopping_application.security.CurrentUser;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -10,13 +12,11 @@ import java.util.List;
 public interface UserService {
     List<User> findAll();
 
-    void updatePicName(MultipartFile multipartFile,User user) throws IOException;
+    void updateUser(MultipartFile multipartFile, User user, CurrentUser currentUser) throws IOException;
 
     void remove(int id);
 
     void save(User user);
-
-    void update(User user, MultipartFile multipartFile) throws IOException;
 
     void removeById(int id);
 
@@ -25,4 +25,6 @@ public interface UserService {
     User findByIdWithAddresses(int id);
 
     User setUserEncodedPassword(UserRegisterDto userRegisterDto);
+
+    void updatePassword(User user, UpdatePasswordDto updatePasswordDto);
 }

@@ -1,7 +1,9 @@
 package com.example.shopping_application.controller;
 
+import com.example.shopping_application.dto.userDto.UpdatePasswordDto;
 import com.example.shopping_application.dto.userDto.UserDto;
 import com.example.shopping_application.dto.userDto.UserRegisterDto;
+import com.example.shopping_application.dto.userDto.UserUpdateDto;
 import com.example.shopping_application.entity.User;
 import com.example.shopping_application.mapper.UserMapper;
 import com.example.shopping_application.security.CurrentUser;
@@ -54,9 +56,9 @@ public class UserController {
     }
 
     @PostMapping()
-    public String updateCurrentUser(@AuthenticationPrincipal CurrentUser currentUser,
+    public String updateCurrentUser(@AuthenticationPrincipal CurrentUser currentUser, UserUpdateDto userUpdateDto,
                                     @RequestParam("profile_pic") MultipartFile multipartFile) throws IOException {
-        userService.updatePicName(multipartFile, UserMapper.currentUserToUser(currentUser));
+        userService.updateUser(multipartFile, UserMapper.userUpdateDtoToUser(userUpdateDto), currentUser);
         return "redirect:/user";
     }
 
@@ -83,15 +85,6 @@ public class UserController {
         return "updateUser";
     }
 
-    @PostMapping("update/{id}")
-    public String updateUser(@PathVariable("id") int id,
-                             @ModelAttribute UserDto userDto,
-                             @RequestParam("profile_pic") MultipartFile multipartFile) throws IOException {
-        User user = UserMapper.userDtoToUser(userDto);
-        userService.update(user, multipartFile);
-        return "redirect:/user/admin/all";
-    }
-
     @GetMapping("/admin")
     public String adminPage(ModelMap modelMap,
                             @AuthenticationPrincipal CurrentUser currentUser) {
@@ -115,5 +108,11 @@ public class UserController {
         }
         modelMap.addAttribute("users", userDtos);
         return "allUsers";
+    }
+
+    @PostMapping("/updatePassword")
+    public String updatePassword(@AuthenticationPrincipal CurrentUser currentUser, UpdatePasswordDto updatePasswordDto) {
+        userService.updatePassword(currentUser.getUser(),updatePasswordDto);
+        return "redirect:/user";
     }
 }

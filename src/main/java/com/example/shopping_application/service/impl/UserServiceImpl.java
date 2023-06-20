@@ -1,16 +1,18 @@
 package com.example.shopping_application.service.impl;
 
-import com.example.shopping_application.dto.userDto.UserDto;
+import com.example.shopping_application.dto.userDto.UpdatePasswordDto;
 import com.example.shopping_application.dto.userDto.UserRegisterDto;
 import com.example.shopping_application.entity.Role;
 import com.example.shopping_application.entity.User;
 import com.example.shopping_application.mapper.UserMapper;
 import com.example.shopping_application.repository.UserRepository;
+import com.example.shopping_application.security.CurrentUser;
 import com.example.shopping_application.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -45,27 +47,40 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updatePicName(MultipartFile multipartFile, User user) throws IOException {
-        String imgName = user.getProfilePic();
+    @Transactional
+    public void updateUser(MultipartFile multipartFile, User user, CurrentUser currentUser) throws IOException {
+        User userOldData = currentUser.getUser();
+        if (user.getName() == null || user.getName().equals("")) {
+            user.setName(userOldData.getName());
+        }
+        if (user.getSurname() == null || user.getSurname().equals("")) {
+            user.setSurname(userOldData.getSurname());
+        }
+        if (user.getEmail() == null || user.getEmail().equals("")) {
+            user.setEmail(userOldData.getEmail());
+        }
+        if (user.getPhoneNumber() == null || user.getPhoneNumber().equals("")) {
+            user.setPhoneNumber(userOldData.getPhoneNumber());
+        }
+        if (user.getGender() == null) {
+            user.setGender(userOldData.getGender());
+        }
+        if (user.getRole() == null) {
+            user.setRole(userOldData.getRole());
+        }
+        if (userOldData.getProfilePic() != null) {
+            user.setProfilePic(userOldData.getProfilePic());
+        }
+        user.setId(userOldData.getId());
+        user.setPassword(userOldData.getPassword());
+        user.setPostCode(userOldData.getPostCode());
         if (multipartFile != null && !multipartFile.isEmpty()) {
             String fileName = System.nanoTime() + "_" + multipartFile.getOriginalFilename();
             File file = new File(imageUploadPath + fileName);
             multipartFile.transferTo(file);
-
             user.setProfilePic(fileName);
-            userRepository.save(user);
         }
-    }
-
-    @Override
-    public void update(User user, MultipartFile multipartFile) throws IOException {
-        if (multipartFile != null && !multipartFile.isEmpty()) {
-            String fileName = System.nanoTime() + "_" + multipartFile.getOriginalFilename();
-            File file = new File(imageUploadPath + fileName);
-            multipartFile.transferTo(file);
-            user.setProfilePic(fileName);
-            userRepository.save(user);
-        }
+        userRepository.save(user);
     }
 
     @Override
@@ -95,6 +110,14 @@ public class UserServiceImpl implements UserService {
         user.setPassword(encodedPassword);
         user.setRole(Role.USER);
         return user;
+    }
+
+    @Override
+    public void updatePassword(User user, UpdatePasswordDto updatePasswordDto) {
+        if (passwordEncoder.matches(updatePasswordDto.getOldPassword(), user.getPassword()) && updatePasswordDto.getPassword1().equals(updatePasswordDto.getPassword2())) {
+            user.setPassword(updatePasswordDto.getPassword2());
+            userRepository.save(user);
+        }
     }
 
     public void deleteProfilePicture(String existingProfilePic) {

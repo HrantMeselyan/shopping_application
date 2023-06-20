@@ -4,6 +4,7 @@ import com.example.shopping_application.dto.addressDto.AddressDto;
 import com.example.shopping_application.dto.userDto.UserDto;
 import com.example.shopping_application.dto.userDto.UserRegisterDto;
 import com.example.shopping_application.dto.userDto.UserShortDto;
+import com.example.shopping_application.dto.userDto.UserUpdateDto;
 import com.example.shopping_application.entity.Address;
 import com.example.shopping_application.entity.User;
 import com.example.shopping_application.security.CurrentUser;
@@ -64,6 +65,19 @@ public class UserMapper {
             addresses1.add(AddressMapper.addressDtoToAddress(address));
         }
         user.setAddresses(addresses1);
+        return user;
+    }
+    public static User userUpdateDtoToUser(UserUpdateDto userUpdateDto) {
+        if (userUpdateDto == null) {
+            return null;
+        }
+        User user = new User();
+        user.setId(userUpdateDto.getId());
+        user.setName(userUpdateDto.getName());
+        user.setSurname(userUpdateDto.getSurname());
+        user.setEmail(userUpdateDto.getEmail());
+        user.setPhoneNumber(userUpdateDto.getPhoneNumber());
+        user.setProfilePic(userUpdateDto.getProfilePic());
         return user;
     }
 

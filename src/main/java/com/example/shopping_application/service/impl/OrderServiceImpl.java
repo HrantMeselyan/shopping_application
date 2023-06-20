@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -83,10 +82,10 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     public void save(int userId) {
         Optional<User> userOptional = userRepository.findById(userId);
-        List<OrderItem> orderItems = new ArrayList<>();
 
         if (userOptional.isPresent()) {
             User user = userOptional.get();
+
             List<Cart> cartList = cartRepository.findAllByUserId(userId);
             double totalAmount = 0;
             Optional<Order> byUserIdAndStatus = orderRepository.findByUserIdAndStatus(userId, Status.PENDING);
@@ -121,12 +120,14 @@ public class OrderServiceImpl implements OrderService {
                     }
                 }
 
-                order.setOrderItems(orderItems);
-                order.setTotalAmount(totalAmount);
-                order.setStatus(Status.PENDING);
+            Optional<Order> byUserIdAndStatus = orderRepository.findByUserIdAndStatus(userId, Status.PENDING);
+
+
+            if (byUserIdAndStatus.isEmpty()) {
+                Order order = createNewOrder(user, userId);
                 orderRepository.save(order);
-                cartRepository.deleteByUserId(userId);
             } else {
+
                 Order existingOrder = order1;
 
                 for (Cart cart : cartList) {
@@ -151,12 +152,69 @@ public class OrderServiceImpl implements OrderService {
                         }
 
                         totalAmount += cartItem.getProduct().getPrice() * (double) cartItem.getCount();
+
+                Order existingOrder = byUserIdAndStatus.get();
+                updateExistingOrder(existingOrder, userId);
+                orderRepository.save(existingOrder);
+            }
+            cartRepository.deleteByUserId(userId);
+        }
+    }
+
+    private Order createNewOrder(User user, int userId) {
+        Optional<Cart> allByUserId = cartRepository.findAllByUser_Id(userId);
+        List<OrderItem> orderItems = new ArrayList<>();
+        int totalAmount = 0;
+
+        if (allByUserId.isPresent()) {
+            Cart cart = allByUserId.get();
+            List<CartItem> cartItems = cart.getCartItems();
+
+            for (CartItem cartItem : cartItems) {
+                OrderItem orderItem = new OrderItem();
+                orderItem.setCount(cartItem.getCount());
+                orderItem.setProduct(cartItem.getProduct());
+                orderItems.add(orderItem);
+                totalAmount += cartItem.getProduct().getPrice() * cartItem.getCount();
+            }
+        }
+
+        Order order = new Order();
+        order.setUser(user);
+        order.setOrderItems(orderItems);
+        order.setTotalAmount(totalAmount);
+        order.setStatus(Status.PENDING);
+
+        return order;
+    }
+
+    private void updateExistingOrder(Order existingOrder, int userId) {
+        Optional<Cart> allByUserId = cartRepository.findAllByUser_Id(userId);
+
+        if (allByUserId.isPresent()) {
+            Cart cart = allByUserId.get();
+            List<CartItem> cartItems = cart.getCartItems();
+
+            for (CartItem cartItem : cartItems) {
+                boolean found = false;
+
+                for (OrderItem orderItem : existingOrder.getOrderItems()) {
+                    if (orderItem.getProduct().getId() == cartItem.getProduct().getId()) {
+                        orderItem.setCount(orderItem.getCount() + cartItem.getCount());
+                        found = true;
+                        break;
+
                     }
                 }
 
-                existingOrder.setTotalAmount(existingOrder.getTotalAmount() + totalAmount);
-                orderRepository.save(existingOrder);
-                cartRepository.deleteByUserId(userId);
+                if (!found) {
+                    OrderItem orderItem = new OrderItem();
+                    orderItem.setCount(cartItem.getCount());
+                    orderItem.setProduct(cartItem.getProduct());
+                    existingOrder.getOrderItems().add(orderItem);
+                }
+
+                existingOrder.setTotalAmount(existingOrder.getTotalAmount() + (cartItem.getProduct().getPrice() * cartItem.getCount()));
             }
         }
     }
