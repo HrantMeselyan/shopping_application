@@ -1,5 +1,6 @@
 package com.example.shopping_application.service.impl;
 
+import com.example.shopping_application.dto.userDto.UpdatePasswordDto;
 import com.example.shopping_application.dto.userDto.UserRegisterDto;
 import com.example.shopping_application.entity.Role;
 import com.example.shopping_application.entity.User;
@@ -109,6 +110,14 @@ public class UserServiceImpl implements UserService {
         user.setPassword(encodedPassword);
         user.setRole(Role.USER);
         return user;
+    }
+
+    @Override
+    public void updatePassword(User user, UpdatePasswordDto updatePasswordDto) {
+        if (passwordEncoder.matches(updatePasswordDto.getOldPassword(), user.getPassword()) && updatePasswordDto.getPassword1().equals(updatePasswordDto.getPassword2())) {
+            user.setPassword(updatePasswordDto.getPassword2());
+            userRepository.save(user);
+        }
     }
 
     public void deleteProfilePicture(String existingProfilePic) {

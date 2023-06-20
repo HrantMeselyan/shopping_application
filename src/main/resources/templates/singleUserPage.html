@@ -57,10 +57,12 @@
                                 </div>
                                 <div class="col-sm-6 mb-3"><label class="form-label">Name<span
                                         class="text-danger">*</span></label> <input type="text" class="form-control"
-                                                                                    placeholder="Name" name="name"></div>
+                                                                                    placeholder="Name" name="name">
+                                </div>
                                 <div class="col-sm-6 mb-3"><label class="form-label">Surname<span
                                         class="text-danger">*</span></label> <input type="text" class="form-control"
-                                                                                    placeholder="Surname" name="surname"></div>
+                                                                                    placeholder="Surname"
+                                                                                    name="surname"></div>
                                 <div class="col-sm-6 mb-3"><label class="form-label">Mobile Number<span
                                         class="text-danger">*</span></label> <input type="text" class="form-control"
                                                                                     placeholder="Mobile"
@@ -75,21 +77,21 @@
                 <div class="card">
                     <div class="card-header py-3"><h5 class="m-0">Change your password</h5></div>
                     <div class="card-body p-4">
-                        <form>
+                        <form action="/user/updatePassword" method="post">
                             <div class="row">
                                 <div class="col-sm-12 mb-3">
                                     <div class="form-group"><label for="password_old" class="form-label">Old
-                                        password</label> <input type="password" id="password_old"
+                                        password</label> <input type="password" id="password_old" name="oldPassword"
                                                                 class="form-control"></div>
                                 </div>
                                 <div class="col-sm-6 mb-3">
                                     <div class="form-group"><label for="password_1" class="form-label">New
-                                        password</label> <input type="password" id="password_1"
+                                        password</label> <input type="password" id="password_1" name="password1"
                                                                 class="form-control"></div>
                                 </div>
                                 <div class="col-sm-6 mb-3">
                                     <div class="form-group"><label for="password_2" class="form-label">Retype
-                                        new password</label><input type="password" id="password_2"
+                                        new password</label><input type="password" id="password_2" name="password2"
                                                                    class="form-control"></div>
                                 </div>
                                 <div class="col-12 pt-2">

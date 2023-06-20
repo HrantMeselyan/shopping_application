@@ -1,5 +1,6 @@
 package com.example.shopping_application.controller;
 
+import com.example.shopping_application.dto.userDto.UpdatePasswordDto;
 import com.example.shopping_application.dto.userDto.UserDto;
 import com.example.shopping_application.dto.userDto.UserRegisterDto;
 import com.example.shopping_application.dto.userDto.UserUpdateDto;
@@ -107,5 +108,11 @@ public class UserController {
         }
         modelMap.addAttribute("users", userDtos);
         return "allUsers";
+    }
+
+    @PostMapping("/updatePassword")
+    public String updatePassword(@AuthenticationPrincipal CurrentUser currentUser, UpdatePasswordDto updatePasswordDto) {
+        userService.updatePassword(currentUser.getUser(),updatePasswordDto);
+        return "redirect:/user";
     }
 }
