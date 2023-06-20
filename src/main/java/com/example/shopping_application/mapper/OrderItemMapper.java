@@ -14,6 +14,7 @@ public class OrderItemMapper {
             return null;
         }
         OrderItem orderItem = new OrderItem();
+        orderItem.setId(orderItemDto.getId());
         orderItem.setProduct(ProductMapper.map(orderItemDto.getProduct()));
         orderItem.setCount(orderItemDto.getCount());
         return orderItem;
@@ -24,6 +25,7 @@ public class OrderItemMapper {
             return null;
         }
         return OrderItemDto.builder()
+                .id(orderItem.getId())
                 .count(orderItem.getCount())
                 .product(ProductMapper.mapToResponseDto(orderItem.getProduct()))
                 .build();

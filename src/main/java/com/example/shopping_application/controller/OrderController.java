@@ -1,8 +1,10 @@
 package com.example.shopping_application.controller;
 
+import com.example.shopping_application.entity.Address;
+import com.example.shopping_application.entity.Order;
+import com.example.shopping_application.entity.Status;
 import com.example.shopping_application.mapper.OrderMapper;
 import com.example.shopping_application.mapper.UserMapper;
-import com.example.shopping_application.repository.OrderItemRepository;
 import com.example.shopping_application.security.CurrentUser;
 import com.example.shopping_application.service.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -14,19 +16,24 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+import java.util.Optional;
+
 @Controller
 @RequestMapping("/order")
 @RequiredArgsConstructor
 public class OrderController {
     private final OrderService orderService;
-    private final OrderItemRepository orderItemRepository;
 
 
     @GetMapping
     public String orderPage(ModelMap modelMap,
                             @AuthenticationPrincipal CurrentUser currentUser) {
-        modelMap.addAttribute("orders", OrderMapper.listOrderToListOrderDto(orderService
-                .findByUserId((UserMapper.currentUserToUser(currentUser)).getId())));
+        orderService.checkOrderItem(UserMapper.currentUserToUser(currentUser).getId());
+        List<Address> addresses = UserMapper.currentUserToUser(currentUser).getAddresses();
+        Optional<Order> byUserIdAndStatus = orderService
+                .findByUserIdAndStatus((UserMapper.currentUserToUser(currentUser)).getId(), Status.PENDING);
+        modelMap.addAttribute("order", OrderMapper.orderToOrderDto(byUserIdAndStatus.orElse(null)));
         return "checkout";
     }
 
@@ -37,8 +44,10 @@ public class OrderController {
     }
 
     @GetMapping("/remove")
-    public String removeProduct(@RequestParam("id") int id) {
-        orderService.removeByProductId(id);
+    public String removeProduct(@RequestParam("product_id") int product_id,
+                                @RequestParam("orderItem_id") int orderItem_id,
+                                @AuthenticationPrincipal CurrentUser currentUser) {
+        orderService.removeByProductIdAndOrderItemId(product_id,orderItem_id, UserMapper.currentUserToUser(currentUser).getId());
         return "redirect:/order";
     }
 }

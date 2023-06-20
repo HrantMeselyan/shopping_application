@@ -10,5 +10,5 @@ public interface DeliveryService {
 
     void remove(int id);
 
-    void save(Delivery delivery);
+    void save(int id);
 }

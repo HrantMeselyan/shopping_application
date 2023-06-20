@@ -25,6 +25,7 @@ public class ProductMapper {
         product.setName(dto.getName());
         product.setProductCode(dto.getProductCode());
         product.setDescription(dto.getDescription());
+        product.setCount(dto.getCount());
         product.setPrice(dto.getPrice());
         List<CategoryDto> categories = dto.getCategories();
         List<Category> categoriesList = new ArrayList<>();

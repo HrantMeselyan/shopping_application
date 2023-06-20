@@ -18,6 +18,7 @@ public class CreateProductRequestDto {
     private String name;
     private String productCode;
     private String description;
+    private int count;
     private double price;
     private List<ImageDto> images;
     private List<CategoryDto> categories;

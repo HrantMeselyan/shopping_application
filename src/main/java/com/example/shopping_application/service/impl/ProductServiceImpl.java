@@ -17,6 +17,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -59,6 +60,7 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
+    @Transactional
     public void save(CreateProductRequestDto productRequestDto, MultipartFile[] files, CurrentUser currentUser) throws IOException {
         Product product = ProductMapper.map(productRequestDto);
         product.getCategories().removeIf(category -> category.getId() == 0);
@@ -81,13 +83,13 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product findBy_Id(int id) {
         Optional<Product> byId = productRepository.findById(id);
-        return byId.get();
+        return byId.orElse(null);
     }
 
     @Override
     public CreateProductResponseDto findById(int id) {
         Optional<Product> byId = productRepository.findById(id);
-        return ProductMapper.mapToResponseDto(byId.get());
+        return ProductMapper.mapToResponseDto(byId.orElse(null));
     }
 
 }

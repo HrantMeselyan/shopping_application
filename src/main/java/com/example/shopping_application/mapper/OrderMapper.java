@@ -37,6 +37,7 @@ public class OrderMapper {
             List<OrderItemDto> orderItemsDto = new ArrayList<>();
             for (OrderItem orderItem : order.getOrderItems()) {
                 OrderItemDto orderItemDto = new OrderItemDto();
+                orderItemDto.setId(orderItem.getId());
                 orderItemDto.setProduct(ProductMapper.mapToResponseDto(orderItem.getProduct()));
                 orderItemDto.setCount(orderItem.getCount());
                 orderItemsDto.add(orderItemDto);

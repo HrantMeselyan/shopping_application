@@ -6,9 +6,6 @@
             <div class="col-md-7"><!-- Form -->
                 <form>
                     <div class="row mb-5 gy-4">
-                        <div class="col-12"><label class="form-label" for="checkout_Billing_Company">Company
-                            name *</label> <input class="form-control" id="checkout_Billing_Company" type="text"
-                                                  placeholder="Company name (optional)"></div>
                         <div class="col-12"><label class="form-label" for="checkout_Billing_Country">Country
                             *</label> <input class="form-control" id="checkout_Billing_Country" type="text"
                                              placeholder="Country" required=""></div>
@@ -34,44 +31,48 @@
                             <tr>
                                 <td>
                                     <div class="form-check"><input class="form-check-input" name="shipping"
-                                                                   type="radio" id="checkoutShippingStandard">
+                                                                   type="radio" id="checkoutShippingStandard"
+                                                                   value="8.0" onchange="getValue()">
                                         <label class="form-check-label" for="checkoutShippingStandard">Standard
                                             Shipping</label></div>
                                 </td>
                                 <td>Delivery in 5 - 7 working days</td>
-                                <td>$8.00</td>
+                                <td>$8.0</td>
                             </tr>
                             <tr>
                                 <td>
                                     <div class="form-check"><input class="form-check-input" name="shipping"
-                                                                   type="radio" id="checkoutShippingExpress">
+                                                                   type="radio" id="checkoutShippingExpress"
+                                                                   value="12.0" onchange="getValue()">
                                         <label class="form-check-label" for="checkoutShippingExpress">Express
                                             Shipping</label></div>
                                 </td>
                                 <td>Delivery in 3 - 5 working days</td>
-                                <td>$12.00</td>
+                                <td>$12.0</td>
                             </tr>
                             <tr>
                                 <td>
                                     <div class="form-check"><input class="form-check-input" name="shipping"
-                                                                   type="radio" id="checkoutShippingShort">
+                                                                   type="radio" id="checkoutShippingShort" value="18.0"
+                                                                   onchange="getValue()">
                                         <label class="form-check-label" for="checkoutShippingShort">1 - 2
                                             Shipping</label></div>
                                 </td>
                                 <td>Delivery in 1 - 2 working days</td>
-                                <td>$18.00</td>
+                                <td>$18.0</td>
                             </tr>
                             <tr>
                                 <td>
                                     <div class="form-check"><input class="form-check-input" name="shipping"
-                                                                   type="radio" id="checkoutShippingFree">
+                                                                   type="radio" id="checkoutShippingFree" value="0.0"
+                                                                   onchange="getValue()">
                                         <label class="form-check-label" for="checkoutShippingFree">Free
                                             Shipping</label></div>
                                 </td>
                                 <td>Living won't the He one every subdue meat replenish face was you morning
                                     firmament darkness.
                                 </td>
-                                <td>$0.00</td>
+                                <td>$0.0</td>
                             </tr>
                             </tbody>
                         </table>
@@ -175,50 +176,75 @@
                 </form>
             </div>
             <div class="col-md-5 col-lg-4 offset-lg-1 sticky-lg-top sticky-lg-top-header">
-                <ul class="list-group mb-6">
-                    <div th:each="order: ${orders}">
-                        <li class="list-group-item p-3" th:each="prod : ${order.orderItems}">
-                            <div class="row g-2">
-                                <div class="col-3 col-md-2"><!-- Image --> <a
-                                        th:href="@{'/products/' + ${prod.product.id}}"><img
-                                        class="img-fluid"
-                                        th:if="${prod.product.images[0] != null}"
-                                        th:src="@{/getImage(profilePic=${prod.product.images[0].image})}">
-                                    <img class="img-fluid"
-                                         th:unless="${prod.product.images[0] != null}"
-                                         src="/image/product-5806313-4863042.webp">
-                                </a></div>
-                                <div class="col"><!-- Title -->
-                                    <div class="fw-600"><a class="text-mode"
-                                                           th:href="@{'/products/' + ${prod.product.id}}"
-                                                           th:text="${prod.product.name}">Fine-knit
-                                        sweater</a></div><!--Footer -->
-                                    <div class="d-flex align-items-center"><span class="text-body"
-                                                                                 th:text="${prod.product.price}">$40.00</span>
-                                        <!-- Remove --> <a class="ms-auto text-danger fs-sm"
-                                                           th:href="@{/order/remove(id=${prod.product.id})}"><i class="bi bi-x"></i> Remove</a>
-                                    </div>
+                <ul class="list-group mb-6" th:if="${order != null}">
+                    <li class="list-group-item p-3" th:each="prod: ${order.orderItems}">
+                        <div class="row g-2">
+                            <div class="col-3 col-md-2"><!-- Image --> <a
+                                    th:href="@{'/products/' + ${prod.product.id}}"><img
+                                    class="img-fluid"
+                                    th:if="${prod.product.images[0] != null}"
+                                    th:src="@{/getImage(profilePic=${prod.product.images[0].image})}">
+                                <img class="img-fluid"
+                                     th:unless="${prod.product.images[0] != null}"
+                                     src="/image/product-5806313-4863042.webp">
+                            </a></div>
+                            <div class="col"><!-- Title -->
+                                <div class="fw-600"><a class="text-mode"
+                                                       th:href="@{'/products/' + ${prod.product.id}}"
+                                                       th:text="${prod.product.name}">Fine-knit
+                                    sweater</a></div><!--Footer -->
+                                <div class="fw-600"><a class="text-body"
+                                                       th:href="@{'/products/' + ${prod.product.id}}"
+                                                       th:text="'pcs. '+${prod.count}">Fine-knit
+                                    sweater</a></div>
+                                <div class="d-flex align-items-center"><span class="text-body"
+                                                                             th:text="${prod.product.price}">$40.00</span>
+                                    <!-- Remove --> <a class="ms-auto text-danger fs-sm"
+                                                       th:href="@{/order/remove(product_id=${prod.product.id},orderItem_id=${prod.id})}"><i
+                                            class="bi bi-x"></i> Remove</a>
                                 </div>
                             </div>
-                        </li>
-                    </div>
+                        </div>
+                    </li>
                 </ul>
+
+
                 <div class="card bg-gray-100">
                     <div class="card-body py-0 px-4">
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item d-flex bg-transparent px-0 py-3"><span>Subtotal</span>
-                                <span class="ms-auto">$89.00</span></li>
-                            <li class="list-group-item d-flex bg-transparent px-0 py-3"><span>Tax</span> <span
-                                    class="ms-auto">$00.00</span></li>
+                                <span class="ms-auto" th:if="${order != null}" th:text="'$' + ${order.totalAmount}" id="total"></span></li>
+                            <li class="list-group-item d-flex bg-transparent px-0 py-3"><span>Tax</span>
+                                <span class="ms-auto" th:if="${order != null}" th:text="'$' + ${order.totalAmount}*16.67/100" id="tax"></span></li>
                             <li class="list-group-item d-flex bg-transparent px-0 py-3"><span>Shipping</span>
-                                <span class="ms-auto">$10.00</span></li>
+                                <span class="ms-auto" id="selectedValue"></span></li>
                             <li class="list-group-item d-flex bg-transparent px-0 py-3 fs-lg fw-600">
-                                <span>Total</span> <span class="ms-auto">$99.00</span></li>
+                                <span>Total</span> <span class="ms-auto" id="orderTotal"></span></li>
                         </ul>
                     </div>
                 </div>
+                <script>
+                    function getValue() {
+                        var radioButtons = document.getElementsByName("shipping");
+                        var selectedValueElement = document.getElementById("selectedValue");
+                        var orderTotal = document.getElementById("orderTotal");
+                        var total = document.getElementById("total");
+                        var tax = document.getElementById("tax");
+
+                        for (var i = 0; i < radioButtons.length; i++) {
+                            if (radioButtons[i].checked) {
+                                var selectedValue = radioButtons[i].value;
+                                var totalValue = parseInt(total.textContent.substring(1));
+                                var taxValue = parseInt(tax.textContent.substring(1));
+                                selectedValueElement.textContent = "$" + selectedValue;
+                                orderTotal.textContent = "$" + (parseInt(selectedValue) + totalValue + taxValue);
+                                break;
+                            }
+                        }
+                    }
+                </script>
                 <div class="pt-4">
-                    <button type="submit" class="btn btn-primary w-100">Place Order</button>
+                    <a th:if="${order != null}" th:href="@{/delivery/add(order_id=${order.id})}"><button type="submit" class="btn btn-primary w-100">Place Order</button></a>
                     <p class="m-0 pt-3">By placing your order you agree to our <a href="checkout-02.html#">Terms
                         &amp; Conditions</a>, <a href="checkout-02.html#">privacy and returns</a> policies. You
                         also consent to some of your data being stored by ShopApp, which may be used to make

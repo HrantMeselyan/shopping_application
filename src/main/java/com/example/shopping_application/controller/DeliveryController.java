@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.*;
 public class DeliveryController {
     private final DeliveryService deliveryService;
 
-    @PostMapping("/add")
-    public String addDelivery(@ModelAttribute Delivery delivery) {
-        deliveryService.save(delivery);
+    @GetMapping("/add")
+    public String addDelivery(@RequestParam("order_id") int id) {
+        deliveryService.save(id);
         return "redirect:/";
     }
 
