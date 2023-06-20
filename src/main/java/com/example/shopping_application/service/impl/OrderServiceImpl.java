@@ -34,13 +34,13 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public Optional<Order> findByUserIdAndStatus(int id,Status status) {
-        return orderRepository.findByUserIdAndStatus(id,status);
+    public Optional<Order> findByUserIdAndStatus(int id, Status status) {
+        return orderRepository.findByUserIdAndStatus(id, status);
     }
 
     @Override
     @Transactional
-    public void removeByProductIdAndOrderItemId(int product_id, int orderItem_id,int userId) {
+    public void removeByProductIdAndOrderItemId(int product_id, int orderItem_id, int userId) {
         Optional<OrderItem> byId1 = orderItemRepository.findById(orderItem_id);
         Optional<Product> byId = productRepository.findById(product_id);
         Product product = byId.orElse(null);
@@ -85,74 +85,12 @@ public class OrderServiceImpl implements OrderService {
 
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-
-            List<Cart> cartList = cartRepository.findAllByUserId(userId);
-            double totalAmount = 0;
             Optional<Order> byUserIdAndStatus = orderRepository.findByUserIdAndStatus(userId, Status.PENDING);
-            Order order1 = byUserIdAndStatus.orElse(null);
-
-            if (order1 == null) {
-                Order order = new Order();
-                order.setUser(user);
-
-                for (Cart cart : cartList) {
-                    List<CartItem> cartItems = cart.getCartItems();
-
-                    for (CartItem cartItem : cartItems) {
-                        boolean found = false;
-
-                        for (OrderItem orderItem : orderItems) {
-                            if (orderItem.getProduct().getId() == cartItem.getProduct().getId()) {
-                                orderItem.setCount(orderItem.getCount() + cartItem.getCount());
-                                found = true;
-                                break;
-                            }
-                        }
-
-                        if (!found) {
-                            OrderItem orderItem = new OrderItem();
-                            orderItem.setCount(cartItem.getCount());
-                            orderItem.setProduct(cartItem.getProduct());
-                            orderItems.add(orderItem);
-                        }
-
-                        totalAmount += cartItem.getProduct().getPrice() * (double) cartItem.getCount();
-                    }
-                }
-
-            Optional<Order> byUserIdAndStatus = orderRepository.findByUserIdAndStatus(userId, Status.PENDING);
-
 
             if (byUserIdAndStatus.isEmpty()) {
                 Order order = createNewOrder(user, userId);
                 orderRepository.save(order);
             } else {
-
-                Order existingOrder = order1;
-
-                for (Cart cart : cartList) {
-                    List<CartItem> cartItems = cart.getCartItems();
-
-                    for (CartItem cartItem : cartItems) {
-                        boolean found = false;
-
-                        for (OrderItem orderItem : existingOrder.getOrderItems()) {
-                            if (orderItem.getProduct().getId() == cartItem.getProduct().getId()) {
-                                orderItem.setCount(orderItem.getCount() + cartItem.getCount());
-                                found = true;
-                                break;
-                            }
-                        }
-
-                        if (!found) {
-                            OrderItem orderItem = new OrderItem();
-                            orderItem.setCount(cartItem.getCount());
-                            orderItem.setProduct(cartItem.getProduct());
-                            existingOrder.getOrderItems().add(orderItem);
-                        }
-
-                        totalAmount += cartItem.getProduct().getPrice() * (double) cartItem.getCount();
-
                 Order existingOrder = byUserIdAndStatus.get();
                 updateExistingOrder(existingOrder, userId);
                 orderRepository.save(existingOrder);
@@ -203,7 +141,6 @@ public class OrderServiceImpl implements OrderService {
                         orderItem.setCount(orderItem.getCount() + cartItem.getCount());
                         found = true;
                         break;
-
                     }
                 }
 
