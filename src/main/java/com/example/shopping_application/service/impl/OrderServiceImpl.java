@@ -77,23 +77,10 @@ public class OrderServiceImpl implements OrderService {
             List<CartItem> cartItems = cart.getCartItems();
 
             for (CartItem cartItem : cartItems) {
-                boolean found = false;
-
-                for (OrderItem orderItem : orderItems) {
-                    if (orderItem.getProduct().getId() == cartItem.getProduct().getId()) {
-                        orderItem.setCount(orderItem.getCount() + cartItem.getCount());
-                        found = true;
-                        break;
-                    }
-                }
-
-                if (!found) {
-                    OrderItem orderItem = new OrderItem();
-                    orderItem.setCount(cartItem.getCount());
-                    orderItem.setProduct(cartItem.getProduct());
-                    orderItems.add(orderItem);
-                }
-
+                OrderItem orderItem = new OrderItem();
+                orderItem.setCount(cartItem.getCount());
+                orderItem.setProduct(cartItem.getProduct());
+                orderItems.add(orderItem);
                 totalAmount += cartItem.getProduct().getPrice() * cartItem.getCount();
             }
         }
