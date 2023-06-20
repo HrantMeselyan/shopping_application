@@ -1,5 +1,6 @@
 package com.example.shopping_application.service;
 
+import com.example.shopping_application.dto.userDto.UpdatePasswordDto;
 import com.example.shopping_application.dto.userDto.UserRegisterDto;
 import com.example.shopping_application.entity.User;
 import com.example.shopping_application.security.CurrentUser;
@@ -24,4 +25,6 @@ public interface UserService {
     User findByIdWithAddresses(int id);
 
     User setUserEncodedPassword(UserRegisterDto userRegisterDto);
+
+    void updatePassword(User user, UpdatePasswordDto updatePasswordDto);
 }
