@@ -115,7 +115,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updatePassword(User user, UpdatePasswordDto updatePasswordDto) {
         if (passwordEncoder.matches(updatePasswordDto.getOldPassword(), user.getPassword()) && updatePasswordDto.getPassword1().equals(updatePasswordDto.getPassword2())) {
-            user.setPassword(updatePasswordDto.getPassword2());
+            String encodedPassword = passwordEncoder.encode(updatePasswordDto.getPassword2());
+            user.setPassword(encodedPassword);
             userRepository.save(user);
         }
     }
