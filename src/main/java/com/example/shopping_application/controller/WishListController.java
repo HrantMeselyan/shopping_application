@@ -30,6 +30,7 @@ public class WishListController {
         return "wishlist";
     }
 
+
     @GetMapping("/add")
     public String addWishList(@RequestParam("productId") int productId,
                               @AuthenticationPrincipal CurrentUser currentUser) {

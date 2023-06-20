@@ -27,30 +27,35 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:if="${wishlistById != null}" th:each="product : ${wishlistById.getProduct()}">
-                        <td class="product-thumbnail">
-                            <a class="text-reset" th:href="@{'/products/' + ${product.id}}"><img
-                                    th:src="@{/getImage(profilePic=${product.images[0].image})}" class="img-fluid"
-                                    width="60"
-                                    alt="">
-                            </a>
-                        </td>
-                        <td class="product-name">
-                            <a class="text-reset" th:href="@{'/products/' + ${product.id}}" th:text="${product.name}">Product
-                                Name</a>
-                        </td>
-                        <td class="product-price-cart"><span class="amount" th:text="${product.price}">$260.00</span>
-                        </td>
-                        <td class="product-remove text-end text-nowrap">
-                            <a th:href="@{/wishList/remove(id=${product.id})}"
-                               class="btn btn-sm btn-outline-dark text-nowrap px-3"><i
-                                    class="bi bi-x lh-1"></i>
-                            </a>
-                            <a th:href="@{'/cart/add/' + ${product.id}}"
-                               class="btn btn-sm btn-outline-primary text-nowrap px-3"><i
-                                    class="fi-shopping-cart lh-1 me-md-1"></i> <span class="d-none d-md-inline-block">ADD TO CART</span></a>
-                        </td>
-                    </tr>
+                    <block th:if="${wishlistById != null}">
+                        <tr  th:each="product : ${wishlistById.getProduct()}">
+                            <td class="product-thumbnail">
+                                <a class="text-reset" th:href="@{'/products/' + ${product.id}}"><img
+                                        th:src="@{/getImage(profilePic=${product.images[0].image})}" class="img-fluid"
+                                        width="60"
+                                        alt="">
+                                </a>
+                            </td>
+                            <td class="product-name">
+                                <a class="text-reset" th:href="@{'/products/' + ${product.id}}"
+                                   th:text="${product.name}">Product
+                                    Name</a>
+                            </td>
+                            <td class="product-price-cart"><span class="amount"
+                                                                 th:text="${product.price}">$260.00</span>
+                            </td>
+                            <td class="product-remove text-end text-nowrap">
+                                <a th:href="@{/wishList/remove(id=${product.id})}"
+                                   class="btn btn-sm btn-outline-dark text-nowrap px-3"><i
+                                        class="bi bi-x lh-1"></i>
+                                </a>
+                                <a th:href="@{'/cart/add/' + ${product.id}}"
+                                   class="btn btn-sm btn-outline-primary text-nowrap px-3"><i
+                                        class="fi-shopping-cart lh-1 me-md-1"></i> <span
+                                        class="d-none d-md-inline-block">ADD TO CART</span></a>
+                            </td>
+                        </tr>
+                    </block>
                     </tbody>
                 </table>
             </div>

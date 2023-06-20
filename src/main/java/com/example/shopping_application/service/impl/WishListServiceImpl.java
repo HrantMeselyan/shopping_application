@@ -37,7 +37,7 @@ public class WishListServiceImpl implements WishListService {
 
     @Override
     public WishlistResponseDto findByUserId(int id) {
-        WishList wishlist = wishListRepository.findByUserId(id).get();
+        WishList wishlist = wishListRepository.findByUserId(id).orElse(null);
         return WishListMapper.map(wishlist);
     }
 
