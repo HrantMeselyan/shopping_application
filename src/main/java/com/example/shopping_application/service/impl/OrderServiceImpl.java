@@ -40,43 +40,31 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public void removeByProductIdAndOrderItemId(int product_id, int orderItem_id, int userId) {
-        Optional<OrderItem> byId1 = orderItemRepository.findById(orderItem_id);
-        Optional<Product> byId = productRepository.findById(product_id);
-        Product product = byId.orElse(null);
-        OrderItem orderItem = byId1.orElse(null);
-        int count1 = orderItem != null ? orderItem.getCount() : 0;
-        product.setCount(product.getCount() + count1);
-        Optional<Order> byUserIdAndStatus = orderRepository.findByUserIdAndStatus(userId, Status.PENDING);
-        Order order = byUserIdAndStatus.orElse(null);
-        double totalAmount;
-        double totalAmount1 = 0;
-        List<OrderItem> all = orderItemRepository.findAllByOrder_Id(order.getId());
-        for (OrderItem item : all) {
-            totalAmount1 += item.getProduct().getPrice() * (double) item.getCount();
-        }
-        totalAmount = totalAmount1;
-        order.setTotalAmount(totalAmount);
-        orderItemRepository.deleteByProduct_IdAndId(product_id, orderItem_id);
-    }
+    public void removeByProductIdAndOrderItemId(int productId, int orderItemId, int userId) {
+        Optional<OrderItem> orderItemOptional = orderItemRepository.findById(orderItemId);
+        Optional<Product> productOptional = productRepository.findById(productId);
 
-    @Override
-    public void checkOrderItem(int userId) {
-        Optional<Order> byUserIdAndStatus = orderRepository.findByUserIdAndStatus(userId, Status.PENDING);
-        if (byUserIdAndStatus.isPresent()) {
-            Order order = byUserIdAndStatus.get();
-            double totalAmount;
-            double totalAmount1 = 0;
-            List<OrderItem> all = orderItemRepository.findAllByOrder_Id(order.getId());
-            for (OrderItem item : all) {
-                totalAmount1 += item.getProduct().getPrice() * (double) item.getCount();
+        if (orderItemOptional.isPresent() && productOptional.isPresent()) {
+            OrderItem orderItem = orderItemOptional.get();
+            Product product = productOptional.get();
+
+            int count = orderItem.getCount();
+            product.setCount(product.getCount() + count);
+
+            Optional<Order> orderOptional = orderRepository.findByUserIdAndStatus(userId, Status.PENDING);
+            if (orderOptional.isPresent()) {
+                Order order = orderOptional.get();
+
+                double itemPrice = orderItem.getProduct().getPrice();
+                double removedAmount = itemPrice * count;
+
+                double totalAmount = order.getTotalAmount() - removedAmount;
+                order.setTotalAmount(totalAmount);
+
+                orderItemRepository.deleteByProduct_IdAndId(productId, orderItemId);
             }
-            totalAmount = totalAmount1;
-            order.setTotalAmount(totalAmount);
-            orderRepository.save(order);
         }
     }
-
 
     @Override
     @Transactional
