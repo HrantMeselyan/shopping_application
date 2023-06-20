@@ -49,16 +49,16 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void updateUser(MultipartFile multipartFile, User user, CurrentUser currentUser) throws IOException {
         User userOldData = currentUser.getUser();
-        if (user.getName() == null) {
+        if (user.getName() == null || user.getName().equals("")) {
             user.setName(userOldData.getName());
         }
-        if (user.getSurname() == null) {
+        if (user.getSurname() == null || user.getSurname().equals("")) {
             user.setSurname(userOldData.getSurname());
         }
-        if (user.getEmail() == null) {
+        if (user.getEmail() == null || user.getEmail().equals("")) {
             user.setEmail(userOldData.getEmail());
         }
-        if (user.getPhoneNumber() == null) {
+        if (user.getPhoneNumber() == null || user.getPhoneNumber().equals("")) {
             user.setPhoneNumber(userOldData.getPhoneNumber());
         }
         if (user.getGender() == null) {
@@ -66,6 +66,9 @@ public class UserServiceImpl implements UserService {
         }
         if (user.getRole() == null) {
             user.setRole(userOldData.getRole());
+        }
+        if (userOldData.getProfilePic() != null) {
+            user.setProfilePic(userOldData.getProfilePic());
         }
         user.setId(userOldData.getId());
         user.setPassword(userOldData.getPassword());
