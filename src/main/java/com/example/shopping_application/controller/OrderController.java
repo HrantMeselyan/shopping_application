@@ -29,10 +29,9 @@ public class OrderController {
     @GetMapping
     public String orderPage(ModelMap modelMap,
                             @AuthenticationPrincipal CurrentUser currentUser) {
-        orderService.checkOrderItem(UserMapper.currentUserToUser(currentUser).getId());
         List<Address> addresses = UserMapper.currentUserToUser(currentUser).getAddresses();
         Optional<Order> byUserIdAndStatus = orderService
-                .findByUserIdAndStatus((UserMapper.currentUserToUser(currentUser)).getId(), Status.PENDING);
+                .findByUserIdAndStatus(currentUser.getUser().getId(), Status.PENDING);
         modelMap.addAttribute("order", OrderMapper.orderToOrderDto(byUserIdAndStatus.orElse(null)));
         return "checkout";
     }
