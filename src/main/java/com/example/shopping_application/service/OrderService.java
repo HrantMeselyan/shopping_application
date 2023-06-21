@@ -2,7 +2,6 @@ package com.example.shopping_application.service;
 
 import com.example.shopping_application.dto.orderDto.OrderResponseDto;
 import com.example.shopping_application.entity.Order;
-import com.example.shopping_application.entity.OrderItem;
 import com.example.shopping_application.entity.Status;
 
 import java.util.List;
@@ -17,4 +16,6 @@ public interface OrderService {
     void removeByProductIdAndOrderItemId(int product_id, int orderItem_id,int userId);
 
     void save(int userId);
+
+    List<Order> findAllByUserId(int id);
 }

@@ -8,7 +8,8 @@ import com.example.shopping_application.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +31,12 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderResponseDto> findAllOrder() {
         List<Order> all = orderRepository.findAll();
         return OrderMapper.findAll(all);
+    }
+    @Override
+    public List<Order> findAllByUserId(int id) {
+        Pageable pageable = PageRequest.of(0, 15);
+        List<Order> last15Orders = orderRepository.findLast15OrdersByUserId(id, pageable);
+        return last15Orders;
     }
 
     @Override
