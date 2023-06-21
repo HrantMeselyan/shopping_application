@@ -24,9 +24,8 @@ public class WishListController {
 
 
     @GetMapping
-    public String wishListPage(ModelMap modelMap,
-                               @RequestParam("userid") int id) {
-        modelMap.addAttribute("wishlistById", wishListService.findByUserId(id));
+    public String wishListPage(ModelMap modelMap,@AuthenticationPrincipal CurrentUser currentUser) {
+        modelMap.addAttribute("wishlistById", wishListService.findByUserId(currentUser.getUser().getId()));
         return "wishlist";
     }
 
