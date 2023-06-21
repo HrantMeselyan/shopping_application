@@ -40,62 +40,59 @@ public class CartServiceImpl implements CartService {
     @Transactional
     public void save(int id, CurrentUser currentUser) {
         Optional<Cart> cartOptional = cartRepository.findAllByUser_Id(currentUser.getUser().getId());
-        Cart cart;
-        if (cartOptional.isPresent()) {
-            cart = cartOptional.get();
-            List<CartItem> cartItems = cart.getCartItems();
-            Optional<Product> productOptional = productRepository.findById(id);
+        Cart cart = cartOptional.orElseGet(() -> createNewCart(currentUser));
 
-            if (productOptional.isPresent()) {
-                Product product = productOptional.get();
-                CartItem existingCartItem = null;
+        List<CartItem> cartItems = cart.getCartItems();
+        Optional<Product> productOptional = productRepository.findById(id);
 
-                for (CartItem item : cartItems) {
-                    if (item.getProduct().equals(product)) {
-                        existingCartItem = item;
-                        break;
-                    }
-                }
+        if (productOptional.isPresent()) {
+            Product product = productOptional.get();
+            CartItem existingCartItem = findExistingCartItem(cartItems, product);
 
-                if (existingCartItem != null) {
-                    existingCartItem.setCount(existingCartItem.getCount() + 1);
-                    existingCartItem.getProduct().setCount(product.getCount() - 1);
-                    cartItemRepository.save(existingCartItem);
-                } else {
-                    product.setCount(product.getCount() - 1);
-                    productRepository.save(product);
-
-                    CartItem cartItem = new CartItem();
-                    cartItem.setCount(1);
-                    cartItem.setProduct(product);
-                    cartItem.setCart(cart);
-                    cartItemRepository.save(cartItem);
-                    cartItems.add(cartItem);
-                }
-            }
-
-        } else {
-            cart = new Cart();
-            cart.setUser(UserMapper.currentUserToUser(currentUser));
-            List<CartItem> cartItems = new ArrayList<>();
-            Optional<Product> productOptional = productRepository.findById(id);
-
-            if (productOptional.isPresent()) {
-                Product product = productOptional.get();
+            if (existingCartItem != null) {
+                incrementCartItem(existingCartItem);
+            } else {
                 product.setCount(product.getCount() - 1);
                 productRepository.save(product);
-                CartItem cartItem = new CartItem();
-                cartItem.setCount(1);
-                cartItem.setProduct(product);
-                cartItem.setCart(cart);
-                cartItemRepository.save(cartItem);
+
+                CartItem cartItem = createCartItem(product, cart);
                 cartItems.add(cartItem);
             }
 
-            cart.setCartItems(cartItems);
+            cartItemRepository.saveAll(cartItems);
+            productRepository.save(product);
         }
+
         cartRepository.save(cart);
     }
+
+    private Cart createNewCart(CurrentUser currentUser) {
+        Cart cart = new Cart();
+        cart.setUser(UserMapper.currentUserToUser(currentUser));
+        cart.setCartItems(new ArrayList<>());
+        return cart;
+    }
+
+    private CartItem findExistingCartItem(List<CartItem> cartItems, Product product) {
+        return cartItems.stream()
+                .filter(item -> item.getProduct().equals(product))
+                .findFirst()
+                .orElse(null);
+    }
+
+    private void incrementCartItem(CartItem cartItem) {
+        cartItem.setCount(cartItem.getCount() + 1);
+        cartItem.getProduct().setCount(cartItem.getProduct().getCount() - 1);
+    }
+
+    private CartItem createCartItem(Product product, Cart cart) {
+        CartItem cartItem = new CartItem();
+        cartItem.setCount(1);
+        cartItem.setProduct(product);
+        cartItem.setCart(cart);
+        return cartItem;
+    }
+
 
     @Override
     @Transactional
