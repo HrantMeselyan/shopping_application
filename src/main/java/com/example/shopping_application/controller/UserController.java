@@ -4,10 +4,13 @@ import com.example.shopping_application.dto.userDto.UpdatePasswordDto;
 import com.example.shopping_application.dto.userDto.UserDto;
 import com.example.shopping_application.dto.userDto.UserRegisterDto;
 import com.example.shopping_application.dto.userDto.UserUpdateDto;
+import com.example.shopping_application.entity.Order;
 import com.example.shopping_application.entity.User;
+import com.example.shopping_application.mapper.OrderMapper;
 import com.example.shopping_application.mapper.UserMapper;
 import com.example.shopping_application.security.CurrentUser;
 import com.example.shopping_application.service.NotificationService;
+import com.example.shopping_application.service.OrderService;
 import com.example.shopping_application.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +31,7 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
-
+    private final OrderService orderService;
     private final NotificationService notificationService;
 
     @GetMapping("/register")
@@ -112,7 +115,15 @@ public class UserController {
 
     @PostMapping("/updatePassword")
     public String updatePassword(@AuthenticationPrincipal CurrentUser currentUser, UpdatePasswordDto updatePasswordDto) {
-        userService.updatePassword(currentUser.getUser(),updatePasswordDto);
+        userService.updatePassword(currentUser.getUser(), updatePasswordDto);
         return "redirect:/user";
+    }
+
+    @GetMapping("/order")
+    public String userOrderPage(@AuthenticationPrincipal CurrentUser currentUser, ModelMap modelMap) {
+        List<Order> allByUserId = orderService.findAllByUserId(currentUser.getUser().getId());
+        modelMap.addAttribute("user", UserMapper.currentUserToUser(currentUser));
+        modelMap.addAttribute(OrderMapper.listOrderToListOrderDto(allByUserId));
+        return "account-orders";
     }
 }

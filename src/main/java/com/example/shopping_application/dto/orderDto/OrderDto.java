@@ -1,6 +1,5 @@
 package com.example.shopping_application.dto.orderDto;
 
-import com.example.shopping_application.entity.OrderItem;
 import com.example.shopping_application.entity.Status;
 import com.example.shopping_application.entity.User;
 import lombok.AllArgsConstructor;
