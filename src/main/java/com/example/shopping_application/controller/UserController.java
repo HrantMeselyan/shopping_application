@@ -9,10 +9,10 @@ import com.example.shopping_application.entity.User;
 import com.example.shopping_application.mapper.OrderMapper;
 import com.example.shopping_application.mapper.UserMapper;
 import com.example.shopping_application.security.CurrentUser;
+import com.example.shopping_application.service.MailService;
 import com.example.shopping_application.service.NotificationService;
 import com.example.shopping_application.service.OrderService;
 import com.example.shopping_application.service.UserService;
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -30,7 +30,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/user")
 public class UserController {
-
+    private final MailService mailService;
     private final UserService userService;
     private final OrderService orderService;
     private final NotificationService notificationService;
@@ -46,7 +46,12 @@ public class UserController {
         if (errors.hasErrors()) {
             return "register";
         }
-        boolean validEmail = userService.save(userRegisterDto);
+        if (userService.save(userRegisterDto)) {
+            mailService.sendMail(userRegisterDto.getEmail(), "Welcome",
+                    "Hi " + userRegisterDto.getName() +
+                            "Welcome to our site!!!"
+            );
+        }
         return "redirect:/customLogin";
     }
 
