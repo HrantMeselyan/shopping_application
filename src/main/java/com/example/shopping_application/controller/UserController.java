@@ -12,6 +12,7 @@ import com.example.shopping_application.security.CurrentUser;
 import com.example.shopping_application.service.NotificationService;
 import com.example.shopping_application.service.OrderService;
 import com.example.shopping_application.service.UserService;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -41,14 +42,12 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String register(@Valid @ModelAttribute UserRegisterDto userRegisterDto,
-                           Errors errors) {
+    public String register(@Valid @ModelAttribute UserRegisterDto userRegisterDto, Errors errors) {
         if (errors.hasErrors()) {
             return "register";
         }
-        User user = userService.setUserEncodedPassword(userRegisterDto);
-        userService.save(user);
-        return "redirect:/";
+        boolean validEmail = userService.save(userRegisterDto);
+        return "redirect:/customLogin";
     }
 
     @GetMapping()
@@ -125,5 +124,11 @@ public class UserController {
         modelMap.addAttribute("user", UserMapper.currentUserToUser(currentUser));
         modelMap.addAttribute(OrderMapper.listOrderToListOrderDto(allByUserId));
         return "account-orders";
+    }
+
+    @GetMapping("/payment")
+    public String userPaymentPage(@AuthenticationPrincipal CurrentUser currentUser, ModelMap modelMap) {
+        modelMap.addAttribute("user", UserMapper.currentUserToUser(currentUser));
+        return "account-payment";
     }
 }

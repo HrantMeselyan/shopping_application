@@ -37,8 +37,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void save(User user) {
-        userRepository.save(user);
+    public boolean save(UserRegisterDto userRegisterDto) {
+        boolean isValidMail = false;
+        Optional<User> byEmail = userRepository.findByEmail(userRegisterDto.getEmail());
+        if (byEmail.isEmpty()) {
+            User user = UserMapper.userRegisterDtoToUser(userRegisterDto);
+            String encodedPassword = passwordEncoder.encode(user.getPassword());
+            user.setPassword(encodedPassword);
+            user.setRole(Role.USER);
+            userRepository.save(user);
+            isValidMail = true;
+        }
+        return isValidMail;
     }
 
     @Override
@@ -103,14 +113,6 @@ public class UserServiceImpl implements UserService {
         return byId.get();
     }
 
-    @Override
-    public User setUserEncodedPassword(UserRegisterDto userRegisterDto) {
-        User user = UserMapper.userRegisterDtoToUser(userRegisterDto);
-        String encodedPassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(encodedPassword);
-        user.setRole(Role.USER);
-        return user;
-    }
 
     @Override
     public void updatePassword(User user, UpdatePasswordDto updatePasswordDto) {

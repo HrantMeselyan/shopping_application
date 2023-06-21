@@ -4,6 +4,7 @@ import com.example.shopping_application.dto.userDto.UpdatePasswordDto;
 import com.example.shopping_application.dto.userDto.UserRegisterDto;
 import com.example.shopping_application.entity.User;
 import com.example.shopping_application.security.CurrentUser;
+import jakarta.validation.Valid;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -16,15 +17,13 @@ public interface UserService {
 
     void remove(int id);
 
-    void save(User user);
+    boolean save(UserRegisterDto user);
 
     void removeById(int id);
 
     User findById(int id);
 
     User findByIdWithAddresses(int id);
-
-    User setUserEncodedPassword(UserRegisterDto userRegisterDto);
 
     void updatePassword(User user, UpdatePasswordDto updatePasswordDto);
 }
