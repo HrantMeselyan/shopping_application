@@ -15,6 +15,7 @@ import com.example.shopping_application.service.OrderService;
 import com.example.shopping_application.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -25,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequiredArgsConstructor
@@ -34,6 +36,9 @@ public class UserController {
     private final UserService userService;
     private final OrderService orderService;
     private final NotificationService notificationService;
+
+    @Value("${site.url}")
+    private String siteUrl;
 
     @GetMapping("/register")
     public String registerPage(ModelMap modelMap) {
@@ -46,10 +51,11 @@ public class UserController {
         if (errors.hasErrors()) {
             return "register";
         }
-        if (userService.save(userRegisterDto)) {
+        User user = userService.save(userRegisterDto);
+        if (user != null) {
             mailService.sendMail(userRegisterDto.getEmail(), "Welcome",
                     "Hi " + userRegisterDto.getName() +
-                            "Welcome to our site!!!"
+                            " Welcome please verify your account by clicking " + siteUrl + "/user/verify?email=" + user.getEmail() + "&token=" + user.getToken()
             );
         }
         return "redirect:/customLogin";
@@ -135,5 +141,14 @@ public class UserController {
     public String userPaymentPage(@AuthenticationPrincipal CurrentUser currentUser, ModelMap modelMap) {
         modelMap.addAttribute("user", UserMapper.currentUserToUser(currentUser));
         return "account-payment";
+    }
+
+    @GetMapping("/verify")
+    public String verifyEmail(@RequestParam("email") String email, @RequestParam("token") UUID token) {
+        boolean isVerified = userService.verifyUserByEmail(email, token);
+        if (isVerified) {
+            return "redirect:/customLogin";
+        }
+        return "redirect:/";
     }
 }

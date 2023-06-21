@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 public interface UserService {
     List<User> findAll();
@@ -17,7 +18,7 @@ public interface UserService {
 
     void remove(int id);
 
-    boolean save(UserRegisterDto user);
+    User save(UserRegisterDto user);
 
     void removeById(int id);
 
@@ -26,4 +27,6 @@ public interface UserService {
     User findByIdWithAddresses(int id);
 
     void updatePassword(User user, UpdatePasswordDto updatePasswordDto);
+
+    boolean verifyUserByEmail(String email, UUID token);
 }

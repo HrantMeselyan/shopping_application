@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Created by Ashot Simonyan on 21.05.23.
@@ -37,18 +38,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean save(UserRegisterDto userRegisterDto) {
-        boolean isValidMail = false;
+    public User save(UserRegisterDto userRegisterDto) {
         Optional<User> byEmail = userRepository.findByEmail(userRegisterDto.getEmail());
         if (byEmail.isEmpty()) {
             User user = UserMapper.userRegisterDtoToUser(userRegisterDto);
             String encodedPassword = passwordEncoder.encode(user.getPassword());
             user.setPassword(encodedPassword);
             user.setRole(Role.USER);
-            userRepository.save(user);
-            isValidMail = true;
+            user.setEnabled(false);
+            user.setToken(UUID.randomUUID().toString());
+            User savedUser = userRepository.save(user);
+            return savedUser;
         }
-        return isValidMail;
+        return null;
     }
 
     @Override
@@ -121,6 +123,22 @@ public class UserServiceImpl implements UserService {
             user.setPassword(encodedPassword);
             userRepository.save(user);
         }
+    }
+
+    @Override
+    public boolean verifyUserByEmail(String email, UUID token) {
+        boolean verified = false;
+        Optional<User> byEmail = userRepository.findByEmail(email);
+        if (byEmail.isPresent()) {
+            User user = byEmail.get();
+            if (!user.isEnabled() && user.getToken().equals(token.toString())) {
+                user.setEnabled(true);
+                user.setToken(null);
+                verified = true;
+                userRepository.save(user);
+            }
+        }
+        return verified;
     }
 
     public void deleteProfilePicture(String existingProfilePic) {
