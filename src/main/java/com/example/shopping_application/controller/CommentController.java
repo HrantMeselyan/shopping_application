@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.*;
 public class CommentController {
     private final CommentService commentService;
 
-    @PostMapping("/add/{id}")
-    public String addComment(@PathVariable("id") int id,
+    @PostMapping("/add")
+    public String addComment(@RequestParam("id") int id,
                                               @ModelAttribute CommentRequestDto commentRequestDto,
                                               @AuthenticationPrincipal CurrentUser currentUser) {
-        commentService.save(commentRequestDto,currentUser.getUser());
+        commentService.save(commentRequestDto,currentUser.getUser(),id);
         return "redirect:/products/" + id;
     }
 

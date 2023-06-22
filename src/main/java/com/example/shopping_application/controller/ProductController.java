@@ -9,7 +9,6 @@ import com.example.shopping_application.service.CommentService;
 import com.example.shopping_application.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -80,7 +79,7 @@ public class ProductController {
                                      @PathVariable("id") int id) {
         modelmap.addAttribute("currentProduct", productService.findById(id));
         modelmap.addAttribute("products", productService.findAll());
-        modelmap.addAttribute("comments", commentService.findAllByProductId(id));
+        modelmap.addAttribute("comments", commentService.findAllByLimit(id));
         return "singleProductPage";
     }
 
