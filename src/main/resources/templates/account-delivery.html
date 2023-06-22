@@ -15,14 +15,14 @@
                     <div class="bg-gray-200 p-3 border-bottom border-top"><h6 class="m-0">Dashboard</h6></div>
                     <ul class="list-unstyled mb-0 theme-link">
                         <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center p-3"
-                                                          th:href="@{/user/delivery}"><i
+                                                          th:href="@{/delivery}"><i
                                 class="bi bi-bag me-2"></i> Deliveries
                             <div class="ms-auto badge-pill badge bg-secondary" th:text="${deliveries1.content.size()}">
                                 5
                             </div>
                         </a></li>
                         <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center p-3"
-                                                          th:href="@{/user/delivery/inProcess}"><i
+                                                          th:href="@{/delivery/inProcess}"><i
                                 class="bi bi-bag me-2"></i>In Process
                             <div class="ms-auto badge-pill badge bg-secondary" th:text="${deliveries2.size()}">5</div>
                         </a></li>
@@ -54,18 +54,18 @@
                         <tbody>
                         <tr th:each="delivery :${deliveries1.content}">
                             <td class="p-3 text-mode"><a
-                                    th:href="@{/user/delivery/customer(id=${delivery.order.user.id})}"><span
+                                    th:href="@{/delivery/customer(id=${delivery.order.user.id})}"><span
                                     class="fw-500"
                                     th:text="${delivery.order.user.name} +' '+ ${delivery.order.user.surname}"></span></a>
                             </td>
                             <td class="p-3"
                                 th:text="${#temporals.format(delivery.order.dateTime, 'yyyy-MM-dd HH:mm')}"></td>
-                            <td class="p-3"><a th:href="@{/user/delivery/order(id=${delivery.order.id})}"><span th:text="${delivery.order.id}"></span></a></td>
+                            <td class="p-3"><a th:href="@{/delivery/order(id=${delivery.order.id})}"><span th:text="${delivery.order.id}"></span></a></td>
                             <td class="p-3"><span class="badge bg-warning m-0"
                                                   th:text="${delivery.order.user.addresses[0].country}+','+${delivery.order.user.addresses[0].city}+','+${delivery.order.user.addresses[0].street}+','+${delivery.order.user.addresses[0].unitNumber}"></span>
                             </td>
                             <td class="p-3" th:text="'$' + ${delivery.order.totalAmount}"></td>
-                            <td class="p-3 text-end"><a th:href="@{/user/delivery/custom(delivery_id=${delivery.id})}">
+                            <td class="p-3 text-end"><a th:href="@{/delivery/custom(delivery_id=${delivery.id})}">
                                 <button class="btn btn-primary">In Process</button>
                             </a></td>
                         </tr>
@@ -78,16 +78,16 @@
                         <!-- Previous button -->
                         <ul class="pagination">
                             <li class="page-item"><a class="page-link" th:if="${currentPage > 1}"
-                                                     th:href="@{/user/delivery(page=${currentPage - 1},size=${deliveries1.size})}"
+                                                     th:href="@{/delivery(page=${currentPage - 1},size=${deliveries1.size})}"
                                                      aria-label="Previous"><span
                                     aria-hidden="true">&laquo;</span></a></li>
                             <li class="page-item" th:each="pageNumber : ${pageNumbers}"
                                 th:class="${pageNumber==deliveries1.number + 1} ? active">
                                 <a class="page-link"
-                                   th:href="@{/user/delivery(size=${deliveries1.size}, page=${pageNumber})}"
+                                   th:href="@{/delivery(size=${deliveries1.size}, page=${pageNumber})}"
                                    aria-label="Previous" th:text="${pageNumber}"></a></li>
                             <li class="page-item"><a class="page-link" th:if="${currentPage < totalPages}"
-                                                     th:href="@{/user/delivery(page=${currentPage + 1},size=${deliveries1.size})}"
+                                                     th:href="@{/delivery(page=${currentPage + 1},size=${deliveries1.size})}"
                                                      aria-label="Next"><span
                                     aria-hidden="true">&raquo;</span></a></li>
                         </ul>

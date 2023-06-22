@@ -4,10 +4,8 @@ import com.example.shopping_application.entity.Delivery;
 import com.example.shopping_application.entity.Order;
 import com.example.shopping_application.entity.Status;
 import com.example.shopping_application.entity.User;
-import com.example.shopping_application.mapper.UserMapper;
 import com.example.shopping_application.repository.DeliveryRepository;
 import com.example.shopping_application.repository.OrderRepository;
-import com.example.shopping_application.security.CurrentUser;
 import com.example.shopping_application.service.DeliveryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -15,7 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
