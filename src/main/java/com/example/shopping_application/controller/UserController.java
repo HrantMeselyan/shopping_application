@@ -162,4 +162,36 @@ public class UserController {
         return "redirect:/";
     }
 
+
+    @PostMapping("/forgotPassword")
+    public String forgotPassword(@RequestParam("email") String email) {
+        User userByEmail = userService.findByEmail(email);
+        if (userByEmail != null) {
+            mailService.sendMail(userByEmail.getEmail(), "Welcome",
+                    "Hi " + userByEmail.getName() +
+                            " Welcome please for change password by click " + siteUrl + "/user/changePassword?email=" + userByEmail.getEmail() + "&token=" + userByEmail.getToken()
+            );
+        }
+        return "redirect:/";
+    }
+
+    @GetMapping("/changePassword")
+    public String changePassword(@RequestParam("email") String email, @RequestParam("token") UUID token, ModelMap modelMap) {
+        boolean isChanged = userService.changeUserPasswordTokenVerify(email, token.toString());
+        if (isChanged) {
+            modelMap.addAttribute("email", email);
+            modelMap.addAttribute("token", token.toString());
+            return "write-new-password";
+        }
+        return "redirect:/";
+    }
+
+    @PostMapping("/changePassword")
+    public String resetPassword(@RequestParam("password") String password, @RequestParam("password") String password2, @RequestParam("email") String email, @RequestParam("token") String token) {
+        if (userService.changePassword(password, password2, email, token)) {
+            return "redirect:/customLogin";
+        }
+        return "redirect:/";
+    }
+
 }

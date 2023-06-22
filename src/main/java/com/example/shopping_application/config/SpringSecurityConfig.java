@@ -33,6 +33,7 @@ public class SpringSecurityConfig {
                         .requestMatchers("/products/list").permitAll()
                         .requestMatchers("/getImage").permitAll()
                         .requestMatchers("/user/register").permitAll()
+                        .requestMatchers("/user/changePassword").permitAll()
                         .requestMatchers("/user/verify").permitAll()
                         .requestMatchers("/user/forgotPassword").permitAll()
                         .requestMatchers("/user/admin").hasAuthority("ADMIN")

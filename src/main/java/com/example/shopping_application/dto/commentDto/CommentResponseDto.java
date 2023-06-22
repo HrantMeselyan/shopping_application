@@ -1,5 +1,6 @@
 package com.example.shopping_application.dto.commentDto;
 
+import com.example.shopping_application.dto.userDto.UserDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,5 +14,6 @@ import java.util.Date;
 @Builder
 public class CommentResponseDto {
     private String comment;
+    private UserDto userDto;
     private Date commentDateTime;
 }

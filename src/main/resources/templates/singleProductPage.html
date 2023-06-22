@@ -120,7 +120,23 @@
                     <div class="pt-4"><img class="img-fluid" src="/img/fashion2/payment-details.png"
                                            title="" alt=""></div>
                 </div>
+
             </div><!-- End Product Details --></div>
+        <div class="col-md-12">
+            <h2>Comments</h2>
+            <form action="/comments/add" method="post" class="margin-bottom-20">
+                <textarea placeholder="comment" style="resize: none; border-radius: 8px; padding: 3px 0px 0px 8px;" name="comment" rows="2" cols="50" required></textarea><br>
+                <input type="hidden" th:value="${currentProduct.id}" name="id">
+                <input type="submit" value="add" class="add-comment-button">
+            </form>
+            <ul class="comment-list">
+                <li th:each="comment : ${comments}" class="comment-item">
+                    <img th:src="@{/getImage(profilePic=${comment.user.profilePic})}"   class="user-image"  alt="User Image" width="50" height="50">
+                     <span th:text="${#temporals.format(comment.dateTime, 'dd MMM yyyy HH:mm')}"> : </span><span th:text=" ' ' + ${comment.user.name}"></span>
+                    <span th:text="${comment.comment}"></span>
+                </li>
+            </ul>
+        </div>
     </div>
 </section><!-- End Product Details --><!-- Product Tabs -->
 <section class="section">

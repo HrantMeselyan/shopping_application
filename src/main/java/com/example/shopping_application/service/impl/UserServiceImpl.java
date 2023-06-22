@@ -54,6 +54,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findByEmail(String email) {
+        Optional<User> byEmail = userRepository.findByEmail(email);
+        if (byEmail.isPresent()) {
+            User user = byEmail.get();
+            user.setToken(UUID.randomUUID().toString());
+            return userRepository.save(user);
+        }
+        return null;
+    }
+
+    @Override
     public List<User> findAll() {
         return userRepository.findAll();
     }
@@ -99,6 +110,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+
     @Override
     public void removeById(int id) {
         userRepository.deleteById(id);
@@ -140,6 +152,35 @@ public class UserServiceImpl implements UserService {
             }
         }
         return verified;
+    }
+
+    @Override
+    public boolean changeUserPasswordTokenVerify(String email, String token) {
+        boolean isVerified = false;
+        Optional<User> byEmail = userRepository.findByEmail(email);
+        if (byEmail.isPresent()) {
+            User user = byEmail.get();
+            if (user.isEnabled() && user.getToken() != null && user.getToken().equals(token)) {
+                isVerified = true;
+            }
+        }
+        return isVerified;
+    }
+
+    @Override
+    public boolean changePassword(String password, String password2, String email, String token) {
+        boolean isChanged = false;
+        Optional<User> byEmail = userRepository.findByEmail(email);
+        if (byEmail.isPresent()) {
+            User user = byEmail.get();
+            if (password.equals(password2) && user.getToken().equals(token)) {
+                user.setPassword(passwordEncoder.encode(password));
+                user.setToken(null);
+                userRepository.save(user);
+                isChanged = true;
+            }
+        }
+        return isChanged;
     }
 
     public void deleteProfilePicture(String existingProfilePic) {
