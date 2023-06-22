@@ -18,4 +18,5 @@ public class Delivery {
 
     @ManyToOne(optional = false)
     private Order order;
+
 }
