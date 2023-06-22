@@ -1,6 +1,7 @@
 package com.example.shopping_application.service.impl;
 
 import com.example.shopping_application.dto.cartDto.CartDto;
+import com.example.shopping_application.dto.cartDto.CartItemDto;
 import com.example.shopping_application.entity.Cart;
 import com.example.shopping_application.entity.CartItem;
 import com.example.shopping_application.entity.Product;
@@ -25,6 +26,17 @@ public class CartServiceImpl implements CartService {
     private final CartRepository cartRepository;
     private final ProductRepository productRepository;
     private final CartItemRepository cartItemRepository;
+
+    @Override
+    public List<CartItemDto> findLastCartItemsByLimit(int userId) {
+        Optional<Cart> allByUserId = cartRepository.findAllByUser_Id(userId);
+        if (allByUserId.isPresent()) {
+            Cart cart = allByUserId.get();
+            List<CartItem> top4ByCartUserIdOrderByCreatedAtDesc = cartItemRepository.findTop4ByCartIdOrderByIdDesc(cart.getId());
+            return CartMapper.mapToDtoList(top4ByCartUserIdOrderByCreatedAtDesc);
+        }
+        return null;
+    }
 
     @Override
     public CartDto findAllByUser_id(int id) {
