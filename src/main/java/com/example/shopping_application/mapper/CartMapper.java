@@ -8,6 +8,7 @@ import com.example.shopping_application.entity.CartItem;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CartMapper {
     public static CartDto convertToDto(Cart cart) {
@@ -52,5 +53,19 @@ public class CartMapper {
 
         return cartDtoList;
     }
+    public static List<CartItemDto> mapToDtoList(List<CartItem> cartItems) {
+        return cartItems.stream()
+                .map(CartMapper::mapToDto)
+                .collect(Collectors.toList());
+    }
+
+    public static CartItemDto mapToDto(CartItem cartItem) {
+        CartItemDto cartItemDto = new CartItemDto();
+        cartItemDto.setId(cartItem.getId());
+        cartItemDto.setCount(cartItem.getCount());
+        cartItemDto.setProduct(ProductMapper.mapToDto(cartItem.getProduct()));
+        return cartItemDto;
+    }
+
 
 }

@@ -2,8 +2,6 @@ package com.example.shopping_application.dto.productDto;
 
 import com.example.shopping_application.dto.categoryDto.CategoryDto;
 import com.example.shopping_application.dto.imageDto.ImageDto;
-import com.example.shopping_application.entity.Category;
-import com.example.shopping_application.entity.Image;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
