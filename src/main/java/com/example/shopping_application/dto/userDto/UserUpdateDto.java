@@ -1,5 +1,8 @@
 package com.example.shopping_application.dto.userDto;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,9 +13,23 @@ import lombok.NoArgsConstructor;
 public class UserUpdateDto {
 
     private int id;
+
+    @NotNull
+    @Size(min = 2,
+            max = 15,
+            message = "Name length it should be min 2 max 15 characters")
     private String name;
+
+    @NotNull
+    @Size(min = 2,
+            max = 15,
+            message = "Surname length it should be min 2 max 15 characters")
     private String surname;
+
+    @Email(regexp = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$",
+            message = "Email is no valid")
     private String email;
+
     private String phoneNumber;
     private String profilePic;
 }

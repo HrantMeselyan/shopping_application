@@ -22,11 +22,11 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @NotNull
-    @Size(min = 2,max = 15,message = "Name length it should be min 2 max 10 characters")
+    @Size(min = 2,max = 15,message = "Name length it should be min 2 max 15 characters")
     @Column(nullable = false)
     private String name;
     @NotNull
-    @Size(min = 2,message = "Surname length it should be min 2 max 10 characters")
+    @Size(min = 2,max = 15,message = "Surname length it should be min 2 max 15 characters")
     @Column(nullable = false)
     private String surname;
     @Email(regexp = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$", message = "Email is no valid")

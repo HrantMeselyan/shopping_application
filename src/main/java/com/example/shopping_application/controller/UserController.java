@@ -20,6 +20,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.Errors;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,6 +32,7 @@ import java.util.UUID;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/user")
+@Validated
 public class UserController {
     private final MailService mailService;
     private final UserService userService;
@@ -64,12 +66,23 @@ public class UserController {
     @GetMapping()
     public String currentUserPage(ModelMap modelmap,
                                   @AuthenticationPrincipal CurrentUser currentUser) {
+        modelmap.addAttribute("userUpdateDto", new UserUpdateDto());
+        modelmap.addAttribute("updatePasswordDto", new UpdatePasswordDto());
         modelmap.addAttribute("user", userService.findByIdWithAddresses(UserMapper.currentUserToUser(currentUser).getId()));
         return "singleUserPage";
     }
 
-    @PostMapping()
-    public String updateCurrentUser(@AuthenticationPrincipal CurrentUser currentUser, UserUpdateDto userUpdateDto,
+    @PostMapping("/updatePassword")
+    public String updatePassword(@Valid @ModelAttribute UpdatePasswordDto updatePasswordDto,
+                                 @AuthenticationPrincipal CurrentUser currentUser) {
+        userService.updatePassword(UserMapper.currentUserToUser(currentUser), updatePasswordDto);
+        return "redirect:/user";
+    }
+
+
+    @PostMapping("/updateUserData")
+    public String updateCurrentUser(@Valid @ModelAttribute UserUpdateDto userUpdateDto,
+                                    @AuthenticationPrincipal CurrentUser currentUser,
                                     @RequestParam("profile_pic") MultipartFile multipartFile) throws IOException {
         userService.updateUser(multipartFile, UserMapper.userUpdateDtoToUser(userUpdateDto), currentUser);
         return "redirect:/user";
@@ -123,11 +136,6 @@ public class UserController {
         return "allUsers";
     }
 
-    @PostMapping("/updatePassword")
-    public String updatePassword(@AuthenticationPrincipal CurrentUser currentUser, UpdatePasswordDto updatePasswordDto) {
-        userService.updatePassword(currentUser.getUser(), updatePasswordDto);
-        return "redirect:/user";
-    }
 
     @GetMapping("/order")
     public String userOrderPage(@AuthenticationPrincipal CurrentUser currentUser, ModelMap modelMap) {
