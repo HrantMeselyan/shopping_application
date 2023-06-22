@@ -1,5 +1,6 @@
 package com.example.shopping_application.mapper;
 
+import com.example.shopping_application.dto.commentDto.CommentDto;
 import com.example.shopping_application.dto.commentDto.CommentRequestDto;
 import com.example.shopping_application.dto.commentDto.CommentResponseDto;
 import com.example.shopping_application.entity.Comment;
@@ -21,8 +22,17 @@ public class CommentMapper {
         CommentResponseDto commentResponseDto = new CommentResponseDto();
         for (Comment comment : comments) {
             commentResponseDto.setComment(comment.getComment());
+            commentResponseDto.setUserDto(UserMapper.userToUserDto(comment.getUser()));
         }
         return commentResponseDtoList;
     }
-
+    public CommentDto toDto(Comment comment) {
+        CommentDto commentDto = new CommentDto();
+        commentDto.setId(comment.getId());
+        commentDto.setComment(comment.getComment());
+        commentDto.setCommentDateTime(comment.getDateTime());
+        commentDto.setUser(UserMapper.userToUserDto(comment.getUser()));
+        commentDto.setProduct(comment.getProduct());
+        return commentDto;
+    }
 }
