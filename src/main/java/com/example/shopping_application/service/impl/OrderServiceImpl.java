@@ -40,6 +40,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public Optional<Order> findById(int id) {
+        return orderRepository.findById(id);
+    }
+
+    @Override
     @Transactional
     public Optional<Order> findByUserIdAndStatus(int id, Status status) {
         return orderRepository.findByUserIdAndStatus(id, status);
