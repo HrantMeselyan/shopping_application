@@ -37,6 +37,8 @@ public class SpringSecurityConfig {
                         .requestMatchers("/user/verify").permitAll()
                         .requestMatchers("/user/forgotPassword").permitAll()
                         .requestMatchers("/user/admin").hasAuthority("ADMIN")
+                        .requestMatchers("/delivery").hasAnyAuthority("DELIVERY","ADMIN")
+                        .requestMatchers("/delivery/**").hasAnyAuthority("DELIVERY","ADMIN")
                         .requestMatchers("/img/**").permitAll()
                         .requestMatchers("/vendor/**").permitAll()
                         .requestMatchers("/css/**").permitAll()

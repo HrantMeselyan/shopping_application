@@ -18,4 +18,6 @@ public interface OrderService {
     void save(int userId);
 
     List<Order> findAllByUserId(int id);
+
+    Optional<Order> findById(int id);
 }

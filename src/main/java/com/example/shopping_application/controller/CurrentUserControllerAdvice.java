@@ -1,16 +1,15 @@
 package com.example.shopping_application.controller;
 
-import com.example.shopping_application.dto.userDto.UpdatePasswordDto;
-import com.example.shopping_application.dto.cartDto.CartDto;
 import com.example.shopping_application.dto.cartDto.CartItemDto;
+import com.example.shopping_application.dto.userDto.UpdatePasswordDto;
 import com.example.shopping_application.dto.userDto.UserShortDto;
 import com.example.shopping_application.dto.userDto.UserUpdateDto;
 import com.example.shopping_application.entity.User;
 import com.example.shopping_application.mapper.UserMapper;
 import com.example.shopping_application.security.CurrentUser;
+import com.example.shopping_application.service.CartService;
 import com.example.shopping_application.service.UserService;
 import lombok.RequiredArgsConstructor;
-import com.example.shopping_application.service.CartService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -19,8 +18,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.List;
 
 import java.util.List;
 

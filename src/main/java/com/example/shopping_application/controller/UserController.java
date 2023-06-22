@@ -72,6 +72,8 @@ public class UserController {
         return "singleUserPage";
     }
 
+
+
     @PostMapping("/updatePassword")
     public String updatePassword(@Valid @ModelAttribute UpdatePasswordDto updatePasswordDto,
                                  @AuthenticationPrincipal CurrentUser currentUser) {
@@ -160,6 +162,7 @@ public class UserController {
         return "redirect:/";
     }
 
+
     @PostMapping("/forgotPassword")
     public String forgotPassword(@RequestParam("email") String email) {
         User userByEmail = userService.findByEmail(email);
@@ -190,4 +193,5 @@ public class UserController {
         }
         return "redirect:/";
     }
+
 }

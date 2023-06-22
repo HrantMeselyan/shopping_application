@@ -119,10 +119,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findById(int id) {
         Optional<User> byId = userRepository.findById(id);
-        if (byId.isPresent()) {
-            return byId.get();
-        }
-        return null;
+        return byId.orElse(null);
     }
 
     @Override
