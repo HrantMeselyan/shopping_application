@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Controller
@@ -56,7 +55,7 @@ public class MainController {
         User user = UserMapper.currentUserToUser(currentUser);
         if (user != null) {
             if (user.getRole() == Role.ADMIN) {
-                return "redirect:/user/admin";
+                return "redirect:/admin";
             } else if (user.getRole() == Role.USER) {
                 return "redirect:/";
             } else if (user.getRole() == Role.DELIVERY) {

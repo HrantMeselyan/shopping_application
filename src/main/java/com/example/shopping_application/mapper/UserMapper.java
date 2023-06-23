@@ -137,4 +137,14 @@ public class UserMapper {
         }
         return null;
     }
+    public static List<UserDto> userDtoListMap(List<User> userList){
+        if (userList == null){
+            return null;
+        }
+        List<UserDto> userDtoList = new ArrayList<>();
+        for (User user : userList) {
+            userDtoList.add(UserMapper.userToUserDto(user));
+        }
+        return userDtoList;
+    }
 }
