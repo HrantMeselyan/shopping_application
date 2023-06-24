@@ -14,10 +14,12 @@ public class AddressMapper {
             return null;
         }
         AddressDto addressDto = new AddressDto();
+        addressDto.setId(address.getId());
         addressDto.setCountry(address.getCountry());
         addressDto.setCity(address.getCity());
         addressDto.setStreet(address.getStreet());
         addressDto.setUnitNumber(address.getUnitNumber());
+        addressDto.setPostCode(address.getPostCode());
         return addressDto;
     }
 
@@ -30,6 +32,7 @@ public class AddressMapper {
         address.setCity(addressDto.getCity());
         address.setStreet(addressDto.getStreet());
         address.setUnitNumber(addressDto.getUnitNumber());
+        address.setPostCode(addressDto.getPostCode());
         return address;
     }
 }

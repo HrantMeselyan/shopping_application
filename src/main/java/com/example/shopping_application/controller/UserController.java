@@ -1,22 +1,23 @@
 package com.example.shopping_application.controller;
 
+import com.example.shopping_application.dto.addressDto.AddressDto;
 import com.example.shopping_application.dto.userDto.UpdatePasswordDto;
 import com.example.shopping_application.dto.userDto.UserRegisterDto;
 import com.example.shopping_application.dto.userDto.UserUpdateDto;
+import com.example.shopping_application.entity.Address;
 import com.example.shopping_application.entity.Order;
 import com.example.shopping_application.entity.User;
+import com.example.shopping_application.mapper.AddressMapper;
 import com.example.shopping_application.mapper.OrderMapper;
 import com.example.shopping_application.mapper.UserMapper;
 import com.example.shopping_application.security.CurrentUser;
-import com.example.shopping_application.service.MailService;
-import com.example.shopping_application.service.NotificationService;
-import com.example.shopping_application.service.OrderService;
-import com.example.shopping_application.service.UserService;
+import com.example.shopping_application.service.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
@@ -36,6 +37,7 @@ public class UserController {
     private final UserService userService;
     private final OrderService orderService;
     private final NotificationService notificationService;
+    private final AddressService addressService;
 
     @Value("${site.url}")
     private String siteUrl;
@@ -69,7 +71,6 @@ public class UserController {
         modelmap.addAttribute("user", userService.findByIdWithAddresses(UserMapper.currentUserToUser(currentUser).getId()));
         return "singleUserPage";
     }
-
 
 
     @PostMapping("/updatePassword")
@@ -156,6 +157,53 @@ public class UserController {
             return "redirect:/customLogin";
         }
         return "redirect:/";
+    }
+
+    @GetMapping("/address")
+    public String userAddressPage(ModelMap modelmap,
+                                  @AuthenticationPrincipal CurrentUser currentUser) {
+        modelmap.addAttribute("user", userService.findByIdWithAddresses(UserMapper.currentUserToUser(currentUser).getId()));
+        return "account-address";
+    }
+
+    @PostMapping("/address")
+    public String userAddressAddPage(ModelMap modelmap,
+                                     @AuthenticationPrincipal CurrentUser currentUser,
+                                     @ModelAttribute AddressDto addressDto) {
+        if (addressDto.getCountry().equals("") && addressDto.getCity().equals("") && addressDto.getStreet().equals("") &&
+                addressDto.getUnitNumber().equals("") && addressDto.getPostCode().equals("")) {
+            modelmap.addAttribute("user", userService.findByIdWithAddresses(UserMapper.currentUserToUser(currentUser).getId()));
+            return "account-address";
+        }
+        User user = UserMapper.currentUserToUser(currentUser);
+        User byId = userService.findById(user.getId());
+        List<Address> addresses = byId.getAddresses();
+        addresses.add(AddressMapper.addressDtoToAddress(addressDto));
+        byId.setAddresses(addresses);
+        userService.save(byId);
+        modelmap.addAttribute("user", userService.findByIdWithAddresses(UserMapper.currentUserToUser(currentUser).getId()));
+        return "account-address";
+    }
+
+    @GetMapping("/address/delete")
+    public String deleteUserAddress(ModelMap modelmap,
+                                  @AuthenticationPrincipal CurrentUser currentUser,
+                                    @RequestParam("id") int id) {
+        User user = UserMapper.currentUserToUser(currentUser);
+        User byId = userService.findById(user.getId());
+        List<Address> addresses = byId.getAddresses();
+        Address address1 = null;
+        for (Address address : addresses) {
+            if (address.getId()==id){
+                address1=address;
+            }
+        }
+        addresses.remove(address1);
+        byId.setAddresses(addresses);
+        userService.save(byId);
+        addressService.delete(id);
+        modelmap.addAttribute("user", userService.findByIdWithAddresses(UserMapper.currentUserToUser(currentUser).getId()));
+        return "account-address";
     }
 
 }

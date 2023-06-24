@@ -16,7 +16,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class MainImpl implements MainService {
+public class MainServiceImpl implements MainService {
     private final ProductRepository productRepository;
 
     @Value("${shopping-app.upload.image.path}")

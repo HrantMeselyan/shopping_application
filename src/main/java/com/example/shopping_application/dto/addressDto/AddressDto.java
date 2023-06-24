@@ -15,8 +15,10 @@ import lombok.NoArgsConstructor;
 @Data
 public class AddressDto {
 
+    private int id;
     private String country;
     private String city;
     private String street;
     private String unitNumber;
+    private String postCode;
 }

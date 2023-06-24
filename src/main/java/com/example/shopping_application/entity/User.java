@@ -37,7 +37,6 @@ public class User {
     @Column(nullable = false)
     private String password;
     private String phoneNumber;
-    private String postCode;
     private String profilePic;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -50,7 +49,7 @@ public class User {
     private boolean enabled;
     private String token;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.ALL,CascadeType.REMOVE})
     @JoinTable(name = "user_address", uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "address_id"}),
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "address_id"))

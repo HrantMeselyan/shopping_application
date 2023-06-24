@@ -24,7 +24,6 @@ public class UserDto {
     private String email;
     private String password;
     private String phoneNumber;
-    private String postCode;
     private String profilePic;
     private Role role;
     private Gender gender;

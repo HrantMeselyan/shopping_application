@@ -55,7 +55,6 @@ public class UserMapper {
         user.setEmail(userDto.getEmail());
         user.setGender(userDto.getGender());
         user.setPhoneNumber(userDto.getPhoneNumber());
-        user.setPostCode(userDto.getPostCode());
         user.setProfilePic(userDto.getProfilePic());
         user.setRole(userDto.getRole());
         user.setGender(userDto.getGender());
@@ -118,7 +117,6 @@ public class UserMapper {
         userDto.setEmail(user.getEmail());
         userDto.setGender(user.getGender());
         userDto.setPhoneNumber(user.getPhoneNumber());
-        userDto.setPostCode(user.getPostCode());
         userDto.setProfilePic(user.getProfilePic());
         userDto.setRole(user.getRole());
         userDto.setGender(user.getGender());

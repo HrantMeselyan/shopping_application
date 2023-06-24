@@ -25,6 +25,7 @@ public interface UserService {
     void remove(int id);
 
     User save(UserRegisterDto user);
+    User save(User user);
 
     void removeById(int id);
 

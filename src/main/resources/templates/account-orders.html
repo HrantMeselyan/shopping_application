@@ -5,8 +5,8 @@
             <div class="col-lg-4 pb-4 pb-lg-0 col-xxl-3 pe-xxl-5">
                 <div class="bg-body border border-bottom-0 shadow-lg">
                     <div class="d-flex p-3 align-items-center">
-                        <div class="avatar avatar-lg rounded-circle"><img th:if="${user.profilePic != null}"
-                                                                          th:src="@{/getImage(profilePic=${user.profilePic})}">
+                        <div class="avatar avatar-lg rounded-circle" th:if="${user.profilePic != null}">
+                            <img th:src="@{/getImage(profilePic=${user.profilePic})}">
                         </div>
                         <div class="col ps-3"><h6 class="m-0" th:text="${user.name}"></h6><small><a
                                 href="#" th:text="${user.email}">your@email.com</a></small></div>
@@ -28,12 +28,12 @@
                     <ul class="list-unstyled mb-0 theme-link">
                         <li class="border-bottom mb-0"><a
                                 class="nav-link-style d-flex align-items-center active p-3"
-                                href="account-profile.html"><i class="fi-user me-2"></i>Profile info</a></li>
+                                href="/user"><i class="fi-user me-2"></i>Profile info</a></li>
                         <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center p-3"
-                                                          href="../../../../../../Desktop/www.pxdraft.com/wrap/shopapp/html/account/account-address.html"><i
+                                                          href="/user/address"><i
                                 class="bi bi-map-fill me-2"></i>Addresses</a></li>
                         <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center p-3"
-                                                          href="../../../../../../Desktop/www.pxdraft.com/wrap/shopapp/html/account/account-payment.html"><i
+                                                          href="/user/payment"><i
                                 class="bi bi-credit-card me-2"></i>Payment</a></li>
                         <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center p-3"
                                                           href="/logout"><i

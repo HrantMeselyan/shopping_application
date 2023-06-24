@@ -54,6 +54,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User save(User user) {
+        return userRepository.save(user);
+    }
+
+    @Override
     public User findByEmail(String email) {
         Optional<User> byEmail = userRepository.findByEmail(email);
         if (byEmail.isPresent()) {
@@ -99,7 +104,6 @@ public class UserServiceImpl implements UserService {
             user.setEnabled(true);
             user.setId(userOldData.getId());
             user.setPassword(userOldData.getPassword());
-            user.setPostCode(userOldData.getPostCode());
             if (multipartFile != null && !multipartFile.isEmpty()) {
                 String fileName = System.nanoTime() + "_" + multipartFile.getOriginalFilename();
                 File file = new File(imageUploadPath + fileName);
