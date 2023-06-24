@@ -3,16 +3,15 @@ package com.example.shopping_application.mapper;
 import com.example.shopping_application.dto.notificationDto.NotificationRequestDto;
 import com.example.shopping_application.dto.notificationDto.NotificationResponseDto;
 import com.example.shopping_application.entity.Notification;
-import com.example.shopping_application.entity.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class NotificationMapper {
-    public static Notification map(NotificationRequestDto notificationRequestDto, User user) {
+    public static Notification map(NotificationRequestDto notificationRequestDto) {
         Notification notification = new Notification();
-        notification.setUser(user);
-        notification.setMessage(notification.getMessage());
+        notification.setMessage(notificationRequestDto.getMessage());
+        notification.setSubject(notificationRequestDto.getSubject());
         return notification;
     }
 
