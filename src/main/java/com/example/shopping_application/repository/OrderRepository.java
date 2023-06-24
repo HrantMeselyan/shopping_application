@@ -13,6 +13,7 @@ import java.util.Optional;
 public interface OrderRepository extends JpaRepository<Order, Integer> {
     @Query("SELECT o FROM Order o WHERE o.user.id = :userId ORDER BY o.dateTime DESC")
     List<Order> findLast15OrdersByUserId(@Param("userId") int userId, Pageable pageable);
+    List<Order> findTop10ByOrderByDateTimeDesc();
 
     List<Order> findAllByUserId(Integer id);
 

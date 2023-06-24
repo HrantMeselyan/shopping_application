@@ -1,5 +1,6 @@
 package com.example.shopping_application.service;
 
+import com.example.shopping_application.dto.orderDto.OrderDto;
 import com.example.shopping_application.dto.orderDto.OrderResponseDto;
 import com.example.shopping_application.entity.Order;
 import com.example.shopping_application.entity.Status;
@@ -20,4 +21,6 @@ public interface OrderService {
     List<Order> findAllByUserId(int id);
 
     Optional<Order> findById(int id);
+
+    List<OrderDto> ordersLimit10();
 }

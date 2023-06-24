@@ -1,5 +1,6 @@
 package com.example.shopping_application.service.impl;
 
+import com.example.shopping_application.dto.orderDto.OrderDto;
 import com.example.shopping_application.dto.orderDto.OrderResponseDto;
 import com.example.shopping_application.entity.*;
 import com.example.shopping_application.mapper.OrderMapper;
@@ -42,6 +43,13 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Optional<Order> findById(int id) {
         return orderRepository.findById(id);
+    }
+
+    @Override
+    public List<OrderDto> ordersLimit10() {
+        List<Order> top10ByOrderByOrderDateDesc = orderRepository.findTop10ByOrderByDateTimeDesc();
+        List<OrderDto> orderDtoList = OrderMapper.listOrderToListOrderDto(top10ByOrderByOrderDateDesc);
+        return orderDtoList;
     }
 
     @Override
