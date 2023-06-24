@@ -17,7 +17,8 @@ public class Notification {
     private int id;
     @Column(nullable = false)
     private String message;
-
+    @Column(nullable = false)
+    private String subject;
     @ManyToOne(optional = false)
     private User user;
 }

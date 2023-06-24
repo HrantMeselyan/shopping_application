@@ -11,4 +11,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class NotificationRequestDto {
     private String message;
+    private String subject;
+    private String email;
 }
