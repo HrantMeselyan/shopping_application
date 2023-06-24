@@ -38,8 +38,9 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public void save(NotificationRequestDto notificationRequestDto) {
+        notificationRequestDto.setEmail(notificationRequestDto.getEmail().trim());
         Optional<User> userOptional = userRepository.findByEmail(notificationRequestDto.getEmail());
-        if (userOptional.isPresent()) {
+        if (notificationRequestDto.getEmail() != null && notificationRequestDto.getMessage() != null && userOptional.isPresent()) {
             Notification notification = NotificationMapper.map(notificationRequestDto);
             notification.setUser(userOptional.get());
             notificationRepository.save(notification);
