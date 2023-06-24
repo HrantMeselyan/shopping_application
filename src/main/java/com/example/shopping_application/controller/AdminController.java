@@ -4,6 +4,7 @@ import com.example.shopping_application.dto.notificationDto.NotificationDto;
 import com.example.shopping_application.dto.notificationDto.NotificationRequestDto;
 import com.example.shopping_application.mapper.UserMapper;
 import com.example.shopping_application.security.CurrentUser;
+import com.example.shopping_application.service.CategoryService;
 import com.example.shopping_application.service.NotificationService;
 import com.example.shopping_application.service.OrderService;
 import com.example.shopping_application.service.UserService;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 public class AdminController {
     private final UserService userService;
     private final OrderService orderService;
+    private final CategoryService categoryService;
 
     @GetMapping
     public String adminPage(ModelMap modelMap,
@@ -47,6 +49,11 @@ public class AdminController {
         modelMap.addAttribute("currentUser", UserMapper.currentUserToUser(currentUser));
         modelMap.addAttribute("users", UserMapper.userDtoListMap(userService.findAll()));
         return "allUsers";
+    }
+    @GetMapping("/add/product")
+    public String addProductAdminPage(ModelMap modelMap){
+        modelMap.addAttribute("categories",categoryService.findAllCategory());
+        return "admin/form-uploads";
     }
 
 }
