@@ -1,6 +1,16 @@
-<th:block th:include="/fragment/header::header"></th:block>
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<div th:replace="header.html"></div>
 <div>
-    <form th:action="@{'/user/update/' + ${user.id}}" method="post" enctype="multipart/form-data">
+    <form th:action="@{'/admin/update/' + ${user.id}}" method="post" enctype="multipart/form-data">
         <label for="name">Name:</label>
         <input id="name" type="text" name="name" th:value="${user.name}"><br>
         <label for="surname">Surname:</label>
@@ -25,8 +35,6 @@
         </select><br>
         <label for="phone">Phone Number:</label>
         <input id="phone" type="text" name="phoneNumber" th:value="${user.phoneNumber}"><br>
-        <label for="postCode">Post Code:</label>
-        <input id="postCode" type="text" name="postCode" th:value="${user.postCode}"><br>
         <label for="type">User Type:</label>
         <select name="userType" id="type">
             <option value="USER">User</option>

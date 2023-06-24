@@ -25,7 +25,7 @@ public class AdminController {
     @GetMapping("remove")
     public String removeUser(@RequestParam("id") int id) {
         userService.removeById(id);
-        return "redirect:/user/admin/all";
+        return "redirect:/admin/all";
     }
     @GetMapping("update")
     public String updateUserPage(@RequestParam("id") int id,
@@ -33,7 +33,7 @@ public class AdminController {
         modelMap.addAttribute("user", UserMapper.userToUserDto(userService.findById(id)));
         return "updateUser";
     }
-    @GetMapping("/admin/all")
+    @GetMapping("/all")
     public String allUsersPage(ModelMap modelMap,
                                @AuthenticationPrincipal CurrentUser currentUser) {
         modelMap.addAttribute("currentUser", UserMapper.currentUserToUser(currentUser));
