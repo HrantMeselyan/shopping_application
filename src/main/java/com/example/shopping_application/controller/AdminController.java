@@ -26,7 +26,7 @@ public class AdminController {
     public String adminPage(ModelMap modelMap,
                             @AuthenticationPrincipal CurrentUser currentUser) {
         modelMap.addAttribute("user", UserMapper.currentUserToUser(currentUser));
-        modelMap.addAttribute("orders",orderService.ordersLimit10());
+        modelMap.addAttribute("orders", orderService.ordersLimit10());
         return "/admin/admin-page";
     }
 
@@ -50,9 +50,10 @@ public class AdminController {
         modelMap.addAttribute("users", UserMapper.userDtoListMap(userService.findAll()));
         return "allUsers";
     }
+
     @GetMapping("/add/product")
-    public String addProductAdminPage(ModelMap modelMap){
-        modelMap.addAttribute("categories",categoryService.findAllCategory());
+    public String addProductAdminPage(ModelMap modelMap) {
+        modelMap.addAttribute("categories", categoryService.findAllCategory());
         return "admin/form-uploads";
     }
 
